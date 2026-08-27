@@ -70,6 +70,7 @@ export default function CardPage() {
           : <p className="muted sm">Đã đạt cấp cao nhất của thẻ này.</p>}
       </section>
 
+      {card.skills.length > 0 && (
       <section>
         <h2>Lịch sử đằng sau kỹ năng</h2>
         {card.skills.map((s, i) => {
@@ -90,6 +91,7 @@ export default function CardPage() {
           );
         })}
       </section>
+      )}
 
       <section>
         <h2>Ba điều cần nhớ</h2>
