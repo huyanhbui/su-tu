@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { QUESTIONS, QUESTION_BY_ID, LEVEL_LABEL } from "../content/questions";
 import { CARD_BY_ID } from "../content/cards";
-import { subscribeClassAnswers, BACKEND } from "../lib/store";
+import { subscribeClassAnswers, backendMode } from "../lib/store";
 
 // Teacher Dashboard — màn hình chứng minh dòng doanh thu B2B của dự án.
 // Điểm bán hàng không phải là "xem điểm số", mà là: giáo viên thấy lớp mình
@@ -59,7 +59,7 @@ function Dashboard({ classCode }) {
   return (
     <div className="page">
       <h1>Lớp {classCode}</h1>
-      {BACKEND === "localStorage" && (
+      {backendMode() === "local" && (
         <p className="warnbar">Bản lưu trên máy — chỉ thấy dữ liệu của thiết bị này.</p>
       )}
 

@@ -1,112 +1,134 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// LỚP LƯU TRỮ (storage layer)
+// LỚP LƯU TRỮ — bản Firestore.
 //
-// Mọi trang trong ứng dụng chỉ gọi các hàm trong file này — không trang nào gọi
-// thẳng xuống localStorage hay Firebase. Nhờ vậy khi thay localStorage bằng
-// Firestore, ta chỉ viết lại file này, không sửa một dòng nào trong các trang.
+// Giữ NGUYÊN chữ ký hàm của bản localStorage (store.local.js). Các trang không
+// biết mình đang chạy trên nền nào; đổi nền chỉ là đổi file này.
 //
-// Bản này lưu trên chính máy người dùng (localStorage): chạy được ngay, không
-// cần mạng, không cần tài khoản. Hạn chế: dữ liệu không đi qua được máy khác,
-// nên bảng xếp hạng chỉ thấy chính mình. Bản Firestore sẽ giải quyết điều đó.
-//
-// Mọi hàm đều async và mọi hàm subscribe đều trả về hàm huỷ đăng ký — giống hệt
-// chữ ký của bản Firestore, để việc thay thế là thay 1-đổi-1.
+// Nếu Firestore không khởi tạo được (mất mạng lúc mở, dự án chưa bật, bị chặn),
+// ứng dụng TỰ ĐỘNG lùi về bản localStorage thay vì hiện màn hình trắng.
+// Đây là lớp bảo hiểm cho ngày thi.
 // ─────────────────────────────────────────────────────────────────────────────
+import * as local from "./store.local";
 
-const KEY = "sutu.v1";
+let mode = "loading";     // "firestore" | "local"
+let fs = null;            // các hàm Firestore, nạp động
+let uid = null;
 
-// Danh tính ẩn danh: một chuỗi ngẫu nhiên gắn với thiết bị.
-// KHÔNG thu thập họ tên thật, email hay hình ảnh — đây là cách dự án tuân thủ
-// Nghị định 13/2023/NĐ-CP về dữ liệu cá nhân của người chưa thành niên.
-function newUid() {
-  return "u_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-}
-
-function read() {
+const ready = (async () => {
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {
-    // localStorage có thể bị chặn (chế độ ẩn danh, trình duyệt chặn cookie).
-    // Khi đó ứng dụng vẫn chạy, chỉ là không nhớ được giữa các lần mở.
+    const [{ db, ensureSignedIn }, firestore] = await Promise.all([
+      import("./firebase"),
+      import("firebase/firestore"),
+    ]);
+    uid = await ensureSignedIn();
+    fs = { db, ...firestore };
+    mode = "firestore";
+  } catch (e) {
+    console.warn("[store] Firestore không dùng được, chuyển sang localStorage:", e?.message || e);
+    mode = "local";
   }
-  return null;
-}
+  return mode;
+})();
 
-function write(state) {
-  try {
-    localStorage.setItem(KEY, JSON.stringify(state));
-  } catch {
-    /* hết dung lượng hoặc bị chặn — bỏ qua, không làm sập ứng dụng */
-  }
-  listeners.forEach((fn) => fn(state));
-}
+export function backendMode() { return mode; }
 
-function blank() {
-  return { uid: newUid(), nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
-}
-
-const listeners = new Set();
-
-function subscribe(fn) {
-  listeners.add(fn);
-  fn(read() || blank());
-  return () => listeners.delete(fn);
-}
-
-// ── API công khai ───────────────────────────────────────────────────────────
+// Bộ nhớ đệm trong phiên, để giao diện không phải chờ mạng mỗi lần đọc.
+let cache = { uid: null, nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
+const watchers = new Set();
+function push() { watchers.forEach((fn) => fn({ ...cache })); }
 
 export async function getPlayer() {
-  let s = read();
-  if (!s) {
-    s = blank();
-    write(s);
-  }
-  return s;
+  await ready;
+  if (mode === "local") return local.getPlayer();
+  const snap = await fs.getDoc(fs.doc(fs.db, "players", uid));
+  cache = snap.exists()
+    ? { uid, answers: {}, cardXp: {}, ...snap.data() }
+    : { uid, nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
+  // Nạp lại các câu đã trả lời để không tính điểm hai lần.
+  const mine = await fs.getDocs(fs.query(fs.collection(fs.db, "answers"), fs.where("uid", "==", uid)));
+  cache.answers = {};
+  mine.forEach((d) => { const a = d.data(); cache.answers[a.qid] = a; });
+  push();
+  return { ...cache };
 }
 
 export async function joinClass(nickname, classCode) {
-  const s = (await getPlayer());
-  s.nickname = nickname.trim().slice(0, 16);
-  s.classCode = classCode.trim().toUpperCase().slice(0, 8);
-  write(s);
-  return s;
+  await ready;
+  if (mode === "local") return local.joinClass(nickname, classCode);
+  cache.nickname = nickname.trim().slice(0, 16);
+  cache.classCode = classCode.trim().toUpperCase().slice(0, 8);
+  await fs.setDoc(
+    fs.doc(fs.db, "players", uid),
+    { nickname: cache.nickname, classCode: cache.classCode, xp: cache.xp || 0,
+      cardXp: cache.cardXp || {}, updatedAt: fs.serverTimestamp() },
+    { merge: true }
+  );
+  push();
+  return { ...cache };
 }
 
-/** Ghi nhận một câu trả lời. Trả về số XP vừa nhận (0 nếu đã trả lời trước đó). */
 export async function recordAnswer({ qid, cardId, level, correct, xp }) {
-  const s = await getPlayer();
-  if (s.answers[qid]) return 0; // mỗi câu chỉ tính điểm một lần
-  s.answers[qid] = { cardId, level, correct, at: Date.now() };
+  await ready;
+  if (mode === "local") return local.recordAnswer({ qid, cardId, level, correct, xp });
+  if (cache.answers[qid]) return 0;               // mỗi câu chỉ tính điểm một lần
   const gained = correct ? xp : 0;
-  s.xp += gained;
-  s.cardXp[cardId] = (s.cardXp[cardId] || 0) + gained;
-  write(s);
+
+  cache.answers[qid] = { qid, cardId, level, correct };
+  cache.xp = (cache.xp || 0) + gained;
+  cache.cardXp[cardId] = (cache.cardXp[cardId] || 0) + gained;
+  push();                                          // cập nhật giao diện ngay, không chờ mạng
+
+  try {
+    await fs.setDoc(fs.doc(fs.db, "answers", `${uid}_${qid}`), {
+      uid, qid, cardId, level, correct,
+      nickname: cache.nickname, classCode: cache.classCode,
+      at: fs.serverTimestamp(),
+    });
+    await fs.setDoc(
+      fs.doc(fs.db, "players", uid),
+      { xp: cache.xp, cardXp: cache.cardXp, nickname: cache.nickname,
+        classCode: cache.classCode, updatedAt: fs.serverTimestamp() },
+      { merge: true }
+    );
+  } catch (e) {
+    console.warn("[store] chưa ghi được lên máy chủ, sẽ tự đồng bộ khi có mạng:", e?.message);
+  }
   return gained;
 }
 
 export function subscribePlayer(fn) {
-  return subscribe(fn);
+  if (mode === "local") return local.subscribePlayer(fn);
+  watchers.add(fn);
+  fn({ ...cache });
+  ready.then(() => { if (mode === "local") local.subscribePlayer(fn); else getPlayer(); });
+  return () => watchers.delete(fn);
 }
 
-/** Bảng xếp hạng. Bản localStorage chỉ có một người chơi — chính thiết bị này. */
 export function subscribeLeaderboard(classCode, fn) {
-  return subscribe((s) => {
-    const rows = s.nickname && s.classCode === classCode ? [s] : [];
-    fn(rows.sort((a, b) => b.xp - a.xp));
-  });
-}
-
-/** Toàn bộ câu trả lời của một lớp — dữ liệu cho Teacher Dashboard. */
-export function subscribeClassAnswers(classCode, fn) {
-  return subscribe((s) => {
-    if (s.classCode !== classCode) return fn([]);
-    fn(
-      Object.entries(s.answers).map(([qid, a]) => ({
-        qid, uid: s.uid, nickname: s.nickname, ...a,
-      }))
+  let stop = () => {};
+  ready.then(() => {
+    if (mode === "local") { stop = local.subscribeLeaderboard(classCode, fn); return; }
+    const q = fs.query(
+      fs.collection(fs.db, "players"),
+      fs.where("classCode", "==", classCode),
+      fs.orderBy("xp", "desc"),
+      fs.limit(50)
     );
+    stop = fs.onSnapshot(q,
+      (snap) => fn(snap.docs.map((d) => ({ uid: d.id, ...d.data() }))),
+      (e) => { console.warn("[store] bảng xếp hạng:", e?.message); fn([]); });
   });
+  return () => stop();
 }
 
-export const BACKEND = "localStorage";
+export function subscribeClassAnswers(classCode, fn) {
+  let stop = () => {};
+  ready.then(() => {
+    if (mode === "local") { stop = local.subscribeClassAnswers(classCode, fn); return; }
+    const q = fs.query(fs.collection(fs.db, "answers"), fs.where("classCode", "==", classCode));
+    stop = fs.onSnapshot(q,
+      (snap) => fn(snap.docs.map((d) => d.data())),
+      (e) => { console.warn("[store] bảng theo dõi:", e?.message); fn([]); });
+  });
+  return () => stop();
+}

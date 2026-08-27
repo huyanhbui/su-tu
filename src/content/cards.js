@@ -9,7 +9,7 @@ export const CARDS = [
     name: "Ngô Quyền",
     battle: "bach-dang-938",
     years: "897–944",
-    art: "/art/n01.jpg",
+    art: "/art/n01-ngo-quyen.png",
     menh: "thuy",
     sinhLuc: 5,
     roles: [
@@ -74,7 +74,7 @@ export const CARDS = [
     name: "Dương Đình Nghệ",
     battle: "bach-dang-938",
     years: "?–937",
-    art: "",
+    art: "/art/n02-duong-dinh-nghe.png",
     menh: null, sinhLuc: null, roles: ["Tướng cũ của họ Khúc", "Tiết độ sứ Tĩnh Hải quân"],
     skills: [],
     facts: [
@@ -95,7 +95,7 @@ export const CARDS = [
     name: "Kiều Công Tiễn",
     battle: "bach-dang-938",
     years: "?–938",
-    art: "",
+    art: "/art/n03-kieu-cong-tien.png",
     menh: null, sinhLuc: null, roles: ["Nha tướng phản chủ"],
     skills: [],
     facts: [
@@ -115,7 +115,7 @@ export const CARDS = [
     name: "Lưu Hoằng Tháo",
     battle: "bach-dang-938",
     years: "?–938",
-    art: "",
+    art: "/art/n04-luu-hoang-thao.png",
     menh: null, sinhLuc: null, roles: ["Vạn Vương nhà Nam Hán", "Chủ soái hạm đội xâm lược"],
     skills: [],
     facts: [
@@ -135,7 +135,7 @@ export const CARDS = [
     name: "Sông Bạch Đằng",
     battle: "bach-dang-938",
     years: "—",
-    art: "",
+    art: "/art/d01-song-bach-dang.png",
     menh: null, sinhLuc: null, roles: ["Cửa ngõ đường thuỷ phía Đông Bắc"],
     skills: [],
     facts: [
@@ -156,7 +156,7 @@ export const CARDS = [
     name: "Trận Bạch Đằng năm 938",
     battle: "bach-dang-938",
     years: "938",
-    art: "",
+    art: "/art/s01-tran-bach-dang.png",
     menh: null, sinhLuc: null, roles: ["Trận quyết chiến chiến lược"],
     skills: [],
     facts: [

@@ -1,0 +1,42 @@
+rules_version = '2';
+
+// Nguyên tắc: trong hệ thống này KHÔNG có dữ liệu riêng tư nào cả.
+// Không họ tên thật, không email, không hình ảnh — chỉ biệt danh và mã thiết bị
+// ẩn danh. Vì vậy cho phép đọc rộng là an toàn, và đó chính là câu trả lời cho
+// câu hỏi của ban giám khảo về quyền riêng tư của học sinh.
+//
+// Phần siết chặt nằm ở GHI: mỗi người chỉ ghi được bản ghi của chính mình,
+// và câu trả lời đã ghi thì không sửa hay xoá được — để điểm số không gian lận được.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
+
+    match /players/{uid} {
+      allow read: if true;
+      allow create, update: if isSelf(uid)
+        && request.resource.data.nickname is string
+        && request.resource.data.nickname.size() <= 16
+        && request.resource.data.classCode is string
+        && request.resource.data.classCode.size() <= 8
+        && request.resource.data.xp is int
+        && request.resource.data.xp >= 0;
+      allow delete: if false;
+    }
+
+    match /answers/{answerId} {
+      allow read: if true;
+      // Chỉ tạo mới, không sửa, không xoá: một câu đã trả lời là bằng chứng cố định.
+      allow create: if signedIn()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.correct is bool
+        && request.resource.data.classCode is string;
+      allow update, delete: if false;
+    }
+
+    // Mọi thứ khác: cấm.
+    match /{document=**} { allow read, write: if false; }
+  }
+}
