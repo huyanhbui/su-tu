@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { QUESTIONS, QUESTION_BY_ID, LEVEL_LABEL } from "../content/questions";
 import { CARD_BY_ID } from "../content/cards";
-import { subscribeClassAnswers, backendMode } from "../lib/store";
+import { subscribeClassAnswers, backendMode, onBackendReady } from "../lib/store";
 
 // Teacher Dashboard — màn hình chứng minh dòng doanh thu B2B của dự án.
 // Điểm bán hàng không phải là "xem điểm số", mà là: giáo viên thấy lớp mình
@@ -33,7 +33,9 @@ export default function Teacher() {
 
 function Dashboard({ classCode }) {
   const [rows, setRows] = useState([]);
+  const [mode, setMode] = useState(backendMode());
   useEffect(() => subscribeClassAnswers(classCode, setRows), [classCode]);
+  useEffect(() => onBackendReady(setMode), []);
 
   // Gộp theo mức tư duy
   const byLevel = {};
@@ -59,7 +61,7 @@ function Dashboard({ classCode }) {
   return (
     <div className="page">
       <h1>Lớp {classCode}</h1>
-      {backendMode() === "local" && (
+      {mode === "local" && (
         <p className="warnbar">Bản lưu trên máy — chỉ thấy dữ liệu của thiết bị này.</p>
       )}
 

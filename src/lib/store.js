@@ -32,6 +32,13 @@ const ready = (async () => {
 
 export function backendMode() { return mode; }
 
+/** Báo cho giao diện biết khi đã xác định xong nền lưu trữ (firestore hay local). */
+export function onBackendReady(fn) {
+  let alive = true;
+  ready.then((m) => { if (alive) fn(m); });
+  return () => { alive = false; };
+}
+
 // Bộ nhớ đệm trong phiên, để giao diện không phải chờ mạng mỗi lần đọc.
 let cache = { uid: null, nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
 const watchers = new Set();

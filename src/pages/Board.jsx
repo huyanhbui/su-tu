@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { subscribeLeaderboard, backendMode } from "../lib/store";
+import { subscribeLeaderboard, backendMode, onBackendReady } from "../lib/store";
 
 // Màn hình dành cho máy chiếu trong lớp — chữ to, tương phản cao.
 export default function Board() {
   const { classCode } = useParams();
   const [rows, setRows] = useState([]);
+  const [mode, setMode] = useState(backendMode());
   useEffect(() => subscribeLeaderboard(classCode, setRows), [classCode]);
+  useEffect(() => onBackendReady(setMode), []);
 
   return (
     <div className="page board">
       <h1>Bảng xếp hạng · lớp {classCode}</h1>
 
-      {backendMode() === "local" && (
+      {mode === "local" && (
         <p className="warnbar">
           Đang chạy bản lưu trên máy — bảng xếp hạng chỉ hiện thiết bị này.
           Khi nối Firestore, mọi máy trong lớp sẽ hiện chung một bảng.
