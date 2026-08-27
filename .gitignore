@@ -3,3 +3,5 @@ dist
 .firebase
 .env.local
 art-source
+qr
+cards/print.html
