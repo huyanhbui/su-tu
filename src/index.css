@@ -1,0 +1,168 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   SỬ TỰ — bảng màu lấy từ chính thẻ bài: sơn mài xanh thẫm, đỏ son, thếp vàng.
+   Ưu tiên điện thoại trước: học sinh quét QR bằng điện thoại, không phải máy tính.
+   ───────────────────────────────────────────────────────────────────────── */
+:root{
+  --ground:#0F1B2A;      /* nền xanh thẫm như viền thẻ */
+  --surface:#16273B;
+  --surface-2:#1E3350;
+  --ink:#F3ECDD;         /* chữ màu ngà */
+  --ink-2:#BFCBDA;
+  --ink-3:#8798AC;
+  --line:#2A415E;
+  --gold:#D4A83A;
+  --gold-2:#F0CB6A;
+  --son:#B23A32;         /* đỏ son */
+  --jade:#4FA88A;
+  --bad:#D9705F;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{margin:0;line-height:1.2;font-weight:700}
+h1{font-size:26px}
+h2{font-size:19px;margin:30px 0 12px;color:var(--gold)}
+h3{font-size:17px}
+p{margin:0}
+a{color:var(--gold-2)}
+img{max-width:100%;display:block}
+
+.page{max-width:640px;margin:0 auto;padding:20px 18px 64px}
+.muted{color:var(--ink-3)}
+.sm{font-size:14px}
+.err{color:var(--bad);font-size:14px}
+section{margin-top:8px}
+
+.brand{text-align:center;padding:22px 0 10px}
+.brand h1{font-size:34px;letter-spacing:.18em;color:var(--gold)}
+
+.note,.insight,.warnbar{
+  border-radius:var(--radius);padding:12px 14px;font-size:14px;margin-top:14px;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-2);
+}
+.insight{border-left:3px solid var(--gold);color:var(--ink)}
+.warnbar{border-left:3px solid var(--son)}
+
+/* form */
+.form{display:grid;gap:14px;margin-top:18px}
+label{display:grid;gap:6px;font-size:14px;color:var(--ink-2)}
+input{
+  font:inherit;font-size:16px;padding:12px 14px;border-radius:10px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+}
+input:focus{outline:2px solid var(--gold);outline-offset:1px}
+
+.btn{
+  display:inline-block;text-align:center;font:inherit;font-weight:600;font-size:15px;
+  padding:12px 18px;border-radius:10px;border:1px solid var(--gold);
+  background:var(--gold);color:#20170A;cursor:pointer;text-decoration:none;
+}
+.btn.ghost{background:transparent;color:var(--gold-2)}
+.btn:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
+.foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+
+/* card page */
+.card-hero{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#000}
+.card-hero img{width:100%;height:auto}
+.card-id{margin-top:16px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+.chip.menh{background:rgba(79,168,138,.16);color:var(--jade);border-color:transparent}
+.roles{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:3px}
+.roles li{font-size:14px;color:var(--ink-2)}
+.roles li::before{content:"◆ ";color:var(--gold);font-size:10px}
+
+.lvbox{margin-top:20px;padding:14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.lvhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.lvnow{font-weight:700;color:var(--gold)}
+.lvxp{font-size:14px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.bar{height:7px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));transition:width .35s ease}
+.bar i.bad{background:var(--bad)}
+.bar.sm{height:4px;margin-top:5px}
+.bar.wide{flex:1}
+
+.skill{margin-top:14px;padding:14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.skill.locked{opacity:.72}
+.kind{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.kind.kich-hoat{background:rgba(178,58,50,.2);color:#E8998F}
+.skill h3{margin-top:8px}
+.rules{margin-top:8px;font-size:14px;color:var(--ink-2);font-style:italic;
+  padding-left:11px;border-left:2px solid var(--line)}
+.history{margin-top:11px;font-size:15px}
+.lockmsg{margin-top:11px;font-size:14px;color:var(--ink-3)}
+
+.facts{margin:0;padding-left:20px;display:grid;gap:8px}
+.facts li{font-size:15px}
+.src{margin-top:12px;font-size:12.5px;color:var(--ink-3)}
+
+/* quiz */
+.quiz{margin-top:16px;padding:15px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.quiz-tag{margin-bottom:9px}
+.lv{font-size:11px;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.lv-van-dung{background:rgba(212,168,58,.18);color:var(--gold-2)}
+.quiz-stem{font-weight:600;font-size:16px}
+.quiz-choices{display:grid;gap:8px;margin-top:12px}
+.choice{
+  display:flex;gap:11px;align-items:flex-start;text-align:left;width:100%;
+  font:inherit;font-size:15px;padding:11px 13px;border-radius:10px;cursor:pointer;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--ink);
+}
+.choice:hover:not(:disabled){border-color:var(--gold)}
+.choice:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.choice-key{font-weight:700;color:var(--ink-3);flex:0 0 auto}
+.choice.right{border-color:var(--jade);background:rgba(79,168,138,.16)}
+.choice.right .choice-key{color:var(--jade)}
+.choice.wrong{border-color:var(--bad);background:rgba(217,112,95,.14)}
+.choice.dim{opacity:.5}
+.choice:disabled{cursor:default}
+.explain{margin-top:12px;font-size:14.5px;padding:12px;border-radius:10px;background:var(--surface-2)}
+.explain.ok{border-left:3px solid var(--jade)}
+.explain.no{border-left:3px solid var(--bad)}
+.explain p{margin-top:6px;color:var(--ink-2)}
+
+.flash{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;
+  background:var(--gold);color:#20170A;font-weight:700;padding:8px 18px;border-radius:999px;
+}
+
+/* collection + leaderboard */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.stats div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px;text-align:center}
+.stats b{display:block;font-size:23px;color:var(--gold);font-variant-numeric:tabular-nums}
+.stats span{font-size:12px;color:var(--ink-3)}
+
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:14px}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:9px;text-decoration:none;color:var(--ink);display:grid;gap:5px}
+.mini img{border-radius:7px}
+.mini span{font-weight:600;font-size:14px}
+.mini em{font-style:normal;font-size:12px;color:var(--ink-3)}
+
+.board h1{color:var(--gold)}
+.rank{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.rank li{display:flex;align-items:center;gap:13px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius);padding:13px 15px;font-size:19px}
+.rank .pos{font-weight:700;color:var(--gold);min-width:1.4em;font-variant-numeric:tabular-nums}
+.rank .who{flex:1;font-weight:600}
+.rank .xp{color:var(--ink-2);font-variant-numeric:tabular-nums}
+@media(min-width:900px){ .board .page{max-width:900px} .rank li{font-size:26px;padding:18px 22px} }
+
+/* dashboard */
+.brow{display:flex;align-items:center;gap:12px;margin-top:10px}
+.blabel{flex:0 0 96px;font-size:14px;color:var(--ink-2)}
+.bval{flex:0 0 46px;text-align:right;font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);margin-top:12px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.flag td{background:rgba(217,112,95,.1)}
+
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
