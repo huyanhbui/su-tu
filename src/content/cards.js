@@ -2,6 +2,10 @@
 // Mọi thẻ PHẢI có `battle` và `source`. Bạch Đằng có ba trận (938 / 981 / 1288)
 // nên không bao giờ được ghi "Bạch Đằng" mà không nói rõ trận nào.
 //
+// `artTam: true` nghĩa là thẻ đó đang mượn tranh khắc gỗ Henri Oger (1908-09,
+// thuộc phạm vi công cộng) làm ảnh tạm, chưa có tranh chính thức của nhóm.
+// `npm run check` và trang /health đều liệt kê ra để không ai quên trước lúc in.
+//
 // Hai trường khác nhau, đừng lẫn:
 //   `source`     — hiện cho học sinh và ban giám khảo đọc. Chỉ ghi điều đã đúng.
 //   `reviewNote` — ghi chú nội bộ cho nhóm, KHÔNG BAO GIỜ hiện ra màn hình.
@@ -17,6 +21,7 @@ export const CARDS = [
     battle: "bach-dang-938",
     years: "897–944",
     art: "/art/n01-ngo-quyen.png",
+    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
     menh: "thuy",
     sinhLuc: 5,
     roles: [
@@ -83,6 +88,7 @@ export const CARDS = [
     battle: "bach-dang-938",
     years: "?–937",
     art: "/art/n02-duong-dinh-nghe.png",
+    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
     menh: null, sinhLuc: null, roles: ["Tướng cũ của họ Khúc", "Tiết độ sứ Tĩnh Hải quân"],
     skills: [],
     facts: [
@@ -104,7 +110,7 @@ export const CARDS = [
     name: "Kiều Công Tiễn",
     battle: "bach-dang-938",
     years: "?–938",
-    art: "/art/n03-kieu-cong-tien.png",
+    art: "/art/n03-kieu-cong-tien.jpg",
     menh: null, sinhLuc: null, roles: ["Nha tướng phản chủ"],
     skills: [],
     facts: [
@@ -125,7 +131,7 @@ export const CARDS = [
     name: "Lưu Hoằng Tháo",
     battle: "bach-dang-938",
     years: "?–938",
-    art: "/art/n04-luu-hoang-thao.png",
+    art: "/art/n04-luu-hoang-thao.jpg",
     menh: null, sinhLuc: null, roles: ["Vạn Vương nhà Nam Hán", "Chủ soái hạm đội xâm lược"],
     skills: [],
     facts: [
@@ -147,6 +153,7 @@ export const CARDS = [
     battle: "bach-dang-938",
     years: "—",
     art: "/art/d01-song-bach-dang.png",
+    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
     menh: null, sinhLuc: null, roles: ["Cửa ngõ đường thuỷ phía Đông Bắc"],
     skills: [],
     facts: [
@@ -168,7 +175,7 @@ export const CARDS = [
     name: "Trận Bạch Đằng năm 938",
     battle: "bach-dang-938",
     years: "938",
-    art: "/art/s01-tran-bach-dang.png",
+    art: "/art/s01-tran-bach-dang.jpg",
     menh: null, sinhLuc: null, roles: ["Trận quyết chiến chiến lược"],
     skills: [],
     facts: [

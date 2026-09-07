@@ -26,6 +26,7 @@ export default function Health() {
   const notes = CARDS.filter((c) => c.reviewNote);
   const noQuestions = CARDS.filter((c) => !QUESTIONS.some((q) => q.cardId === c.id));
   const noMechanics = CARDS.filter((c) => (c.skills || []).length === 0);
+  const artTam = CARDS.filter((c) => c.artTam);
 
   const byLevel = {};
   for (const l of Object.keys(LEVEL_LABEL)) byLevel[l] = QUESTIONS.filter((q) => q.level === l).length;
@@ -76,7 +77,7 @@ export default function Health() {
       <div className="stats">
         <div><b>{CARDS.length}</b><span>Thẻ bài</span></div>
         <div><b>{QUESTIONS.length}</b><span>Câu hỏi</span></div>
-        <div><b>{CARDS.length - noMechanics.length}</b><span>Thẻ đủ cơ chế</span></div>
+        <div><b>{CARDS.length - artTam.length}</b><span>Thẻ có tranh thật</span></div>
       </div>
       <table className="kv">
         <tbody>
@@ -98,13 +99,20 @@ export default function Health() {
             chép <em>nguyên văn</em> luật in trên thẻ vào.
           </li>
         )}
+        {artTam.length > 0 && (
+          <li>
+            Còn dùng ảnh tạm (tranh khắc gỗ Oger):{" "}
+            <strong>{artTam.map((c) => c.id).join(", ")}</strong>. Chờ tranh chính thức
+            của nhóm cho những thẻ này.
+          </li>
+        )}
         {notes.length > 0 && (
           <li>
             {notes.length} thẻ chưa được giáo viên Lịch sử duyệt nội dung. Máy không
             kiểm hộ được việc này.
           </li>
         )}
-        {noQuestions.length === 0 && noMechanics.length === 0 && notes.length === 0 && (
+        {noQuestions.length === 0 && noMechanics.length === 0 && artTam.length === 0 && notes.length === 0 && (
           <li>Không còn việc nào máy biết được.</li>
         )}
       </ul>

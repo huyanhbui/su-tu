@@ -1,0 +1,51 @@
+NGUỒN HÌNH MINH HOẠ
+===================
+Thư mục này hiện có HAI nguồn khác nhau. Đừng lẫn, vì tình trạng bản quyền khác
+nhau và câu trả lời cho ban giám khảo cũng khác nhau.
+
+
+(1) TRANH CHÍNH THỨC CỦA NHÓM
+-----------------------------
+  n03-kieu-cong-tien.jpg
+  n04-luu-hoang-thao.jpg
+  s01-tran-bach-dang.jpg      (bãi cọc gỗ trên sông)
+
+Do nhóm tự lo phần tranh. File gốc độ phân giải đầy đủ nằm ở
+`art-source/cards-master/` (không đưa lên git). File trong thư mục này đã được
+nén xuống bề ngang 800px cho web — thẻ in phải dùng file gốc, không dùng file này.
+
+Nhóm cần tự xác nhận nguồn gốc và quyền sử dụng của bộ tranh này trước khi in
+và trước khi nộp dự thi.
+
+
+(2) ẢNH TẠM — TRANH MỘC BẢN HENRI OGER
+--------------------------------------
+  n01-ngo-quyen.png
+  n02-duong-dinh-nghe.png
+  d01-song-bach-dang.png
+
+Ba thẻ này CHƯA có tranh chính thức, đang mượn tạm mộc bản Oger. Trong
+`src/content/cards.js` chúng được đánh dấu `artTam: true`; `npm run check` và
+trang /health đều nhắc. Thay xong thì bỏ cờ đó đi.
+
+Ba file mộc bản nói trên được cắt ra từ:
+
+  Henri Oger, "Technique du peuple annamite" (Kỹ thuật của người An Nam),
+  Hà Nội, 1908–1909.
+
+Tình trạng bản quyền: THUỘC PHẠM VI CÔNG CỘNG (public domain).
+  - Xuất bản năm 1909, tác giả Henri Oger (1885–1936) mất đã hơn 50 năm.
+  - Bản quét gốc do Thư viện Quốc hội Hoa Kỳ (Library of Congress) lưu giữ.
+  - Các trang được tải từ Wikimedia Commons, tất cả gắn nhãn "Public domain".
+
+Vì vậy dự án được dùng miễn phí, kể cả cho mục đích thương mại, không cần xin phép
+và không phải trả phí bản quyền.
+
+Ghi công (không bắt buộc nhưng nên có, in ở mặt sau hộp hoặc sách hướng dẫn):
+  "Hình minh hoạ phỏng theo mộc bản trong 'Kỹ thuật của người An Nam'
+   của Henri Oger, Hà Nội 1908–1909 (tư liệu thuộc phạm vi công cộng)."
+
+LƯU Ý: đây là tranh mộc bản dân gian đầu thế kỷ XX, KHÔNG phải chân dung
+lịch sử của các nhân vật thế kỷ X. Không có chân dung đương thời của Ngô Quyền.
+Nếu ban giám khảo hỏi, trả lời thẳng: hình mang tính biểu tượng, lấy từ tư liệu
+mộc bản Việt Nam thuộc phạm vi công cộng.

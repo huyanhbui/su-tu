@@ -19,6 +19,11 @@ export default function CardPage() {
   const card = CARD_BY_ID[cardId];
   const [player, setPlayer] = useState(null);
   const [flash, setFlash] = useState(null);
+  // Ảnh thẻ thiếu hoặc đổi tên thì hiện khung chữ thay thế. Biểu tượng ảnh vỡ
+  // ngay giữa trang là thứ tệ nhất có thể xảy ra lúc giám khảo cầm điện thoại.
+  // Nhớ theo MÃ THẺ chứ không phải true/false, để chuyển sang thẻ khác là tự
+  // tính lại — khỏi cần một useEffect chỉ để đặt lại cờ.
+  const [artLoiId, setArtLoiId] = useState(null);
 
   useEffect(() => subscribePlayer(setPlayer), []);
   useEffect(() => { getPlayer(); }, []);
@@ -53,6 +58,7 @@ export default function CardPage() {
     );
   }
 
+  const artLoi = artLoiId === cardId;
   const joined = !!player?.nickname && !!player?.classCode;
   const cardXp = player?.cardXp?.[card.id] || 0;
   const lv = levelOf(card, cardXp);
@@ -72,8 +78,10 @@ export default function CardPage() {
     <div className="page card-page">
       {flash && <div className="flash">{flash}</div>}
 
-      <div className="card-hero">
-        <img src={card.art} alt={`Thẻ bài ${card.name}`} />
+      <div className={`card-hero ${artLoi ? "noart" : ""}`}>
+        {artLoi
+          ? <div className="artfall"><span>{card.name}</span></div>
+          : <img src={card.art} alt={`Thẻ bài ${card.name}`} onError={() => setArtLoiId(cardId)} />}
       </div>
 
       <div className="card-id">

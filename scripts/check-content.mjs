@@ -129,6 +129,12 @@ for (const l of LEVELS) {
   console.log(`  ${pad(LEVEL_LABEL[l], 12)} ${pad(n, 4)} ${"█".repeat(Math.round(pct / 4))} ${pct}%`);
 }
 
+const tam = CARDS.filter((c) => c.artTam);
+if (tam.length) {
+  console.log("\nThẻ còn dùng ảnh TẠM (tranh khắc gỗ Oger), chưa có tranh chính thức:");
+  for (const c of tam) console.log(`  ${pad(c.id, 5)} ${pad(c.name, 26)} ${c.art}`);
+}
+
 const notes = CARDS.filter((c) => c.reviewNote);
 if (notes.length) {
   console.log("\nGhi chú nội bộ còn tồn đọng (máy không kiểm hộ được):");
