@@ -28,6 +28,7 @@ npm run dev          # http://localhost:5173
 | `npm run check` | soát nội dung thẻ và câu hỏi trước khi in |
 | `npm run e2e` | chạy thử luồng thật trên trình duyệt thật |
 | `npm run e2e:offline` | ngắt mạng thật rồi thử lại — cần chạy `preview` trước |
+| `npm run e2e:rules` | cố tình vi phạm luật bảo mật để xem có bị chặn thật không |
 | `npm run lint` | soát code |
 
 `npm run e2e https://ten-mien-that.xyz` chạy được cả với bản đã lên mạng. **Chạy
@@ -128,6 +129,19 @@ lên bị từ chối) — cam kết chỉ đứng vững nếu phần mềm th�
 Vì không có gì riêng tư, luật bảo mật Firestore cho **đọc rộng**. Phần siết chặt
 nằm ở **ghi**: mỗi người chỉ ghi được bản ghi của chính mình, và câu trả lời đã
 ghi thì không sửa, không xoá được — để điểm số không gian lận được.
+
+`npm run e2e:rules` cố tình vi phạm bảy điều trên Firestore thật và kiểm tra
+rằng cả bảy đều bị **từ chối**. Đã chạy, cả bảy đều `permission-denied`:
+
+| Thử làm | Kết quả |
+|---|---|
+| Ghi đè hồ sơ của học sinh khác | từ chối |
+| Tự đặt XP âm | từ chối |
+| Đặt biệt danh dài quá 16 ký tự | từ chối |
+| Sửa câu đã trả lời sai thành đúng | từ chối |
+| Xoá câu đã trả lời | từ chối |
+| Mạo danh người khác khi ghi câu trả lời | từ chối |
+| Ghi vào collection lạ | từ chối |
 
 ---
 

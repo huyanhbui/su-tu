@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "check": "node scripts/check-content.mjs",
     "e2e": "node scripts/e2e.mjs",
-    "e2e:offline": "node scripts/e2e-offline.mjs"
+    "e2e:offline": "node scripts/e2e-offline.mjs",
+    "e2e:rules": "node scripts/e2e-rules.mjs"
   },
   "dependencies": {
     "firebase": "^12.18.0",
