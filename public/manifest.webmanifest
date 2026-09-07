@@ -1,0 +1,21 @@
+{
+  "name": "SỬ TỰ",
+  "short_name": "SỬ TỰ",
+  "description": "Ứng dụng đồng hành của bộ bài SỬ TỰ: quét mã QR trên thẻ bài để đọc sử Việt và trả lời câu hỏi ngay trên điện thoại, dùng được cả khi mất mạng.",
+  "lang": "vi",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0F1B2A",
+  "background_color": "#0F1B2A",
+  "categories": ["education", "games"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

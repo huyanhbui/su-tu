@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="SỬ TỰ">
+  <rect width="512" height="512" fill="#0F1B2A"/>
+  <rect x="40" y="40" width="432" height="432" rx="68" fill="#16273B" stroke="#D4A83A" stroke-width="12"/>
+  <rect x="66" y="66" width="380" height="380" rx="46" fill="none" stroke="#D4A83A" stroke-width="3" opacity="0.38"/>
+  <g font-family="DejaVu Sans" font-weight="bold" text-anchor="middle">
+    <text x="250" y="228" font-size="126" letter-spacing="10" fill="#F0CB6A">SỬ</text>
+    <text x="250" y="378" font-size="126" letter-spacing="10" fill="#D4A83A">TỰ</text>
+  </g>
+</svg>
