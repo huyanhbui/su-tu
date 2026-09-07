@@ -13,6 +13,7 @@ import * as local from "./store.local";
 let mode = "loading";     // "firestore" | "local"
 let fs = null;            // các hàm Firestore, nạp động
 let uid = null;
+let initError = null;     // vì sao phải lùi về localStorage — trang /health đọc cái này
 
 const ready = (async () => {
   try {
@@ -24,13 +25,42 @@ const ready = (async () => {
     fs = { db, ...firestore };
     mode = "firestore";
   } catch (e) {
-    console.warn("[store] Firestore không dùng được, chuyển sang localStorage:", e?.message || e);
+    initError = e?.code || e?.message || String(e);
+    console.warn("[store] Firestore không dùng được, chuyển sang localStorage:", initError);
     mode = "local";
   }
   return mode;
 })();
 
 export function backendMode() { return mode; }
+
+/**
+ * Chẩn đoán cho trang /health. Trả về đúng những gì đang xảy ra, kể cả khi hỏng —
+ * vì lỗi im lặng là loại lỗi đắt nhất. Chính ứng dụng này đã chạy trên localStorage
+ * một thời gian mà không ai biết, chỉ vì phần đăng nhập ẩn danh chưa được bật.
+ */
+export async function diagnose() {
+  const out = { mode: "loading", uid: null, reason: null, canRead: null, canWrite: null };
+  out.mode = await ready;
+  out.reason = initError;
+  if (out.mode === "local") {
+    const p = await local.getPlayer();
+    out.uid = p.uid;
+    return out;
+  }
+  out.uid = uid;
+  try {
+    await fs.getDoc(fs.doc(fs.db, "players", uid));
+    out.canRead = true;
+  } catch (e) { out.canRead = false; out.reason = e?.message || String(e); }
+  try {
+    await fs.setDoc(fs.doc(fs.db, "players", uid),
+      { nickname: cache.nickname || "", classCode: cache.classCode || "",
+        xp: cache.xp || 0, updatedAt: fs.serverTimestamp() }, { merge: true });
+    out.canWrite = true;
+  } catch (e) { out.canWrite = false; out.reason = e?.message || String(e); }
+  return out;
+}
 
 /** Báo cho giao diện biết khi đã xác định xong nền lưu trữ (firestore hay local). */
 export function onBackendReady(fn) {
@@ -43,6 +73,15 @@ export function onBackendReady(fn) {
 let cache = { uid: null, nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
 const watchers = new Set();
 function push() { watchers.forEach((fn) => fn({ ...cache })); }
+
+// Đã nạp xong hồ sơ từ máy chủ hay chưa. Quan trọng: luật bảo mật chỉ cho TẠO
+// bản ghi câu trả lời, không cho sửa. Nếu ghi điểm khi chưa biết em đã trả lời
+// những câu nào, ta sẽ ghi đè lên một bản ghi cũ và bị từ chối. Nên luôn nạp trước.
+let hydration = null;
+function hydrated() {
+  if (!hydration) hydration = getPlayer();
+  return hydration;
+}
 
 export async function getPlayer() {
   await ready;
@@ -74,20 +113,21 @@ export async function joinClass(nickname, classCode) {
   return { ...cache };
 }
 
-export async function recordAnswer({ qid, cardId, level, correct, xp }) {
+export async function recordAnswer({ qid, cardId, level, correct, xp, picked }) {
   await ready;
-  if (mode === "local") return local.recordAnswer({ qid, cardId, level, correct, xp });
+  if (mode === "local") return local.recordAnswer({ qid, cardId, level, correct, xp, picked });
+  await hydrated();                                // biết chắc em đã trả lời những câu nào
   if (cache.answers[qid]) return 0;               // mỗi câu chỉ tính điểm một lần
   const gained = correct ? xp : 0;
 
-  cache.answers[qid] = { qid, cardId, level, correct };
+  cache.answers[qid] = { qid, cardId, level, correct, picked };
   cache.xp = (cache.xp || 0) + gained;
   cache.cardXp[cardId] = (cache.cardXp[cardId] || 0) + gained;
   push();                                          // cập nhật giao diện ngay, không chờ mạng
 
   try {
     await fs.setDoc(fs.doc(fs.db, "answers", `${uid}_${qid}`), {
-      uid, qid, cardId, level, correct,
+      uid, qid, cardId, level, correct, picked,
       nickname: cache.nickname, classCode: cache.classCode,
       at: fs.serverTimestamp(),
     });
@@ -104,11 +144,20 @@ export async function recordAnswer({ qid, cardId, level, correct, xp }) {
 }
 
 export function subscribePlayer(fn) {
-  if (mode === "local") return local.subscribePlayer(fn);
   watchers.add(fn);
   fn({ ...cache });
-  ready.then(() => { if (mode === "local") local.subscribePlayer(fn); else getPlayer(); });
-  return () => watchers.delete(fn);
+  // Lúc gọi hàm này ta thường chưa biết nền lưu trữ là gì (`mode` còn "loading"),
+  // nên phải chờ `ready` rồi mới quyết định — và phải nhớ hàm huỷ của bản local,
+  // nếu không mỗi lần rời trang lại bỏ sót một người nghe.
+  let stopLocal = null;
+  ready.then(() => {
+    if (mode === "local") stopLocal = local.subscribePlayer(fn);
+    else hydrated();
+  });
+  return () => {
+    watchers.delete(fn);
+    if (stopLocal) stopLocal();
+  };
 }
 
 export function subscribeLeaderboard(classCode, fn) {

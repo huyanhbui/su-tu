@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { QUESTIONS, QUESTION_BY_ID, LEVEL_LABEL } from "../content/questions";
+import { QUESTIONS, LEVEL_LABEL } from "../content/questions";
 import { CARD_BY_ID } from "../content/cards";
 import { subscribeClassAnswers, backendMode, onBackendReady } from "../lib/store";
 
@@ -98,7 +98,7 @@ function Dashboard({ classCode }) {
           <table>
             <thead><tr><th>Câu hỏi</th><th>Thẻ</th><th>Mức</th><th>Lượt</th><th>Đúng</th></tr></thead>
             <tbody>
-              {byQ.map(({ q, n, ok, pct }) => (
+              {byQ.map(({ q, n, pct }) => (
                 <tr key={q.id} className={pct !== null && pct < 0.5 ? "flag" : ""}>
                   <td>{q.stem}</td>
                   <td>{CARD_BY_ID[q.cardId]?.name || q.cardId}</td>

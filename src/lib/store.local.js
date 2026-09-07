@@ -74,10 +74,12 @@ export async function joinClass(nickname, classCode) {
 }
 
 /** Ghi nhận một câu trả lời. Trả về số XP vừa nhận (0 nếu đã trả lời trước đó). */
-export async function recordAnswer({ qid, cardId, level, correct, xp }) {
+export async function recordAnswer({ qid, cardId, level, correct, xp, picked }) {
   const s = await getPlayer();
   if (s.answers[qid]) return 0; // mỗi câu chỉ tính điểm một lần
-  s.answers[qid] = { cardId, level, correct, at: Date.now() };
+  // Lưu cả `picked` — phương án học sinh đã chọn, không chỉ đúng/sai. Nhờ vậy khi
+  // quét lại thẻ, các em thấy đúng thứ mình đã chọn lúc trước, kể cả khi chọn sai.
+  s.answers[qid] = { qid, cardId, level, correct, picked, at: Date.now() };
   const gained = correct ? xp : 0;
   s.xp += gained;
   s.cardXp[cardId] = (s.cardXp[cardId] || 0) + gained;

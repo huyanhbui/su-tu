@@ -1,6 +1,13 @@
 // Nội dung thẻ bài — biên soạn tay, KHÔNG sinh tự động.
 // Mọi thẻ PHẢI có `battle` và `source`. Bạch Đằng có ba trận (938 / 981 / 1288)
 // nên không bao giờ được ghi "Bạch Đằng" mà không nói rõ trận nào.
+//
+// Hai trường khác nhau, đừng lẫn:
+//   `source`     — hiện cho học sinh và ban giám khảo đọc. Chỉ ghi điều đã đúng.
+//   `reviewNote` — ghi chú nội bộ cho nhóm, KHÔNG BAO GIỜ hiện ra màn hình.
+// Trước đây ghi chú "cần đối chiếu trước khi in" nằm chung trong `source` nên
+// hiện thẳng lên trang thẻ — ban giám khảo đọc được lời tự thú rằng nội dung
+// chưa ai kiểm. Chạy `npm run check` để xem những ghi chú còn tồn đọng.
 
 export const CARDS = [
   {
@@ -52,7 +59,8 @@ export const CARDS = [
       "Năm 938 ông chỉ huy quân dân đánh tan hạm đội Nam Hán trên sông Bạch Đằng; chủ tướng địch là Lưu Hoằng Tháo tử trận.",
       "Chiến thắng Bạch Đằng năm 938 chấm dứt hơn một nghìn năm Bắc thuộc, mở ra thời kỳ độc lập lâu dài của dân tộc.",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Tướng quân", unlock: "3 sự kiện cơ bản" },
       { xp: 60, label: "Tiết chế", unlock: "Bối cảnh hai kỹ năng" },
@@ -82,7 +90,8 @@ export const CARDS = [
       "Ông tự xưng Tiết độ sứ và cai quản đất nước trong sáu năm, nuôi dưỡng lực lượng cho thế hệ sau.",
       "Năm 937 ông bị nha tướng Kiều Công Tiễn sát hại — sự kiện trực tiếp châm ngòi cho cuộc xâm lược của Nam Hán năm 938.",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Nha tướng", unlock: "3 sự kiện cơ bản" },
       { xp: 60, label: "Tiết độ sứ", unlock: "Bối cảnh thời họ Khúc" },
@@ -103,7 +112,8 @@ export const CARDS = [
       "Bị Ngô Quyền đem quân từ Ái Châu ra hỏi tội, ông cầu cứu vua Nam Hán — mở đường cho quân xâm lược tiến vào nước ta.",
       "Ngô Quyền hạ thành Đại La và giết Kiều Công Tiễn trước khi hạm đội Nam Hán kịp tới, dứt điểm mối hoạ bên trong rồi mới quay ra đối phó giặc ngoài.",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Nha tướng", unlock: "3 sự kiện cơ bản" },
     ],
@@ -123,7 +133,8 @@ export const CARDS = [
       "Vua cha đóng quân ở biên giới để sẵn sàng tiếp ứng, cho thấy Nam Hán coi đây là cuộc xâm lược quy mô lớn chứ không phải một cuộc cướp phá.",
       "Hạm đội của ông tiến vào cửa Bạch Đằng đúng lúc triều lên, bị mắc bẫy cọc khi triều rút; Lưu Hoằng Tháo tử trận tại đây.",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Chủ soái", unlock: "3 sự kiện cơ bản" },
     ],
@@ -143,7 +154,8 @@ export const CARDS = [
       "Sông có biên độ thuỷ triều lớn: mỗi ngày mực nước chênh nhau vài mét, đủ để nhấn chìm rồi lại phơi ra cả một bãi cọc.",
       "Chính đặc điểm tự nhiên này khiến Bạch Đằng ba lần trở thành nơi quyết chiến — năm 938 (Ngô Quyền), năm 981 (Lê Hoàn) và năm 1288 (Trần Hưng Đạo).",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Địa thế", unlock: "3 sự kiện cơ bản" },
       { xp: 60, label: "Yếu địa", unlock: "So sánh ba trận Bạch Đằng" },
@@ -164,7 +176,8 @@ export const CARDS = [
       "Quân ta dùng thuyền nhẹ khiêu chiến rồi giả thua, nhử hạm đội Nam Hán vượt qua bãi cọc lúc triều đang lên.",
       "Khi triều rút, quân ta phản công; thuyền lớn của địch bị cọc đâm thủng và mắc cạn, chủ soái Lưu Hoằng Tháo tử trận — chấm dứt hơn một nghìn năm Bắc thuộc.",
     ],
-    source: "SGK Lịch sử 10 — cần đối chiếu số bài trước khi in",
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Diễn biến", unlock: "3 sự kiện cơ bản" },
       { xp: 60, label: "Ý nghĩa", unlock: "Vì sao gọi là trận quyết chiến chiến lược" },

@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { CARD_BY_ID } from "../content/cards";
-import { QUESTION_BY_ID } from "../content/questions";
+import { CARDS, CARD_BY_ID } from "../content/cards";
+import { QUESTIONS } from "../content/questions";
 import { levelOf } from "../lib/level";
 import { getPlayer, recordAnswer, subscribePlayer } from "../lib/store";
 import Quiz from "../components/Quiz";
+import JoinGate from "../components/JoinGate";
 
 // Đây là trang quan trọng nhất của sản phẩm: nơi mã QR trên thẻ bài dẫn tới.
 // Nguyên tắc: KHÔNG lặp lại những gì đã in trên thẻ. Thẻ đã có cơ chế chơi rồi.
 // Trang này bổ sung thứ tấm bìa không chứa được — LỊCH SỬ ĐẰNG SAU CƠ CHẾ ĐÓ.
+
+const MENH_LABEL = { thuy: "Thủy", hoa: "Hỏa", moc: "Mộc", kim: "Kim", tho: "Thổ" };
+const LEVEL_ORDER = { "nhan-biet": 0, "thong-hieu": 1, "van-dung": 2 };
+
 export default function CardPage() {
   const { cardId } = useParams();
   const card = CARD_BY_ID[cardId];
@@ -18,22 +23,44 @@ export default function CardPage() {
   useEffect(() => subscribePlayer(setPlayer), []);
   useEffect(() => { getPlayer(); }, []);
 
+  // Câu hỏi của thẻ được suy ra từ ngân hàng câu hỏi theo `cardId`, không chép tay
+  // vào từng thẻ. Thêm câu hỏi mới chỉ cần sửa một file, không sợ quên nối dây.
+  const questions = useMemo(() => {
+    if (!card) return [];
+    return QUESTIONS
+      .filter((q) => q.cardId === card.id)
+      .sort((a, b) => (LEVEL_ORDER[a.level] ?? 9) - (LEVEL_ORDER[b.level] ?? 9));
+  }, [card]);
+
   if (!card) {
     return (
       <div className="page">
         <h1>Không tìm thấy thẻ</h1>
-        <p className="muted">Mã thẻ “{cardId}” không có trong bộ bài.</p>
-        <Link className="btn" to="/">Về trang chính</Link>
+        <p className="muted">
+          Mã thẻ “{cardId}” không có trong bộ bài. Có thể mã QR bị mờ hoặc quét nhầm thẻ.
+        </p>
+        <h2>Các thẻ hiện có</h2>
+        <div className="cardgrid">
+          {CARDS.map((c) => (
+            <Link key={c.id} to={`/c/${c.id}`} className="mini">
+              <img src={c.art} alt="" />
+              <span>{c.name}</span>
+            </Link>
+          ))}
+        </div>
+        <nav className="foot"><Link className="btn" to="/">Về trang chính</Link></nav>
       </div>
     );
   }
 
+  const joined = !!player?.nickname && !!player?.classCode;
   const cardXp = player?.cardXp?.[card.id] || 0;
   const lv = levelOf(card, cardXp);
 
   async function onAnswer(q, res) {
     const gained = await recordAnswer({
-      qid: q.id, cardId: card.id, level: q.level, correct: res.correct, xp: res.xp,
+      qid: q.id, cardId: card.id, level: q.level,
+      correct: res.correct, xp: res.xp, picked: res.picked,
     });
     if (gained > 0) {
       setFlash(`+${gained} XP`);
@@ -52,9 +79,13 @@ export default function CardPage() {
       <div className="card-id">
         <h1>{card.name}</h1>
         <div className="chips">
-          <span className="chip menh">Mệnh {card.menh === "thuy" ? "Thủy" : card.menh}</span>
-          <span className="chip">{card.years}</span>
-          <span className="chip">Sinh lực {card.sinhLuc}</span>
+          {/* Chỉ hiện những ô có dữ liệu thật. Mệnh và Sinh lực là cơ chế chơi do
+              nhóm thiết kế; thẻ nào chưa có bản in cuối thì không hiện ô rỗng. */}
+          {card.menh && (
+            <span className="chip menh">Mệnh {MENH_LABEL[card.menh] || card.menh}</span>
+          )}
+          {card.years && card.years !== "—" && <span className="chip">{card.years}</span>}
+          {card.sinhLuc != null && <span className="chip">Sinh lực {card.sinhLuc}</span>}
         </div>
         <ul className="roles">{card.roles.map((r) => <li key={r}>{r}</li>)}</ul>
       </div>
@@ -101,18 +132,25 @@ export default function CardPage() {
 
       <section>
         <h2>Thử thách</h2>
-        {card.questions.map((qid) => {
-          const q = QUESTION_BY_ID[qid];
-          if (!q) return null;
-          return (
+        {questions.length === 0 ? (
+          <p className="muted sm">Thẻ này chưa có câu hỏi.</p>
+        ) : !joined ? (
+          <>
+            <JoinGate />
+            <p className="muted sm">
+              {questions.length} câu hỏi đang chờ — trả lời đúng để mở thêm phần lịch sử của thẻ này.
+            </p>
+          </>
+        ) : (
+          questions.map((q) => (
             <Quiz
               key={q.id}
               question={q}
-              answered={player?.answers?.[q.id] ? { picked: q.answer } : null}
+              answered={player?.answers?.[q.id] || null}
               onAnswer={(res) => onAnswer(q, res)}
             />
-          );
-        })}
+          ))
+        )}
       </section>
 
       <nav className="foot">
