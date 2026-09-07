@@ -163,16 +163,3 @@ hơn thì mã QR ít ô hơn, in ra to hơn, dễ quét hơn. Đổi sau khi in 
 
 ---
 
-## Việc còn phải làm
-
-- [ ] **Bật đăng nhập ẩn danh.** Firebase Console → Authentication → Sign-in
-      method → **Anonymous** → Enable. Chưa bật thì toàn bộ ứng dụng chạy trên
-      localStorage, mỗi máy là một ốc đảo. Kiểm tra lại bằng `/health`.
-- [ ] **Giáo viên Lịch sử duyệt nội dung.** `npm run check` liệt kê thẻ nào chưa
-      được duyệt. Máy không kiểm hộ được tính đúng đắn của lịch sử.
-- [ ] **Cơ chế chơi của N02, N03, N04, D01, S01.** Hiện để trống *có chủ ý* —
-      đó là thiết kế game của nhóm, nằm trên bản in thật. Khi có bản cuối, chép
-      **nguyên văn** luật in trên thẻ vào `skills[].text`, đừng viết lại theo ý
-      mình: chữ trên màn hình khác chữ trên tấm bìa trong tay giám khảo còn tệ
-      hơn là không hiện gì.
-- [ ] **Mua tên miền, triển khai, sinh mã QR** — theo đúng thứ tự đó.
