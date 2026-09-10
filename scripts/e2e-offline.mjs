@@ -13,9 +13,31 @@
 // dữ liệu đăng nhập vừa làm hỏng đồng bộ, vừa có thể lẫn dữ liệu giữa học sinh.
 // ─────────────────────────────────────────────────────────────────────────────
 import { spawn } from "node:child_process";
+import { readFile } from "node:fs/promises";
 import { setTimeout as sleep } from "node:timers/promises";
 const PORT = 9500 + Math.floor(Math.random() * 300);
-const APP = process.argv[2] || "http://127.0.0.1:4178";
+const APP = (process.argv[2] || "http://localhost:4173").replace(/\/+$/, "");
+
+// Kiểm tra máy chủ có sống không TRƯỚC khi mở trình duyệt.
+// Vì sao phải có: một lần cổng mặc định sai (5177 trong khi `npm run dev` chạy ở
+// 5173) đã khiến bài kiểm tra báo bốn lỗi nghe như lỗi ứng dụng, trong khi thật ra
+// nó đang nói chuyện với một cái cổng không có ai nghe. Thà không chạy còn hơn
+// chạy rồi đổ oan cho phần mềm.
+async function phaiSong(url, goiY) {
+  try {
+    const r = await fetch(url, { redirect: "manual" });
+    if (r.status >= 500) throw new Error("HTTP " + r.status);
+  } catch (e) {
+    console.error(`\n✗ Không kết nối được tới ${url}`);
+    console.error(`  (${e.message})\n`);
+    console.error(`  ${goiY}\n`);
+    console.error(`  Hoặc chỉ rõ địa chỉ khác:  node ${process.argv[1].split("/").pop()} <địa-chỉ>\n`);
+    process.exit(1);
+  }
+}
+
+await phaiSong(APP, "Mở một cửa sổ khác và chạy:  npm run build && npm run preview");
+
 const brave = spawn("brave", ["--headless", "--disable-gpu", "--no-sandbox", "--no-zygote",
   `--remote-debugging-port=${PORT}`, "--user-data-dir=/tmp/off-" + Date.now(),
   "--no-first-run", "--window-size=390,1400", "about:blank"], { stdio: "ignore" });
@@ -38,8 +60,12 @@ try {
   check("Service worker đăng ký và hoạt động", reg && reg.state === "activated", JSON.stringify(reg));
   const keys = await ev(`caches.keys()`, S);
   check("Có kho cache của bản build", (keys || []).some(k => k.startsWith("su-tu-")), JSON.stringify(keys));
+  // Số file lấy từ chính dist/sw.js chứ không gõ cứng — thêm một tấm tranh là con
+  // số đổi, gõ cứng thì bài kiểm tra sẽ hỏng vì lý do chẳng liên quan gì.
+  const swSrc = await readFile(new URL("../dist/sw.js", import.meta.url), "utf8");
+  const canCo = (swSrc.match(/^\s*"\/[^"]+",?$/gm) || []).length;
   const n = await ev(`caches.open(${JSON.stringify((keys||[])[0]||"x")}).then(c=>c.keys()).then(k=>k.length)`, S);
-  check("Kho chứa đủ 20 file", n === 20, n + " file");
+  check(`Kho chứa đủ ${canCo} file như danh sách trong dist/sw.js`, n === canCo, `${n} file`);
 
   const cross = await ev(`caches.open(${JSON.stringify((keys||[])[0]||"x")}).then(c=>c.keys())
     .then(k=>k.map(r=>new URL(r.url).host).filter(h=>h!==${JSON.stringify(new URL(APP).host)}))`, S);

@@ -12,17 +12,19 @@ import * as local from "./store.local";
 
 let mode = "loading";     // "firestore" | "local"
 let fs = null;            // các hàm Firestore, nạp động
+let fbMod = null;         // module firebase.js, nạp động
 let uid = null;
 let initError = null;     // vì sao phải lùi về localStorage — trang /health đọc cái này
 
 const ready = (async () => {
   try {
-    const [{ db, ensureSignedIn }, firestore] = await Promise.all([
+    const [fb, firestore] = await Promise.all([
       import("./firebase"),
       import("firebase/firestore"),
     ]);
-    uid = await ensureSignedIn();
-    fs = { db, ...firestore };
+    uid = await fb.ensureSignedIn();
+    fbMod = fb;
+    fs = { db: fb.db, ...firestore };
     mode = "firestore";
   } catch (e) {
     initError = e?.code || e?.message || String(e);
@@ -33,6 +35,24 @@ const ready = (async () => {
 })();
 
 export function backendMode() { return mode; }
+
+/**
+ * Bắt đầu lại từ đầu: bỏ danh tính hiện tại, cấp mã thiết bị mới, xoá sạch XP.
+ *
+ * Vì sao cần: danh tính trong hệ thống này gắn với THIẾT BỊ, không gắn với biệt
+ * danh — đổi tên chỉ là đổi nhãn hiển thị, tiến trình vẫn nguyên. Đó là chủ ý
+ * (một điện thoại = một học sinh, và không thu thập gì để nhận ra ai). Nhưng vì
+ * vậy phải có một lối thoát rõ ràng cho máy dùng chung và cho lúc demo.
+ */
+export async function resetIdentity() {
+  await ready;
+  if (mode === "local") return local.resetIdentity();
+  uid = await fbMod.newAnonymousIdentity();
+  cache = { uid, nickname: "", classCode: "", xp: 0, cardXp: {}, answers: {} };
+  hydration = null;
+  push();
+  return uid;
+}
 
 /**
  * Chẩn đoán cho trang /health. Trả về đúng những gì đang xảy ra, kể cả khi hỏng —

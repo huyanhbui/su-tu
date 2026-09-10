@@ -27,7 +27,7 @@ npm run dev          # http://localhost:5173
 | `npm run build` | đóng gói vào `dist/` |
 | `npm run check` | soát nội dung thẻ và câu hỏi trước khi in |
 | `npm run e2e` | chạy thử luồng thật trên trình duyệt thật |
-| `npm run e2e:offline` | ngắt mạng thật rồi thử lại — cần chạy `preview` trước |
+| `npm run e2e:offline` | ngắt mạng thật rồi thử lại — cần `npm run build && npm run preview` trước |
 | `npm run e2e:rules` | cố tình vi phạm luật bảo mật để xem có bị chặn thật không |
 | `npm run lint` | soát code |
 | `npm run cards` | dựng bản in thử A4 → `html/print.html` |
@@ -35,8 +35,14 @@ npm run dev          # http://localhost:5173
 | `npm run fb:rules` | triển khai luật bảo mật Firestore |
 | `npm run fb:indexes` | triển khai index Firestore |
 
-`npm run e2e https://ten-mien-that.xyz` chạy được cả với bản đã lên mạng. **Chạy
-lệnh này trước mỗi buổi demo, trên đúng đường mạng sẽ dùng.**
+Các lệnh kiểm thử mặc định trỏ tới `npm run dev` ở **localhost:5173** (riêng
+`e2e:offline` trỏ tới `npm run preview` ở **localhost:4173**). Nếu không có máy chủ
+nào ở đó, lệnh dừng ngay và nói rõ — thay vì chạy tiếp rồi báo một loạt lỗi nghe
+như lỗi ứng dụng.
+
+Muốn kiểm tra bản đã lên mạng thì đưa địa chỉ vào:
+`npm run e2e https://ten-mien-that.xyz`. **Chạy trước mỗi buổi demo, trên đúng
+đường mạng sẽ dùng.**
 
 ---
 

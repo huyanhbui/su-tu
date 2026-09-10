@@ -43,6 +43,12 @@ for (const c of CARDS) {
     for (let i = 1; i < c.levels.length; i++) {
       if (c.levels[i].xp <= c.levels[i - 1].xp) err(`${at}: mốc XP của các bậc phải tăng dần`);
     }
+    // Thẻ chỉ có MỘT bậc thì sinh ra đã ở cấp cao nhất: thanh tiến trình đầy vàng
+    // và dòng chữ "Đã đạt cấp cao nhất" ngay lần mở đầu tiên. Học sinh chưa làm gì
+    // mà đã xong — mất sạch lý do trả lời câu hỏi.
+    if (c.levels.length < 2) {
+      err(`${at}: chỉ có 1 bậc nên vừa mở ra đã ở cấp cao nhất, thanh tiến trình đầy sẵn. Cần ít nhất 2 bậc.`);
+    }
   }
 
   // Ảnh phải có thật, không thì trang thẻ hiện ô vỡ ngay trước mặt giám khảo.
@@ -111,6 +117,19 @@ for (const q of QUESTIONS) {
     if (!hasYear && !pinned) {
       warn(`${at}: nhắc "Bạch Đằng" mà không có năm, cũng không có tên riêng nào ghim vào một trận. Có ba trận: 938 (Ngô Quyền), 981 (Lê Hoàn), 1288 (Trần Hưng Đạo).`);
     }
+  }
+}
+
+// Bậc cao nhất phải với tới được bằng chính các câu hỏi của thẻ đó. Đặt mốc cao
+// hơn tổng XP có thể kiếm được thì bậc ấy vĩnh viễn không ai đạt tới — một lời hứa
+// suông hiện ngay trên màn hình.
+for (const c of CARDS) {
+  const toiDa = QUESTIONS
+    .filter((q) => q.cardId === c.id)
+    .reduce((t, q) => t + (XP_PER_CORRECT[q.level] || 0), 0);
+  const moc = (c.levels || []).length ? c.levels[c.levels.length - 1].xp : 0;
+  if (moc > toiDa) {
+    err(`thẻ ${c.id}: bậc cao nhất cần ${moc} XP nhưng cả ${perCard[c.id]} câu hỏi của thẻ cộng lại chỉ được ${toiDa} XP — không bao giờ đạt tới.`);
   }
 }
 

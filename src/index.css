@@ -205,3 +205,10 @@ code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:.9e
   background:rgba(178,58,50,.12);border:1px solid var(--son);border-left-width:3px}
 .hucau strong{display:block;color:#E8998F;font-size:14px;letter-spacing:.02em}
 .hucau p{margin-top:6px;font-size:14px;color:var(--ink-2)}
+
+/* đổi người chơi — đặt cuối trang, phải bấm có chủ ý mới xoá được */
+.reset{margin-top:38px;padding-top:20px;border-top:1px solid var(--line)}
+.reset h2{font-size:15px;color:var(--ink-2);margin:0 0 6px}
+.reset .btn{margin-top:12px}
+.btn.ghost.danger{border-color:var(--son);color:#E8998F}
+.btn.ghost.danger:disabled{opacity:.6;cursor:default}

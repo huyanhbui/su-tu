@@ -72,8 +72,8 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Tướng quân", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Tiết chế", unlock: "Bối cảnh hai kỹ năng" },
-      { xp: 150, label: "Tiền Ngô Vương", unlock: "Sơ đồ trận Bạch Đằng 938" },
+      { xp: 30, label: "Tiết chế", unlock: "Bối cảnh hai kỹ năng" },
+      { xp: 60, label: "Tiền Ngô Vương", unlock: "Sơ đồ trận Bạch Đằng 938" },
     ],
     questions: ["Q01", "Q02", "Q03"],
   },
@@ -104,7 +104,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Nha tướng", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Tiết độ sứ", unlock: "Bối cảnh thời họ Khúc" },
+      { xp: 30, label: "Tiết độ sứ", unlock: "Bối cảnh thời họ Khúc" },
     ],
     questions: ["Q04"],
   },
@@ -126,6 +126,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Nha tướng", unlock: "3 sự kiện cơ bản" },
+      { xp: 40, label: "Kẻ phản chủ", unlock: "Vì sao thù trong lại mở đường cho giặc ngoài" },
     ],
     questions: ["Q05"],
   },
@@ -147,6 +148,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Chủ soái", unlock: "3 sự kiện cơ bản" },
+      { xp: 30, label: "Bại tướng Bạch Đằng", unlock: "Vì sao ưu thế thuyền lớn lại hoá thành điểm yếu" },
     ],
     questions: ["Q06"],
   },
@@ -169,7 +171,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Địa thế", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Yếu địa", unlock: "So sánh ba trận Bạch Đằng" },
+      { xp: 30, label: "Yếu địa", unlock: "So sánh ba trận Bạch Đằng" },
     ],
     questions: ["Q07"],
   },
@@ -191,7 +193,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Diễn biến", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Ý nghĩa", unlock: "Vì sao gọi là trận quyết chiến chiến lược" },
+      { xp: 40, label: "Ý nghĩa", unlock: "Vì sao gọi là trận quyết chiến chiến lược" },
     ],
     questions: ["Q08"],
   },
@@ -225,7 +227,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Hoàng đế", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Kẻ bại trận", unlock: "Vì sao một quyết định sai kéo đổ cả chiến dịch" },
+      { xp: 30, label: "Kẻ bại trận", unlock: "Vì sao một quyết định sai kéo đổ cả chiến dịch" },
     ],
   },
   {
@@ -247,7 +249,7 @@ export const CARDS = [
     reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
     levels: [
       { xp: 0, label: "Mưu sĩ", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Lời can bỏ ngoài tai", unlock: "Vì sao lời khuyên đúng vẫn có thể không được nghe" },
+      { xp: 30, label: "Lời can bỏ ngoài tai", unlock: "Vì sao lời khuyên đúng vẫn có thể không được nghe" },
     ],
   },
   {
@@ -274,7 +276,7 @@ export const CARDS = [
     reviewNote: "Nhân vật hư cấu. Nhóm phải quyết định giữ hay bỏ, và nếu giữ thì phải ghi rõ là hư cấu trên thẻ in.",
     levels: [
       { xp: 0, label: "Tướng tiên phong", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
+      { xp: 30, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
     ],
   },
   {
@@ -301,7 +303,7 @@ export const CARDS = [
     reviewNote: "Nhân vật hư cấu. Nhóm phải quyết định giữ hay bỏ, và nếu giữ thì phải ghi rõ là hư cấu trên thẻ in.",
     levels: [
       { xp: 0, label: "Tướng tiếp ứng", unlock: "3 sự kiện cơ bản" },
-      { xp: 60, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
+      { xp: 30, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
     ],
   },
 ];

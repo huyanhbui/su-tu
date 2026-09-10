@@ -2,7 +2,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // KIỂM TRA LUỒNG THẬT, chạy trên trình duyệt thật.
 //
-//   node scripts/e2e.mjs                          # kiểm tra bản dev ở localhost:5177
+//   node scripts/e2e.mjs                          # kiểm tra bản dev ở localhost:5173
 //   node scripts/e2e.mjs https://ten-mien.xyz     # kiểm tra bản đã lên mạng
 //
 // Chạy cái này TRƯỚC BUỔI DEMO, trên đúng đường mạng sẽ dùng. Nó đi đúng con
@@ -15,12 +15,33 @@
 import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 
-const BASE = (process.argv[2] || "http://localhost:5177").replace(/\/+$/, "");
+const BASE = (process.argv[2] || "http://localhost:5173").replace(/\/+$/, "");
 // Cổng gỡ lỗi phải ngẫu nhiên. Cổng cố định thì nếu trên máy còn một phiên Brave
 // cũ đang giữ cổng đó, bài kiểm tra sẽ lặng lẽ nối vào TRÌNH DUYỆT CŨ và báo hỏng
 // những thứ hoàn toàn lành lặn. Đã dính đúng một lần rồi.
 const PORT = 9200 + Math.floor(Math.random() * 700);
 const CLASS = "ZZTEST";
+
+// Kiểm tra máy chủ có sống không TRƯỚC khi mở trình duyệt.
+// Vì sao phải có: một lần cổng mặc định sai (5177 trong khi `npm run dev` chạy ở
+// 5173) đã khiến bài kiểm tra báo bốn lỗi nghe như lỗi ứng dụng, trong khi thật ra
+// nó đang nói chuyện với một cái cổng không có ai nghe. Thà không chạy còn hơn
+// chạy rồi đổ oan cho phần mềm.
+async function phaiSong(url, goiY) {
+  try {
+    const r = await fetch(url, { redirect: "manual" });
+    if (r.status >= 500) throw new Error("HTTP " + r.status);
+  } catch (e) {
+    console.error(`\n✗ Không kết nối được tới ${url}`);
+    console.error(`  (${e.message})\n`);
+    console.error(`  ${goiY}\n`);
+    console.error(`  Hoặc chỉ rõ địa chỉ khác:  node ${process.argv[1].split("/").pop()} <địa-chỉ>\n`);
+    process.exit(1);
+  }
+}
+
+await phaiSong(BASE, "Mở một cửa sổ khác và chạy:  npm run dev");
+
 const NICK = "E2EBot" + Math.floor(Math.random() * 900 + 100);
 let NICK2 = NICK;   // biệt danh thứ hai, dùng khi đóng vai học sinh mới ở giữa bài
 
@@ -234,6 +255,35 @@ try {
   }))()`, S);
   check("Dashboard nhận được dữ liệu của lớp", t.rows > 0 && !/^0 *Lượt/.test(t.text), `${t.rows} dòng câu hỏi`);
   console.log("\n--- trích màn hình dashboard ---\n" + t.text.split("\n").slice(0, 14).join("\n"));
+
+  // ── Đổi người chơi ───────────────────────────────────────────────────────
+  // Danh tính gắn với thiết bị, nên đổi biệt danh KHÔNG xoá tiến trình — đó là
+  // chủ ý. Vì vậy phải có đường làm lại từ đầu cho máy dùng chung, và đường đó
+  // phải thật sự xoá sạch chứ không chỉ đổi cái nhãn.
+  console.log("\n── Đổi người chơi ──");
+  await goto(`${BASE}/c/N01`);
+  const trcReset = await evalJs(`(async () => {
+    const m = await import("/src/lib/store.js"); const p = await m.getPlayer();
+    return { uid: p.uid, xp: p.xp, cau: Object.keys(p.answers || {}).length };
+  })()`, S).catch(() => null);
+
+  if (!trcReset) {
+    console.log("  BỎ QUA  — chỉ chạy được với bản dev (cần nạp module nguồn)");
+  } else {
+    check("Có tiến trình trước khi đổi", trcReset.xp > 0 || trcReset.cau > 0,
+      `${trcReset.xp} XP, ${trcReset.cau} câu`);
+    const sauReset = await evalJs(`(async () => {
+      const m = await import("/src/lib/store.js"); await m.resetIdentity();
+      const p = await m.getPlayer();
+      return { uid: p.uid, xp: p.xp, cau: Object.keys(p.answers || {}).length,
+               nickname: p.nickname, classCode: p.classCode };
+    })()`, S);
+    check("Đổi người chơi cấp mã thiết bị mới", trcReset.uid !== sauReset.uid);
+    check("Đổi người chơi xoá sạch XP và câu đã trả lời",
+      sauReset.xp === 0 && sauReset.cau === 0, `${sauReset.xp} XP, ${sauReset.cau} câu`);
+    check("Đổi người chơi xoá cả biệt danh và mã lớp",
+      !sauReset.nickname && !sauReset.classCode);
+  }
 
 } catch (e) {
   console.error("\nLỖI KHI CHẠY:", e.message);

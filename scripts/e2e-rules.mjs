@@ -20,7 +20,28 @@
 import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 const PORT = 9600 + Math.floor(Math.random() * 300);
-const APP = "http://localhost:5177";
+const APP = (process.argv[2] || "http://localhost:5173").replace(/\/+$/, "");
+
+// Kiểm tra máy chủ có sống không TRƯỚC khi mở trình duyệt.
+// Vì sao phải có: một lần cổng mặc định sai (5177 trong khi `npm run dev` chạy ở
+// 5173) đã khiến bài kiểm tra báo bốn lỗi nghe như lỗi ứng dụng, trong khi thật ra
+// nó đang nói chuyện với một cái cổng không có ai nghe. Thà không chạy còn hơn
+// chạy rồi đổ oan cho phần mềm.
+async function phaiSong(url, goiY) {
+  try {
+    const r = await fetch(url, { redirect: "manual" });
+    if (r.status >= 500) throw new Error("HTTP " + r.status);
+  } catch (e) {
+    console.error(`\n✗ Không kết nối được tới ${url}`);
+    console.error(`  (${e.message})\n`);
+    console.error(`  ${goiY}\n`);
+    console.error(`  Hoặc chỉ rõ địa chỉ khác:  node ${process.argv[1].split("/").pop()} <địa-chỉ>\n`);
+    process.exit(1);
+  }
+}
+
+await phaiSong(APP, "Mở một cửa sổ khác và chạy:  npm run dev");
+
 const srcFb = await (await fetch(APP + "/src/lib/firebase.js")).text();
 const FS_URL = (srcFb.match(/"(\/node_modules\/\.vite\/deps\/firebase_firestore\.js[^"]*)"/) || [])[1];
 if (!FS_URL) { console.error("Không tìm được đường dẫn module firestore mà Vite đang phục vụ."); process.exit(1); }

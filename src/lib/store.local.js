@@ -91,6 +91,13 @@ export function subscribePlayer(fn) {
   return subscribe(fn);
 }
 
+/** Xoá sạch tiến trình trên máy này và cấp một mã thiết bị mới. */
+export async function resetIdentity() {
+  const s = blank();
+  write(s);
+  return s.uid;
+}
+
 /** Bảng xếp hạng. Bản localStorage chỉ có một người chơi — chính thiết bị này. */
 export function subscribeLeaderboard(classCode, fn) {
   return subscribe((s) => {
