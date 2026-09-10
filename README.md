@@ -74,9 +74,10 @@ index.html                TRANG HTML CHÍNH — cửa vào của ứng dụng
 package.json              npm bắt buộc phải nằm ở thư mục gốc
 vite.config.js            cấu hình đóng gói
 
+vercel.json               cấu hình triển khai (Vercel chỉ đọc file này ở gốc)
+
 config/                   cấu hình lặt vặt, gom một chỗ
   .oxlintrc.json          luật soát code
-  vercel.json             cấu hình triển khai — ĐANG TẠM DỪNG, xem ghi chú dưới
 
 firebase/                 mọi thứ thuộc Firebase, tách riêng
   firebase.json
@@ -102,8 +103,9 @@ art-source/               tranh gốc độ phân giải đầy đủ (không l�
 nằm ở thư mục gốc — npm và Vite tìm chúng ở đó, đổi chỗ là hỏng. Những file cấu
 hình còn lại đã gom hết vào `config/` và `firebase/`.
 
-`config/vercel.json` hiện không có tác dụng: Vercel chỉ đọc file này khi nó nằm ở
-thư mục gốc. Khi nào quay lại việc triển khai thì chuyển nó ra ngoài.
+`vercel.json` cũng phải ở gốc — Vercel không tìm nó ở nơi khác. Trong đó có luật
+`rewrites` chuyển mọi đường dẫn về `index.html`; thiếu luật này thì mọi mã QR đều
+ra trang 404, vì `/c/N01` không phải là một file có thật trên máy chủ.
 
 ### Lớp lưu trữ, và vì sao nó tách riêng
 
