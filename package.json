@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "oxlint",
     "preview": "vite preview",
+    "lint": "oxlint -c config/.oxlintrc.json",
     "check": "node scripts/check-content.mjs",
     "e2e": "node scripts/e2e.mjs",
     "e2e:offline": "node scripts/e2e-offline.mjs",
-    "e2e:rules": "node scripts/e2e-rules.mjs"
+    "e2e:rules": "node scripts/e2e-rules.mjs",
+    "cards": "node scripts/make-cards.mjs",
+    "qr": "node scripts/make-qr.mjs",
+    "fb:rules": "firebase deploy --only firestore:rules --config firebase/firebase.json --project ky-hung-dat-viet",
+    "fb:indexes": "firebase deploy --only firestore:indexes --config firebase/firebase.json --project ky-hung-dat-viet"
   },
   "dependencies": {
     "firebase": "^12.18.0",

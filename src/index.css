@@ -199,3 +199,9 @@ code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:.9e
 .card-hero.noart{background:var(--surface);border-style:dashed}
 .artfall{aspect-ratio:3/4;display:grid;place-items:center;padding:20px;text-align:center}
 .artfall span{font-size:20px;font-weight:700;color:var(--gold);letter-spacing:.04em}
+
+/* cảnh báo nhân vật hư cấu — phải đập vào mắt, đặt trên mọi nội dung lịch sử */
+.hucau{margin-top:16px;padding:13px 15px;border-radius:var(--radius);
+  background:rgba(178,58,50,.12);border:1px solid var(--son);border-left-width:3px}
+.hucau strong{display:block;color:#E8998F;font-size:14px;letter-spacing:.02em}
+.hucau p{margin-top:6px;font-size:14px;color:var(--ink-2)}

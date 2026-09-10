@@ -347,6 +347,181 @@ export const QUESTIONS = [
       "biệt: năm 938 quân ta chặn hạm đội đang tiến vào xâm lược, còn năm 1288 quân ta tiêu diệt đoàn " +
       "thuyền quân Nguyên đang rút chạy — nên phương án 'đoàn thuyền rút chạy' chỉ đúng với trận 1288.",
   },
+  // ── Phía Nam Hán: N05 Lưu Cung, N06 Tiêu Ích ────────────────────────────────
+  {
+    id: "Q25", cardId: "N05", topic: "bach-dang-938", level: "nhan-biet",
+    stem: "Ai là vua nhà Nam Hán đã sai con đem quân sang đánh nước ta năm 938?",
+    choices: ["Lưu Hoằng Tháo", "Lưu Cung", "Tiêu Ích", "Kiều Công Tiễn"],
+    answer: 1,
+    explain:
+      "Lưu Cung — sử sách còn gọi là Lưu Nghiễm — là vua khai quốc nhà Nam Hán và là " +
+      "người ra quyết định xâm lược. Lưu Hoằng Tháo là con ông, người trực tiếp cầm " +
+      "quân và tử trận ở Bạch Đằng.",
+  },
+  {
+    id: "Q26", cardId: "N05", topic: "bach-dang-938", level: "thong-hieu",
+    stem: "Vì sao Lưu Cung quyết định đem quân sang đánh nước ta ngay sau khi Dương Đình Nghệ bị giết?",
+    choices: [
+      "Vì Ngô Quyền đã đem quân sang đánh Nam Hán trước",
+      "Vì nhà Tống ép Nam Hán phải mở rộng lãnh thổ xuống phía nam",
+      "Vì Dương Đình Nghệ trước đó đã hứa thần phục rồi nuốt lời",
+      "Vì ông cho rằng Tĩnh Hải quân mất người cầm đầu thì không còn tướng giỏi để chống cự",
+    ],
+    answer: 3,
+    explain:
+      "Cái chết của Dương Đình Nghệ và cuộc tranh giành quyền lực sau đó khiến Lưu Cung " +
+      "tin rằng thời cơ đã tới. Ông đánh giá sai một điều: người kế tục Dương Đình Nghệ " +
+      "là Ngô Quyền.",
+  },
+  {
+    id: "Q27", cardId: "N05", topic: "bach-dang-938", level: "van-dung",
+    stem: "Việc vua Nam Hán tự đem quân đóng ở biên giới để tiếp ứng cho con nói lên điều gì về cuộc xâm lược năm 938?",
+    choices: [
+      "Nam Hán dốc sức cho một cuộc xâm lược quy mô lớn, có tính toán và có lực lượng dự phòng",
+      "Đây chỉ là một cuộc cướp phá nhỏ ở vùng biên giới",
+      "Vua Nam Hán sợ con làm phản nên phải đi theo giám sát",
+      "Nam Hán không thật muốn đánh, chỉ đưa quân ra để thị uy",
+    ],
+    answer: 0,
+    explain:
+      "Con vua cầm quân, vua cha đóng ở biên giới sẵn sàng tiếp ứng — đó là cách một " +
+      "triều đình dốc sức cho một chiến dịch lớn, không phải một cuộc cướp phá. Hiểu " +
+      "được quy mô ấy mới thấy hết ý nghĩa của chiến thắng năm 938.",
+  },
+  {
+    id: "Q28", cardId: "N06", topic: "bach-dang-938", level: "nhan-biet",
+    stem: "Tiêu Ích giữ vai trò gì bên cạnh vua Nam Hán Lưu Cung?",
+    choices: [
+      "Chủ soái hạm đội sang đánh nước ta",
+      "Sứ giả được cử sang thương lượng với Ngô Quyền",
+      "Mưu sĩ được vua hỏi kế trước khi xuất quân",
+      "Người trông coi việc đóng thuyền chiến",
+    ],
+    answer: 2,
+    explain:
+      "Tiêu Ích giữ tước Sùng Văn hầu và được Lưu Cung hỏi kế trước cuộc xâm lược. " +
+      "Người cầm quân là Lưu Hoằng Tháo, không phải ông.",
+  },
+  {
+    id: "Q29", cardId: "N06", topic: "bach-dang-938", level: "thong-hieu",
+    stem: "Tiêu Ích khuyên vua Nam Hán nên đánh nước ta theo cách nào?",
+    choices: [
+      "Thăm dò kỹ đường đi, tích đủ lương thảo, tiến quân từ từ và chia nhiều đường thuỷ bộ",
+      "Đánh nhanh thắng nhanh, dùng thuyền lớn tiến thẳng vào cửa sông",
+      "Không nên đánh, mà nên dụ Ngô Quyền quy hàng",
+      "Đem toàn bộ quân theo đường bộ, không dùng đến thuỷ quân",
+    ],
+    answer: 0,
+    explain:
+      "Tiêu Ích khuyên cách đánh chậm mà chắc: nắm rõ địa hình rồi mới tiến, chia " +
+      "nhiều mũi để bao vây. Lưu Cung chọn ngược lại — đưa hạm đội tiến thẳng vào " +
+      "một cửa sông mà quân mình chưa hề thông thuộc.",
+  },
+  {
+    id: "Q30", cardId: "N06", topic: "bach-dang-938", level: "van-dung",
+    stem: "Bài học rút ra từ việc Lưu Cung bỏ ngoài tai lời can của Tiêu Ích là gì?",
+    choices: [
+      "Người cầm quân không nên nghe ý kiến của quan văn",
+      "Đánh chậm bao giờ cũng thắng đánh nhanh",
+      "Mưu sĩ giỏi thì phải tự mình cầm quân mới thuyết phục được vua",
+      "Chủ quan và coi thường đối thủ có thể làm hỏng cả một chiến dịch được chuẩn bị công phu",
+    ],
+    answer: 3,
+    explain:
+      "Nam Hán không thiếu quân, thiếu thuyền hay thiếu người bày mưu. Thứ họ thiếu là " +
+      "sự thận trọng. Lưu ý phương án 'đánh chậm bao giờ cũng thắng' là sai: không có " +
+      "cách đánh nào luôn đúng, điều quyết định là hiểu đúng đối thủ và địa hình.",
+  },
+
+  // ── Hai thẻ nhân vật hư cấu: câu hỏi bám vào phần sử CÓ THẬT và vào kỹ năng
+  //    phân biệt sử liệu với hư cấu. Không hỏi về chi tiết bịa trong tiểu thuyết.
+  {
+    id: "Q31", cardId: "N07", topic: "bach-dang-938", level: "nhan-biet",
+    stem: "Vì sao thẻ Lý Long Câu được ghi rõ là nhân vật hư cấu?",
+    choices: [
+      "Vì ông là người nước ta chứ không phải người Nam Hán",
+      "Vì ông sống ở thế kỷ XIII chứ không phải thế kỷ X",
+      "Vì Đại Việt sử ký toàn thư và SGK đều không chép tên vị tướng này",
+      "Vì tên ông chỉ còn thấy trên bia đá ở vùng Bạch Đằng",
+    ],
+    answer: 2,
+    explain:
+      "Cái tên này chỉ xuất hiện trong tiểu thuyết và dã sử. Sử sách chép về trận Bạch " +
+      "Đằng năm 938 không có vị tướng nào tên như vậy, nên bộ bài ghi rõ để người chơi " +
+      "không nhầm truyện thành sử.",
+  },
+  {
+    id: "Q32", cardId: "N07", topic: "bach-dang-938", level: "thong-hieu",
+    stem: "Vì sao chính sử thường không chép tên các tướng cấp dưới trong một trận đánh?",
+    choices: [
+      "Vì các tướng cấp dưới không trực tiếp tham gia chiến đấu",
+      "Vì chính sử phần nhiều chỉ chép người đứng đầu và những sự kiện lớn",
+      "Vì tên họ đã bị người đời sau cố ý xoá đi",
+      "Vì thời đó nước ta chưa có chữ viết để ghi chép",
+    ],
+    answer: 1,
+    explain:
+      "Sử biên niên ghi rất gọn: người cầm đầu, mốc thời gian, kết cục. Chi tiết về " +
+      "từng người lính, từng viên tướng nhỏ phần lớn không được chép lại — đó là lý do " +
+      "nhiều khoảng trống trong lịch sử sau này được tiểu thuyết lấp vào.",
+  },
+  {
+    id: "Q33", cardId: "N07", topic: "bach-dang-938", level: "van-dung",
+    stem: "Khi đọc một cuốn tiểu thuyết lịch sử về trận Bạch Đằng năm 938, em nên làm gì với những cái tên nhân vật trong đó?",
+    choices: [
+      "Tin hoàn toàn, vì tiểu thuyết lịch sử luôn dựa trên sử liệu",
+      "Bỏ qua cuốn sách, vì tiểu thuyết không có giá trị với người học sử",
+      "Chỉ tin những cái tên là người nước ta, còn tên người phương Bắc thì không",
+      "Đối chiếu với sử liệu để biết tên nào có thật, tên nào do tác giả đặt ra",
+    ],
+    answer: 3,
+    explain:
+      "Tiểu thuyết lịch sử rất đáng đọc, nhưng nó có quyền hư cấu. Việc của người học " +
+      "sử là biết ranh giới đó nằm ở đâu — chứ không phải tin tất cả, cũng không phải " +
+      "gạt bỏ tất cả.",
+  },
+  {
+    id: "Q34", cardId: "N08", topic: "bach-dang-938", level: "nhan-biet",
+    stem: "Điều gì xảy ra với hạm đội Nam Hán khi nước triều rút ở Bạch Đằng năm 938?",
+    choices: [
+      "Bị dồn vào bãi cọc, thuyền vỡ và đắm, quân chết quá nửa",
+      "Rút được an toàn ra biển rồi quay về nước",
+      "Quay lại đánh chiếm thành Đại La",
+      "Được cánh quân của vua cha từ biên giới cứu kịp",
+    ],
+    answer: 0,
+    explain:
+      "Triều rút là thời điểm quyết định: bãi cọc nhô lên, thuyền lớn của địch bị đâm " +
+      "thủng và mắc cạn. Chủ soái Lưu Hoằng Tháo tử trận ngay trong trận này.",
+  },
+  {
+    id: "Q35", cardId: "N08", topic: "bach-dang-938", level: "thong-hieu",
+    stem: "Vì sao lớp thuyền đi sau của Nam Hán cũng không thoát được khỏi bãi cọc?",
+    choices: [
+      "Vì họ được lệnh ở lại chiến đấu đến người cuối cùng",
+      "Vì quân ta đã giăng xích sắt chặn sẵn đường ra biển",
+      "Vì nước triều rút xiết đẩy cả đoàn thuyền dồn vào bãi cọc, quay ra không kịp",
+      "Vì thuyền của họ nhẹ hơn nên bị sóng đánh dạt vào bờ",
+    ],
+    answer: 2,
+    explain:
+      "Cả đoàn thuyền đã ở phía trong bãi cọc khi triều bắt đầu rút. Dòng nước rút " +
+      "mạnh biến chính con sông thành thứ đẩy họ vào bẫy — không ai kịp trở đầu thuyền.",
+  },
+  {
+    id: "Q36", cardId: "N08", topic: "bach-dang-938", level: "van-dung",
+    stem: "Thẻ Lý Long Câu và thẻ Tô Phán đều ghi rõ là nhân vật hư cấu. Vì sao một bộ bài dạy lịch sử lại cần ghi như vậy?",
+    choices: [
+      "Để người chơi biết hai thẻ này yếu hơn các thẻ khác",
+      "Để người học phân biệt được đâu là sử liệu, đâu là hư cấu — đó chính là một kỹ năng của người học sử",
+      "Vì luật bản quyền bắt buộc phải ghi chú như vậy",
+      "Vì hai thẻ đó sẽ bị loại khỏi trò chơi ở các bản sau",
+    ],
+    answer: 1,
+    explain:
+      "Một bộ bài có thể vừa hay vừa trung thực. Ghi rõ chỗ nào là hư cấu không làm " +
+      "trò chơi kém đi, mà làm người chơi tin được phần còn lại.",
+  },
 ];
 
 export const QUESTION_BY_ID = Object.fromEntries(QUESTIONS.map((q) => [q.id, q]));

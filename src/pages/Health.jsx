@@ -27,6 +27,7 @@ export default function Health() {
   const noQuestions = CARDS.filter((c) => !QUESTIONS.some((q) => q.cardId === c.id));
   const noMechanics = CARDS.filter((c) => (c.skills || []).length === 0);
   const artTam = CARDS.filter((c) => c.artTam);
+  const hucau = CARDS.filter((c) => c.hucau);
 
   const byLevel = {};
   for (const l of Object.keys(LEVEL_LABEL)) byLevel[l] = QUESTIONS.filter((q) => q.level === l).length;
@@ -99,6 +100,13 @@ export default function Health() {
             chép <em>nguyên văn</em> luật in trên thẻ vào.
           </li>
         )}
+        {hucau.length > 0 && (
+          <li className="bad">
+            Nhân vật hư cấu: <strong>{hucau.map((c) => c.id).join(", ")}</strong>. Trang
+            thẻ đã ghi rõ, nhưng <strong>thẻ in cũng phải ghi</strong> — nếu không, người
+            cầm thẻ trên tay sẽ tưởng là nhân vật lịch sử có thật.
+          </li>
+        )}
         {artTam.length > 0 && (
           <li>
             Còn dùng ảnh tạm (tranh khắc gỗ Oger):{" "}
@@ -112,7 +120,7 @@ export default function Health() {
             kiểm hộ được việc này.
           </li>
         )}
-        {noQuestions.length === 0 && noMechanics.length === 0 && artTam.length === 0 && notes.length === 0 && (
+        {noQuestions.length === 0 && noMechanics.length === 0 && artTam.length === 0 && hucau.length === 0 && notes.length === 0 && (
           <li>Không còn việc nào máy biết được.</li>
         )}
       </ul>

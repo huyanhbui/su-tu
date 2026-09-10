@@ -90,6 +90,16 @@ for (const q of QUESTIONS) {
   if (stems.has(key)) err(`${at}: trùng đề với ${stems.get(key)}`);
   stems.set(key, q.id);
 
+  // Thẻ hư cấu: câu hỏi không được hỏi về chi tiết bịa. Nếu đề bài nhắc tên nhân
+  // vật hư cấu như một sự kiện đã xảy ra thì phải xem lại.
+  const card = CARDS.find((c) => c.id === q.cardId);
+  if (card?.hucau) {
+    const asks = new RegExp(`${card.name}\\s+(đã|từng|chỉ huy|dẫn|đem|bị|tử trận)`, "i");
+    if (asks.test(q.stem)) {
+      warn(`${at}: hỏi về hành động của "${card.name}" như thể có thật, nhưng đây là nhân vật hư cấu.`);
+    }
+  }
+
   // Cái bẫy Bạch Đằng: ba trận khác nhau trên cùng một dòng sông (938 / 981 / 1288).
   // Chỉ kêu khi câu hỏi thật sự mập mờ — nghĩa là không có năm VÀ cũng không có
   // tên riêng nào ghim câu hỏi vào một trận cụ thể. Một bộ kiểm tra lúc nào cũng
@@ -127,6 +137,12 @@ for (const l of LEVELS) {
   const n = perLevel[l];
   const pct = QUESTIONS.length ? Math.round((n / QUESTIONS.length) * 100) : 0;
   console.log(`  ${pad(LEVEL_LABEL[l], 12)} ${pad(n, 4)} ${"█".repeat(Math.round(pct / 4))} ${pct}%`);
+}
+
+const hucau = CARDS.filter((c) => c.hucau);
+if (hucau.length) {
+  console.log("\nThẻ NHÂN VẬT HƯ CẤU — phải ghi rõ trên thẻ in, không chỉ trên web:");
+  for (const c of hucau) console.log(`  ${pad(c.id, 5)} ${c.name}`);
 }
 
 const tam = CARDS.filter((c) => c.artTam);

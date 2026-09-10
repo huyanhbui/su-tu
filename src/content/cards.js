@@ -2,6 +2,11 @@
 // Mọi thẻ PHẢI có `battle` và `source`. Bạch Đằng có ba trận (938 / 981 / 1288)
 // nên không bao giờ được ghi "Bạch Đằng" mà không nói rõ trận nào.
 //
+// `hucau` là lời cảnh báo, không phải trang trí: thẻ nào có trường này là nhân
+// vật KHÔNG có trong chính sử. Trang thẻ hiện nó ra thành một khung riêng, ngay
+// trên phần lịch sử. Sản phẩm này dạy lịch sử; bịa một cái tên rồi để học sinh
+// tưởng là thật thì hỏng đúng thứ mình đang bán.
+//
 // `artTam: true` nghĩa là thẻ đó đang mượn tranh khắc gỗ Henri Oger (1908-09,
 // thuộc phạm vi công cộng) làm ảnh tạm, chưa có tranh chính thức của nhóm.
 // `npm run check` và trang /health đều liệt kê ra để không ai quên trước lúc in.
@@ -20,8 +25,7 @@ export const CARDS = [
     name: "Ngô Quyền",
     battle: "bach-dang-938",
     years: "897–944",
-    art: "/art/n01-ngo-quyen.png",
-    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
+    art: "/art/n01-ngo-quyen.jpg",
     menh: "thuy",
     sinhLuc: 5,
     roles: [
@@ -190,6 +194,115 @@ export const CARDS = [
       { xp: 60, label: "Ý nghĩa", unlock: "Vì sao gọi là trận quyết chiến chiến lược" },
     ],
     questions: ["Q08"],
+  },
+  // ───────────────────────────────────────────────────────────────────────────
+  // PHÍA NAM HÁN. Bốn thẻ dưới đây dùng tranh nhóm gửi ngày 07/9.
+  //
+  // Hai thẻ N05, N06 là người CÓ THẬT, chép trong Đại Việt sử ký toàn thư.
+  // Hai thẻ N07, N08 là nhân vật HƯ CẤU — xem trường `hucau`. Không trộn lẫn
+  // hai loại này với nhau, và không bao giờ viết chuyện hư cấu vào `facts`.
+  // ───────────────────────────────────────────────────────────────────────────
+  {
+    id: "N05",
+    type: "nhan-vat",
+    name: "Lưu Cung",
+    battle: "bach-dang-938",
+    years: "889–942",
+    art: "/art/n05-luu-cung.jpg",
+    menh: null, sinhLuc: null,
+    roles: [
+      "Vua khai quốc nhà Nam Hán",
+      "Cha của Lưu Hoằng Tháo",
+      "Người quyết định cuộc xâm lược năm 938",
+    ],
+    skills: [],
+    facts: [
+      "Lưu Cung — sử sách còn gọi là Lưu Nghiễm — là vua khai quốc nhà Nam Hán, một trong mười nước thời Ngũ đại Thập quốc bên Trung Quốc.",
+      "Nghe tin Dương Đình Nghệ bị Kiều Công Tiễn giết, ông cho rằng Tĩnh Hải quân không còn tướng giỏi, liền phong con là Lưu Hoằng Tháo làm Bình Hải tướng quân, Giao Chỉ vương, đem thuỷ quân sang đánh nước ta.",
+      "Ông tự đem quân đóng ở biên giới để tiếp ứng. Khi hay tin con tử trận và hạm đội tan vỡ, ông phải thu quân về; từ đó Nam Hán không đem quân sang nước ta lần nào nữa.",
+    ],
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
+    levels: [
+      { xp: 0, label: "Hoàng đế", unlock: "3 sự kiện cơ bản" },
+      { xp: 60, label: "Kẻ bại trận", unlock: "Vì sao một quyết định sai kéo đổ cả chiến dịch" },
+    ],
+  },
+  {
+    id: "N06",
+    type: "nhan-vat",
+    name: "Tiêu Ích",
+    battle: "bach-dang-938",
+    years: "—",
+    art: "/art/n06-tieu-ich.jpg",
+    menh: null, sinhLuc: null,
+    roles: ["Sùng Văn hầu nhà Nam Hán", "Mưu sĩ can gián vua Lưu Cung"],
+    skills: [],
+    facts: [
+      "Tiêu Ích giữ tước Sùng Văn hầu, được vua Nam Hán Lưu Cung hỏi kế trước khi đem quân sang đánh nước ta năm 938.",
+      "Ông khuyên nên thăm dò kỹ đường đi, tích đủ lương thảo, tiến quân từ từ và chia nhiều đường thuỷ bộ — cách đánh chậm mà chắc.",
+      "Lưu Cung nóng vội, coi thường Ngô Quyền nên không nghe. Kết cục đúng như điều Tiêu Ích lo ngại: hạm đội Nam Hán thua tan tác ở Bạch Đằng.",
+    ],
+    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
+    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
+    levels: [
+      { xp: 0, label: "Mưu sĩ", unlock: "3 sự kiện cơ bản" },
+      { xp: 60, label: "Lời can bỏ ngoài tai", unlock: "Vì sao lời khuyên đúng vẫn có thể không được nghe" },
+    ],
+  },
+  {
+    id: "N07",
+    type: "nhan-vat",
+    name: "Lý Long Câu",
+    battle: "bach-dang-938",
+    years: "—",
+    art: "/art/n07-ly-long-cau.jpg",
+    menh: null, sinhLuc: null,
+    roles: ["Tướng tiên phong hạm đội Nam Hán"],
+    skills: [],
+    hucau:
+      "Chính sử KHÔNG chép tên vị tướng này. Lý Long Câu chỉ xuất hiện trong " +
+      "tiểu thuyết và dã sử về trận Bạch Đằng, không có trong Đại Việt sử ký " +
+      "toàn thư cũng như trong SGK. Trong bộ bài, thẻ này đại diện cho đội " +
+      "thuyền tiên phong của Nam Hán. Phần dưới đây là những điều sử sách CÓ chép.",
+    facts: [
+      "Hạm đội Nam Hán tiến vào cửa Bạch Đằng theo đội hình có thuyền đi trước dò đường, thuyền lớn theo sau — và chính lớp đi đầu là lớp sa vào bãi cọc trước tiên.",
+      "Sử sách chép khá kỹ về chủ soái Lưu Hoằng Tháo nhưng không ghi tên các tướng dưới quyền ông. Đó là chuyện thường: chính sử phần nhiều chỉ chép người đứng đầu.",
+      "Vì vậy khi gặp một cái tên trong truyện hay phim về trận Bạch Đằng, cần hỏi: tên này lấy từ sử, hay do người viết đặt ra?",
+    ],
+    source: "Bối cảnh biên soạn theo chương trình Lịch sử 10 (GDPT 2018); nhân vật là hư cấu",
+    reviewNote: "Nhân vật hư cấu. Nhóm phải quyết định giữ hay bỏ, và nếu giữ thì phải ghi rõ là hư cấu trên thẻ in.",
+    levels: [
+      { xp: 0, label: "Tướng tiên phong", unlock: "3 sự kiện cơ bản" },
+      { xp: 60, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
+    ],
+  },
+  {
+    id: "N08",
+    type: "nhan-vat",
+    name: "Tô Phán",
+    battle: "bach-dang-938",
+    years: "—",
+    art: "/art/n08-to-phan.jpg",
+    menh: null, sinhLuc: null,
+    roles: ["Tướng chỉ huy lớp thuyền tiếp ứng Nam Hán"],
+    skills: [],
+    hucau:
+      "Chính sử KHÔNG chép tên vị tướng này. Tô Phán chỉ xuất hiện trong tiểu " +
+      "thuyết và dã sử về trận Bạch Đằng, không có trong Đại Việt sử ký toàn thư " +
+      "cũng như trong SGK. Trong bộ bài, thẻ này đại diện cho lớp thuyền tiếp ứng " +
+      "đi sau đội tiên phong. Phần dưới đây là những điều sử sách CÓ chép.",
+    facts: [
+      "Hạm đội Nam Hán vào cửa Bạch Đằng lúc triều đang lên. Khi triều rút, cả đoàn thuyền bị dồn vào bãi cọc; quân Nam Hán chết quá nửa và chủ soái Lưu Hoằng Tháo tử trận.",
+      "Lớp thuyền đi sau cũng không thoát: nước rút xiết đẩy chúng vào bãi cọc, quay ra không kịp.",
+      "Sử sách không chép tên một vị tướng nào đi cùng Lưu Hoằng Tháo. Biết rõ đâu là sử, đâu là truyện chính là một kỹ năng của người học sử.",
+    ],
+    source: "Bối cảnh biên soạn theo chương trình Lịch sử 10 (GDPT 2018); nhân vật là hư cấu",
+    reviewNote: "Nhân vật hư cấu. Nhóm phải quyết định giữ hay bỏ, và nếu giữ thì phải ghi rõ là hư cấu trên thẻ in.",
+    levels: [
+      { xp: 0, label: "Tướng tiếp ứng", unlock: "3 sự kiện cơ bản" },
+      { xp: 60, label: "Sử và truyện", unlock: "Cách phân biệt sử liệu với hư cấu" },
+    ],
   },
 ];
 

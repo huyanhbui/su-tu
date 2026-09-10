@@ -5,7 +5,8 @@
 // Xuất ra:
 //   qr/svg/<ID>.svg   — VECTOR, đây là file nên đưa cho người thiết kế
 //   qr/png/<ID>.png   — 1200px, dùng khi phần mềm không nhận SVG
-//   qr/proof.html     — bảng đối chiếu: mã nào ứng với link nào
+//   html/qr-proof.html— bảng đối chiếu: mã nào ứng với link nào
+//                       (mọi file HTML sinh ra đều nằm chung thư mục html/)
 //   qr/HUONG-DAN-IN.md— quy tắc in để mã quét được
 import { writeFile, mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -68,7 +69,9 @@ ${rows.map((r) => `<div class="c">
   <div class="m">${r.modules}×${r.modules} ô · in tối thiểu ${minMm(r.modules)}mm</div>
 </div>`).join("")}
 </div></body></html>`;
-await writeFile(path.join(dir, "proof.html"), proof, "utf8");
+const htmlDir = path.join(root, "html");
+await mkdir(htmlDir, { recursive: true });
+await writeFile(path.join(htmlDir, "qr-proof.html"), proof, "utf8");
 
 const guide = `# Hướng dẫn in mã QR
 
@@ -97,7 +100,7 @@ ${rows.map((r) => `| \`${r.id}\` | ${r.name} | \`${r.url}\` | ${r.modules}×${r.
 
 ## Trước khi gửi đi in
 
-- [ ] Mở \`qr/proof.html\`, **quét thử từng mã bằng điện thoại thật**
+- [ ] Mở \`html/qr-proof.html\`, **quét thử từng mã bằng điện thoại thật**
 - [ ] Link hiện ra khớp đúng với dòng chữ dưới mỗi mã
 - [ ] Trang web ở tên miền đó đã chạy được (không phải trang lỗi)
 - [ ] In thử **một tấm** trên đúng loại giấy sẽ dùng, quét lại lần nữa
@@ -108,5 +111,5 @@ Xong hết mới in cả lô.
 await writeFile(path.join(dir, "HUONG-DAN-IN.md"), guide, "utf8");
 
 console.log(`✓ ${rows.length} mã QR → qr/svg, qr/png`);
-console.log(`✓ qr/proof.html · qr/HUONG-DAN-IN.md`);
+console.log(`✓ html/qr-proof.html · qr/HUONG-DAN-IN.md`);
 rows.forEach((r) => console.log(`   ${r.id}  ${r.modules}×${r.modules}  ≥${minMm(r.modules)}mm  ${r.url}`));

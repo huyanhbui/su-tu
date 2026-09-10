@@ -103,7 +103,7 @@ ${isPlaceholder ? `<div class="warn"><b>CHƯA IN ĐƯỢC.</b> Mã QR đang tr�
 <div class="sheet">${cards.join("")}</div>
 </body></html>`;
 
-await mkdir(path.join(root, "cards"), { recursive: true });
-await writeFile(path.join(root, "cards", "print.html"), html, "utf8");
-console.log(`✓ cards/print.html — ${CARDS.length} thẻ, QR trỏ tới ${BASE}/c/<ID>`);
+await mkdir(path.join(root, "html"), { recursive: true });
+await writeFile(path.join(root, "html", "print.html"), html, "utf8");
+console.log(`✓ html/print.html — ${CARDS.length} thẻ, QR trỏ tới ${BASE}/c/<ID>`);
 if (isPlaceholder) console.log("⚠  TÊN MIỀN GIẢ — chưa được mang đi in.");

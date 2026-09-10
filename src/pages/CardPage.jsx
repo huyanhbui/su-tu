@@ -98,6 +98,13 @@ export default function CardPage() {
         <ul className="roles">{card.roles.map((r) => <li key={r}>{r}</li>)}</ul>
       </div>
 
+      {card.hucau && (
+        <div className="hucau">
+          <strong>Nhân vật hư cấu — không có trong chính sử</strong>
+          <p>{card.hucau}</p>
+        </div>
+      )}
+
       <section className="lvbox">
         <div className="lvhead">
           <span className="lvnow">{lv.current.label}</span>

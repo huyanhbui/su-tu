@@ -30,6 +30,10 @@ npm run dev          # http://localhost:5173
 | `npm run e2e:offline` | ngắt mạng thật rồi thử lại — cần chạy `preview` trước |
 | `npm run e2e:rules` | cố tình vi phạm luật bảo mật để xem có bị chặn thật không |
 | `npm run lint` | soát code |
+| `npm run cards` | dựng bản in thử A4 → `html/print.html` |
+| `npm run qr` | sinh mã QR cho thợ in → `qr/` và `html/qr-proof.html` |
+| `npm run fb:rules` | triển khai luật bảo mật Firestore |
+| `npm run fb:indexes` | triển khai index Firestore |
 
 `npm run e2e https://ten-mien-that.xyz` chạy được cả với bản đã lên mạng. **Chạy
 lệnh này trước mỗi buổi demo, trên đúng đường mạng sẽ dùng.**
@@ -65,14 +69,41 @@ dữ liệu học sinh làm bài. Câu nào cả lớp đúng dưới 50% thì t
 ## Cấu trúc
 
 ```
+README.md                 file này
+index.html                TRANG HTML CHÍNH — cửa vào của ứng dụng
+package.json              npm bắt buộc phải nằm ở thư mục gốc
+vite.config.js            cấu hình đóng gói
+
+config/                   cấu hình lặt vặt, gom một chỗ
+  .oxlintrc.json          luật soát code
+  vercel.json             cấu hình triển khai — ĐANG TẠM DỪNG, xem ghi chú dưới
+
+firebase/                 mọi thứ thuộc Firebase, tách riêng
+  firebase.json
+  firestore.rules         luật bảo mật (ai được đọc, ai được ghi)
+  firestore.indexes.json  index cho truy vấn bảng xếp hạng
+
 src/
-  content/cards.js       nội dung thẻ — biên soạn tay, KHÔNG sinh tự động
-  content/questions.js   ngân hàng câu hỏi, mỗi câu gắn một mức nhận thức
-  lib/store.js           LỚP LƯU TRỮ (Firestore)  ─┐ cùng một bộ chữ ký hàm
-  lib/store.local.js     LỚP LƯU TRỮ (localStorage)─┘
-  lib/firebase.js        cấu hình Firebase + đăng nhập ẩn danh
-  pages/                 mỗi trang một file
+  content/cards.js        nội dung thẻ — biên soạn tay, KHÔNG sinh tự động
+  content/questions.js    ngân hàng câu hỏi, mỗi câu gắn một mức nhận thức
+  lib/store.js            LỚP LƯU TRỮ (Firestore)  ─┐ cùng một bộ chữ ký hàm
+  lib/store.local.js      LỚP LƯU TRỮ (localStorage)─┘
+  lib/firebase.js         kết nối Firebase + đăng nhập ẩn danh
+  pages/                  mỗi trang một file
+
+public/art/               tranh thẻ đã nén cho web (bản in dùng file gốc)
+scripts/                  công cụ dòng lệnh: soát nội dung, kiểm thử, sinh QR
+html/                     MỌI FILE HTML SINH RA đều vào đây (không lên git)
+qr/                       mã QR sinh ra cho thợ in (không lên git)
+art-source/               tranh gốc độ phân giải đầy đủ (không lên git)
 ```
+
+`package.json`, `package-lock.json`, `index.html` và `vite.config.js` **bắt buộc**
+nằm ở thư mục gốc — npm và Vite tìm chúng ở đó, đổi chỗ là hỏng. Những file cấu
+hình còn lại đã gom hết vào `config/` và `firebase/`.
+
+`config/vercel.json` hiện không có tác dụng: Vercel chỉ đọc file này khi nó nằm ở
+thư mục gốc. Khi nào quay lại việc triển khai thì chuyển nó ra ngoài.
 
 ### Lớp lưu trữ, và vì sao nó tách riêng
 
@@ -145,10 +176,53 @@ rằng cả bảy đều bị **từ chối**. Đã chạy, cả bảy đều `p
 
 ---
 
+## Bộ thẻ
+
+Hiện có **10 thẻ**, tất cả thuộc trận Bạch Đằng năm 938.
+
+| Mã | Tên | Ghi chú |
+|---|---|---|
+| N01 | Ngô Quyền | |
+| N02 | Dương Đình Nghệ | còn dùng ảnh tạm |
+| N03 | Kiều Công Tiễn | |
+| N04 | Lưu Hoằng Tháo | |
+| N05 | Lưu Cung | vua Nam Hán, sử sách còn gọi là Lưu Nghiễm |
+| N06 | Tiêu Ích | mưu sĩ can gián vua Nam Hán |
+| N07 | Lý Long Câu | **nhân vật hư cấu** |
+| N08 | Tô Phán | **nhân vật hư cấu** |
+| D01 | Sông Bạch Đằng | còn dùng ảnh tạm |
+| S01 | Trận Bạch Đằng năm 938 | |
+
+### Hai thẻ hư cấu — đọc kỹ chỗ này
+
+**Lý Long Câu** và **Tô Phán** không có trong Đại Việt sử ký toàn thư, không có
+trong SGK, không có trong bài viết bách khoa về trận đánh này. Hai cái tên đó chỉ
+xuất hiện trong tiểu thuyết và dã sử.
+
+Bộ bài vẫn giữ hai thẻ, nhưng **ghi rõ là hư cấu**: trong `cards.js` chúng có
+trường `hucau`, và trang thẻ hiện một khung cảnh báo màu đỏ ngay trên phần lịch
+sử. Câu hỏi của hai thẻ này không hỏi về chi tiết bịa — chúng hỏi về phần sử CÓ
+THẬT (đội hình hạm đội, quy luật thuỷ triều) và về kỹ năng phân biệt sử liệu với
+hư cấu.
+
+Đây không phải chỗ vá víu cho qua. Một sản phẩm dạy sử mà để học sinh tưởng nhân
+vật tiểu thuyết là người thật thì hỏng đúng thứ nó đang bán. Nói rõ ra thì ngược
+lại: nó dạy thêm được một điều mà phần lớn ứng dụng lịch sử không dạy.
+
+**Nếu in thẻ thì bản in cũng phải ghi.** Người cầm tấm bìa trên tay không đọc
+được `cards.js`.
+
+### Tranh
+
+Tranh chính của bộ bài **do AI tạo sinh**. Chi tiết và những điều cần biết trước
+khi trả lời ban giám khảo nằm ở `public/art/NGUON.txt` — đọc trước buổi thi.
+
+---
+
 ## In thẻ và mã QR
 
 ```bash
-node scripts/make-qr.mjs --base https://ten-mien-that.xyz
+npm run qr -- --base https://ten-mien-that.xyz
 ```
 
 Script **từ chối chạy** nếu chưa đưa tên miền thật. Mã QR in ra là vĩnh viễn; in

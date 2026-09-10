@@ -4,4 +4,4 @@ dist
 .env.local
 art-source
 qr
-cards/print.html
+html
