@@ -256,34 +256,6 @@ try {
   check("Dashboard nhận được dữ liệu của lớp", t.rows > 0 && !/^0 *Lượt/.test(t.text), `${t.rows} dòng câu hỏi`);
   console.log("\n--- trích màn hình dashboard ---\n" + t.text.split("\n").slice(0, 14).join("\n"));
 
-  // ── Đổi người chơi ───────────────────────────────────────────────────────
-  // Danh tính gắn với thiết bị, nên đổi biệt danh KHÔNG xoá tiến trình — đó là
-  // chủ ý. Vì vậy phải có đường làm lại từ đầu cho máy dùng chung, và đường đó
-  // phải thật sự xoá sạch chứ không chỉ đổi cái nhãn.
-  console.log("\n── Đổi người chơi ──");
-  await goto(`${BASE}/c/N01`);
-  const trcReset = await evalJs(`(async () => {
-    const m = await import("/src/lib/store.js"); const p = await m.getPlayer();
-    return { uid: p.uid, xp: p.xp, cau: Object.keys(p.answers || {}).length };
-  })()`, S).catch(() => null);
-
-  if (!trcReset) {
-    console.log("  BỎ QUA  — chỉ chạy được với bản dev (cần nạp module nguồn)");
-  } else {
-    check("Có tiến trình trước khi đổi", trcReset.xp > 0 || trcReset.cau > 0,
-      `${trcReset.xp} XP, ${trcReset.cau} câu`);
-    const sauReset = await evalJs(`(async () => {
-      const m = await import("/src/lib/store.js"); await m.resetIdentity();
-      const p = await m.getPlayer();
-      return { uid: p.uid, xp: p.xp, cau: Object.keys(p.answers || {}).length,
-               nickname: p.nickname, classCode: p.classCode };
-    })()`, S);
-    check("Đổi người chơi cấp mã thiết bị mới", trcReset.uid !== sauReset.uid);
-    check("Đổi người chơi xoá sạch XP và câu đã trả lời",
-      sauReset.xp === 0 && sauReset.cau === 0, `${sauReset.xp} XP, ${sauReset.cau} câu`);
-    check("Đổi người chơi xoá cả biệt danh và mã lớp",
-      !sauReset.nickname && !sauReset.classCode);
-  }
 
 } catch (e) {
   console.error("\nLỖI KHI CHẠY:", e.message);

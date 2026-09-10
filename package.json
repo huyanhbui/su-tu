@@ -10,6 +10,7 @@
     "lint": "oxlint -c config/.oxlintrc.json",
     "check": "node scripts/check-content.mjs",
     "e2e": "node scripts/e2e.mjs",
+    "e2e:identity": "node scripts/e2e-identity.mjs",
     "e2e:offline": "node scripts/e2e-offline.mjs",
     "e2e:rules": "node scripts/e2e-rules.mjs",
     "cards": "node scripts/make-cards.mjs",

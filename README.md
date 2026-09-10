@@ -27,6 +27,7 @@ npm run dev          # http://localhost:5173
 | `npm run build` | đóng gói vào `dist/` |
 | `npm run check` | soát nội dung thẻ và câu hỏi trước khi in |
 | `npm run e2e` | chạy thử luồng thật trên trình duyệt thật |
+| `npm run e2e:identity` | đổi tên giữ điểm, đổi lớp làm lại từ đầu |
 | `npm run e2e:offline` | ngắt mạng thật rồi thử lại — cần `npm run build && npm run preview` trước |
 | `npm run e2e:rules` | cố tình vi phạm luật bảo mật để xem có bị chặn thật không |
 | `npm run lint` | soát code |
@@ -181,6 +182,35 @@ rằng cả bảy đều bị **từ chối**. Đã chạy, cả bảy đều `p
 | Xoá câu đã trả lời | từ chối |
 | Mạo danh người khác khi ghi câu trả lời | từ chối |
 | Ghi vào collection lạ | từ chối |
+
+---
+
+## Danh tính học sinh
+
+Không có tài khoản, không có mật khẩu. Danh tính là một **mã thiết bị ẩn danh** do
+Firebase cấp — không gắn với họ tên, email hay số điện thoại nào.
+
+Hệ quả cần nắm, vì nó quyết định cách chấm điểm:
+
+**Đổi biệt danh = đổi nhãn hiển thị.** XP giữ nguyên. Một điện thoại là một học
+sinh; gõ tên khác không biến em thành người khác.
+
+**Đổi mã lớp = một học sinh mới.** Cấp mã thiết bị mới, XP về 0, và ứng dụng
+**hỏi lại** trước khi làm, có nêu rõ đang ở lớp nào và sắp mất bao nhiêu XP.
+
+Vì sao đổi lớp lại phải làm lại từ đầu? Bản ghi câu trả lời chỉ được **tạo**, không
+được sửa — đó là cách chặn gian lận điểm. Nên nếu để bản ghi người chơi đi theo em
+sang lớp mới trong khi các bản ghi câu trả lời ở lại lớp cũ, hai lớp sẽ vênh nhau
+vĩnh viễn: giáo viên lớp mới thấy một em có sẵn XP mà bảng theo dõi trống trơn, còn
+lớp cũ mất em khỏi bảng xếp hạng dù vẫn còn bài làm của em.
+
+Cách làm hiện tại giữ mọi thứ khớp nhau: **bản ghi cũ ở lại nguyên vẹn trong lớp
+cũ**, lớp mới nhận một học sinh mới từ 0 điểm. Không lớp nào mất gì.
+
+Ngoài ra, cuối trang `/me` có nút **Đổi người chơi** để xoá sạch và bắt đầu lại —
+cần cho máy dùng chung lúc demo, nếu không người sau sẽ thừa hưởng điểm người trước.
+
+`npm run e2e:identity` kiểm đúng những quy tắc trên.
 
 ---
 
