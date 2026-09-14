@@ -9,6 +9,7 @@
 // Đây là lớp bảo hiểm cho ngày thi.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as local from "./store.local";
+import { normalizeClass } from "./nickname";
 
 let mode = "loading";     // "firestore" | "local"
 let fs = null;            // các hàm Firestore, nạp động
@@ -122,7 +123,7 @@ export async function joinClass(nickname, classCode) {
   await ready;
   if (mode === "local") return local.joinClass(nickname, classCode);
   cache.nickname = nickname.trim().slice(0, 16);
-  cache.classCode = classCode.trim().toUpperCase().slice(0, 8);
+  cache.classCode = normalizeClass(classCode);
   await fs.setDoc(
     fs.doc(fs.db, "players", uid),
     { nickname: cache.nickname, classCode: cache.classCode, xp: cache.xp || 0,

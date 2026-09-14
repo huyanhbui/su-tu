@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { QUESTIONS, LEVEL_LABEL } from "../content/questions";
 import { CARD_BY_ID } from "../content/cards";
 import { subscribeClassAnswers, backendMode, onBackendReady } from "../lib/store";
+import { normalizeClass } from "../lib/nickname";
 
 // Teacher Dashboard — màn hình chứng minh dòng doanh thu B2B của dự án.
 // Điểm bán hàng không phải là "xem điểm số", mà là: giáo viên thấy lớp mình
@@ -17,7 +18,7 @@ export default function Teacher() {
       <div className="page">
         <h1>Teacher Dashboard</h1>
         <p className="muted">Nhập mã lớp để xem kết quả. Mã lớp do giáo viên tự đặt và đọc cho học sinh.</p>
-        <form className="form" onSubmit={(e) => { e.preventDefault(); if (code.trim()) nav(`/t/${code.trim().toUpperCase()}`); }}>
+        <form className="form" onSubmit={(e) => { e.preventDefault(); if (code.trim()) nav(`/t/${normalizeClass(code)}`); }}>
           <label>Mã lớp
             <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="vd: 10A1"
                    maxLength={8} style={{ textTransform: "uppercase" }} />

@@ -13,6 +13,8 @@
 // chữ ký của bản Firestore, để việc thay thế là thay 1-đổi-1.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { normalizeClass } from "./nickname";
+
 const KEY = "sutu.v1";
 
 // Danh tính ẩn danh: một chuỗi ngẫu nhiên gắn với thiết bị.
@@ -68,7 +70,7 @@ export async function getPlayer() {
 export async function joinClass(nickname, classCode) {
   const s = (await getPlayer());
   s.nickname = nickname.trim().slice(0, 16);
-  s.classCode = classCode.trim().toUpperCase().slice(0, 8);
+  s.classCode = normalizeClass(classCode);
   write(s);
   return s;
 }
@@ -87,9 +89,7 @@ export async function recordAnswer({ qid, cardId, level, correct, xp, picked }) 
   return gained;
 }
 
-export function subscribePlayer(fn) {
-  return subscribe(fn);
-}
+export const subscribePlayer = subscribe;
 
 /** Xoá sạch tiến trình trên máy này và cấp một mã thiết bị mới. */
 export async function resetIdentity() {
@@ -117,5 +117,3 @@ export function subscribeClassAnswers(classCode, fn) {
     );
   });
 }
-
-export const BACKEND = "localStorage";

@@ -151,7 +151,27 @@ export default function CardPage() {
           <p className="muted sm">Thẻ này chưa có câu hỏi.</p>
         ) : !joined ? (
           <>
-            <JoinGate />
+            {/* Cửa vào lớp, đặt NGAY TRÊN TRANG THẺ BÀI.
+
+                Lý do: mã QR mới là cửa trước của sản phẩm, không phải trang chủ. Học sinh cầm
+                thẻ lên và quét — các em không đi qua trang "Vào lớp" bao giờ. Trước đây ai quét
+                thẳng vào thẻ sẽ trả lời câu hỏi với mã lớp rỗng, nên điểm không bao giờ hiện lên
+                bảng xếp hạng hay bảng theo dõi của giáo viên. Câu trả lời rơi vào hư không.
+
+                Nguyên tắc: phần lịch sử KHÔNG bị chặn — ai quét cũng đọc được ngay, kể cả ban
+                giám khảo. Chỉ phần ghi điểm mới cần biết em là ai và ở lớp nào. */}
+            <div className="gate">
+              <h3>Vào lớp để bắt đầu tính điểm</h3>
+              <p className="muted sm">
+                Phần lịch sử phía trên ai cũng đọc được. Nhập biệt danh và mã lớp thì câu trả
+                lời mới được tính XP và hiện lên bảng xếp hạng của lớp.
+              </p>
+              <JoinGate player={player} />
+              <p className="muted sm">
+                Dùng biệt danh, <strong>không dùng tên thật</strong>. Ứng dụng không thu thập
+                họ tên, email hay hình ảnh.
+              </p>
+            </div>
             <p className="muted sm">
               {questions.length} câu hỏi đang chờ — trả lời đúng để mở thêm phần lịch sử của thẻ này.
             </p>

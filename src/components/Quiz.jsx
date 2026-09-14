@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LEVEL_LABEL, XP_PER_CORRECT } from "../content/questions";
 
-export default function Quiz({ question, answered, onAnswer, locked }) {
+export default function Quiz({ question, answered, onAnswer }) {
   const [justPicked, setJustPicked] = useState(null);
 
   // `answered` là câu trả lời đã lưu từ lần trước, và nó thường về SAU lần vẽ đầu
@@ -16,7 +16,7 @@ export default function Quiz({ question, answered, onAnswer, locked }) {
   const done = picked != null || !!answered;
 
   function choose(i) {
-    if (done || locked) return;
+    if (done) return;
     setJustPicked(i);
     onAnswer({
       correct: i === question.answer,
@@ -26,7 +26,7 @@ export default function Quiz({ question, answered, onAnswer, locked }) {
   }
 
   return (
-    <div className={`quiz ${locked ? "quiz-locked" : ""}`}>
+    <div className="quiz">
       <div className="quiz-tag">
         <span className={`lv lv-${question.level}`}>{LEVEL_LABEL[question.level]}</span>
         <span className="lv-xp">+{XP_PER_CORRECT[question.level]} XP</span>
@@ -43,7 +43,7 @@ export default function Quiz({ question, answered, onAnswer, locked }) {
           }
           return (
             <button key={i} className={cls} onClick={() => choose(i)}
-                    disabled={done || locked} type="button">
+                    disabled={done} type="button">
               <span className="choice-key">{"ABCD"[i]}</span>
               <span>{c}</span>
             </button>

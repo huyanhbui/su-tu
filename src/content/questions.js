@@ -524,8 +524,6 @@ export const QUESTIONS = [
   },
 ];
 
-export const QUESTION_BY_ID = Object.fromEntries(QUESTIONS.map((q) => [q.id, q]));
-
 export const LEVEL_LABEL = {
   "nhan-biet": "Nhận biết",
   "thong-hieu": "Thông hiểu",

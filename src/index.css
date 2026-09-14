@@ -183,8 +183,6 @@ tr.flag td{background:rgba(217,112,95,.1)}
   box-shadow:0 0 0 3px rgba(212,168,58,.08)}
 .gate h3{color:var(--gold)}
 .gate p{margin-top:6px}
-.form.tight{gap:11px;margin-top:14px}
-.quiz-locked{opacity:.6}
 
 /* bảng khoá–giá trị ở trang tự kiểm tra */
 .kv{margin-top:12px;font-size:14px}

@@ -15,8 +15,8 @@
     "e2e:rules": "node scripts/e2e-rules.mjs",
     "cards": "node scripts/make-cards.mjs",
     "qr": "node scripts/make-qr.mjs",
-    "fb:rules": "firebase deploy --only firestore:rules --config firebase/firebase.json --project ky-hung-dat-viet",
-    "fb:indexes": "firebase deploy --only firestore:indexes --config firebase/firebase.json --project ky-hung-dat-viet"
+    "fb:rules": "npx firebase-tools@15 deploy --only firestore:rules --config firebase/firebase.json --project ky-hung-dat-viet",
+    "fb:indexes": "npx firebase-tools@15 deploy --only firestore:indexes --config firebase/firebase.json --project ky-hung-dat-viet"
   },
   "dependencies": {
     "firebase": "^12.18.0",
@@ -25,10 +25,7 @@
     "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
-    "firebase-tools": "^15.28.1",
     "oxlint": "^1.79.0",
     "qrcode": "^1.5.4",
     "vite": "^8.2.2"

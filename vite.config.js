@@ -7,17 +7,6 @@ import { defineConfig } from 'vite'
 const SW = 'sw.js'
 const MOC = /\/\* SU-TU:PRECACHE:BEGIN[\s\S]*?SU-TU:PRECACHE:END \*\//
 
-/** Liệt kê mọi file đã thực sự nằm trong dist, kể cả thứ copy từ public/. */
-function liet_ke(goc, thu_muc = goc) {
-  const ra = []
-  for (const muc of readdirSync(thu_muc, { withFileTypes: true })) {
-    const duong = join(thu_muc, muc.name)
-    if (muc.isDirectory()) ra.push(...liet_ke(goc, duong))
-    else ra.push(relative(goc, duong).split(sep).join(posix.sep))
-  }
-  return ra
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Vite đặt mã băm vào tên file (index-D1L-tYZU.js), nên một danh sách precache
 // gõ tay sẽ hỏng ngay lần build sau — và hỏng lặng lẽ: service worker vẫn cài
@@ -36,7 +25,9 @@ function swPrecache() {
       const dist = options.dir
       const swFile = join(dist, SW)
 
-      const files = liet_ke(dist)
+      const files = readdirSync(dist, { recursive: true, withFileTypes: true })
+        .filter((d) => d.isFile())
+        .map((d) => relative(dist, join(d.parentPath, d.name)).split(sep).join(posix.sep))
         .filter((f) => f !== SW && !f.endsWith('.map'))
         .sort()
 
