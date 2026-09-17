@@ -1,0 +1,1965 @@
+ ▐▛███▛█   Claude Code v2.1.270
+▝▜██████▀  Opus 5 · Claude Pro
+  ▝▝ ▝▝    /home/huyanh
+
+
+● Those are real screenshots of the running app, not mockups. Here's what's
+  there.
+
+  Five pages
+
+  1. / — Join screen (first in the wide image)
+  Nickname + class code. It rejects anything that looks like a real name (3+
+  words) — that's what keeps the "no PII" claim true when a student types
+  carelessly. Below, the six cards are tappable so you can demo without printing
+  anything.
+
+  2. /c/N01 — The card page (the tall one)
+  This is the product. QR codes point here. Top to bottom: the Oger artwork, the
+  name, chips for Mệnh Thủy · 897–944 · Sinh lực 5, the four role lines, the
+  level box (Tướng quân · 0 XP · còn 60 XP để lên Tiết chế), then Lịch sử đằng 
+  sau kỹ năng — the printed rule in italics, and underneath, why it exists
+  historically. Then three questions, then the facts.
+
+  The second skill stays locked until the card reaches level 2. That's the
+  mechanic that makes answering worth doing.
+
+  3. /me — Bộ sưu tập — XP, questions answered, accuracy, and every card with
+  its level and progress bar.
+
+  4. /board/:classCode — Bảng xếp hạng — big type for a projector, updates live.
+
+  5. /t/:classCode — Teacher Dashboard — students, answers, accuracy, then the
+  bar chart by mức độ nhận thức (GDPT 2018) and a per-question table that flags
+  anything under 50%. This is the screen schools pay for.
+
+  Two things I did just now
+
+  Deployed the Firestore security rules. Without that the database was denying
+  every write — the app looked fine but nothing would have saved. Now: anyone
+  can read (there's no private data by design), you can only write your own
+  record, and answers can't be edited or deleted once written.
+
+  Fixed a bug I found while looking at the screenshots. The "running on local
+  storage" warning banner could never appear — it checked the backend during
+  first render, when the answer was still "loading". Silent failure: if
+  Firestore had broken on demo day, you'd have had no idea. Fixed.
+
+  When your card details arrive
+
+  Send whatever you have and I'll port it. What I need per card:
+
+  - ID — N01, N02… must match what the QR encodes
+  - Tên, năm sinh–mất
+  - Mệnh and Sinh lực
+  - Các vai trò — the role lines under the name
+  - Kỹ năng — for each: name, kích hoạt or thường trực, and the rules text 
+    copied exactly as printed
+
+  That last one matters: I won't paraphrase it. If the screen says something
+  different from the cardboard in a judge's hand, that's worse than showing
+  nothing. I'll transcribe verbatim and write the history paragraph underneath.
+
+  Screenshots or a spreadsheet both work — whatever's fastest.
+
+  Still on you
+
+  1. Buy the .xyz domain → then I deploy and generate real QR codes
+  2. Decide /c/N01 vs /N01 — shorter URL means a bigger, more scannable code.
+     Free now, permanent after printing.
+  3. Somebody must check the history text against SGK before anything prints.
+
+❯ /compact                                                                      
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Referenced file .claude/jobs/8a022d38/tmp/ky-hung-spec.html
+  ⎿  Referenced file 
+     code/docs/superpowers/specs/2026-08-27-ky-hung-prototype-design.md
+  ⎿  Read .claude/projects/-home-huyanh/memory/ky-hung-dat-viet-prototype.md (31
+     lines)
+  ⎿  Referenced file .claude/projects/-home-huyanh/8a022d38-449a-4515-b765-146ad
+     a841414/tool-results/artifact-e10e2f65-1787725583-7677.html
+
+❯ /model                                                                        
+  ⎿  Set model to Opus 5 and saved as your default for new sessions with xhigh
+     effort
+          .claude/settings.json pins Fable 5.1 — that applies on restart
+
+❯ continue to develop the website, use sub-driven agent if neccesary            
+
+  Read 2 files, ran 4 shell commands (ctrl+o to expand)
+
+● Let me verify the current state empirically before changing anything.
+
+  Read 1 file, called plugin:firebase:firebase, ran 3 shell commands (ctrl+o to expand)
+
+● Confirmed two real bugs. Let me set up the work and parallelize.
+
+● Spawning two agents on independent, non-overlapping files while I take the
+  core flow fixes.
+
+● 2 background agents launched (↓ to manage)
+   ├ Add offline PWA support
+   └ Expand history question bank
+
+● Now the core work. Deploying the missing indexes first, since that's a silent
+  demo-killer.
+
+  Called plugin:firebase:firebase, ran 1 shell command (ctrl+o to expand)
+
+● Indexes deployed and building. Now the code fixes.
+
+  Read 1 file, ran 11 shell commands (ctrl+o to expand)
+
+● Fixing the placeholder casing and setting up Vercel.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now an end-to-end test of the exact flow I changed — this also proves the
+  rules and indexes work against real Firestore.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Real finding: it fell back to localStorage instead of Firestore. Let me find
+  out why.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Found it — Anonymous Auth is not enabled, so the app has been silently running
+  on localStorage this whole time. Let me try to enable it.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● That's blocked — enabling the auth provider needs a credential action I
+  shouldn't take. I'll flag it for you and keep going.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Agent B delivered — 24 questions. Let me inspect the six flagged for the Bạch
+  Đằng ambiguity trap.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● These are all correctly pinned by context — my heuristic is crying wolf. Let
+  me sharpen it so it only fires on genuine ambiguity.
+
+  Called plugin:vercel:vercel, ran 3 shell commands (ctrl+o to expand)
+
+● Vercel needs your click — I'll surface that at the end. Meanwhile, the silent
+  Firestore fallback needs to stop being invisible to your team.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Agent "Expand history question bank" finished · 10m 40s
+● Agent B flagged its own weak spots honestly. Let me inspect the four it
+  doubted.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Q09, Q12, Q18 hold up — Q12's stem carries its own context and Q18's claim is
+  sound. Q24 is the real one: it asks about 1288 on a card that never mentions
+  it. Fixing the stem to be self-contained.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now a diagnostics page so this class of failure is never silent again.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Two issues: horizontal overflow (the dashboard's min-width:520px leaks to all
+  tables) and the probe hadn't resolved in time.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Overflow fixed. The probe still shows "checking…" — let me verify with real
+  wall-clock time rather than Chrome's virtual clock.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The diagnostics page now names the exact failure and the exact fix. Let me
+  make that e2e harness a permanent part of the repo so your team can re-run it
+  against production.
+
+  Ran 4 shell commands (ctrl+o to expand)
+
+● Only the known auth blocker fails. But the "correct answer" step silently
+  skipped — let me make it content-independent so it can't quietly no-op.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The scoring test never exercised the correct path — all three picks happened
+  to be wrong. Let me make it deterministic by learning the key, then replaying
+  as a fresh student.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Something regressed between runs. Let me look at the actual page.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● The gate works fine — the e2e harness was talking to a stale browser still
+  holding its fixed debug port. Let me fix that.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Confirmed — the PWA agent's browser was squatting on port 9333 and my harness
+  connected to its session. (My pkill pattern also matched my own shell, hence
+  the abort.) Let me verify the fix landed and re-run.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Correct-answer path now properly exercised (0 → 10 XP). Fixing the leaderboard
+  assertion, which broke because the test now switches identity mid-run.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Down to exactly one red light — the auth blocker. Let me commit my half of the
+  work.
+
+  Read 1 file, ran 4 shell commands (ctrl+o to expand)
+  ⎿  PostToolUse:Bash says: Tip: Run /ultrareview before you push to catch bugs 
+     with a cloud-based multi-agent review — 3 free reviews left.
+
+● The README is still Vite boilerplate — and judges will look at this repo.
+  Writing the real one, in Vietnamese, since you need to explain the system.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Agent "Add offline PWA support" finished · 22m 32s
+
+● The PWA agent independently hit the same accounts:signUp 400 — corroborating
+  the auth diagnosis. Let me verify its work myself rather than take it on
+  trust.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Precache list matches the real hashed assets exactly. Now my own offline test.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Preview binds localhost only, not 127.0.0.1 — my harness hit a dead address.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Independently verified: network cut, all four routes render, nothing from
+  Firebase cached. Let me review the service worker itself before committing it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Solid — Firebase bypass is explicit and ordered before the origin check.
+  Committing it with the offline test.
+
+  Ran 2 shell commands (ctrl+o to expand)
+● Final verification pass, then screenshots.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● 17 pass, 1 fail — and the one failure is the thing only you can fix. Let me
+  capture what changed.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+  ⎿  Invalid tool parameters
+
+● Trái: thẻ N02 — hai ô "Mệnh" và "Sinh lực" rỗng đã biến mất, và cửa vào lớp
+  giờ nằm ngay trên trang thẻ. Phải: trang /health mới, nó chỉ thẳng ra thứ đang
+  chặn cả hệ thống.
+
+  › [image] .claude/jobs/8a022d38/tmp/ket-qua.png (239.1KB)
+
+  Wrote 1 memory (ctrl+o to expand)
+
+● Done. Two commits on branch fix/scan-first-flow.
+
+  The thing that matters most
+
+  Firebase Anonymous sign-in was never enabled. The app has been running
+  entirely on the localStorage fallback this whole time — silently.
+  accounts:signUp returns 400 auth/configuration-not-found. Both I and the
+  second agent hit it independently.
+
+  That means the multi-device leaderboard and the Teacher Dashboard have never
+  actually worked across phones. The fallback hid it perfectly.
+
+  Fix (20 seconds, only you can do it): Firebase Console → Authentication →
+  Sign-in method → Anonymous → Enable. Then npm run e2e — it should go from
+  17/18 to 18/18.
+
+  I tried to enable it from here using the Firebase CLI's stored login; the
+  permission classifier blocked that, and I didn't work around it.
+
+  Bugs found and fixed
+
+  - A wrong answer showed as correct after re-scanning. The card page passed
+    "you picked the right one" for every answered question, and the quiz read
+    that only on first render — so it never corrected itself when the profile
+    loaded. A student re-scanning their card was told they'd got it right. Now
+    the actual choice is stored and re-derived every render.
+  - Answers from QR scans vanished. The QR is the front door, but the join form
+    was only on the home page — which nobody scanning a card ever sees. Those
+    students answered with an empty class code, so their work never reached the
+    leaderboard or the dashboard. The card page now has the join form built in;
+    history stays readable without it.
+  - 5 of 6 cards showed empty "Mệnh" and "Sinh lực" chips — labels with nothing
+    after them.
+  - No Firestore composite indexes were deployed. The leaderboard query would
+    have failed and rendered an empty board with no error. Deployed.
+  - Students and judges could read "cần đối chiếu số bài trước khi in" on every
+    card — an internal note admitting the content was unverified. Split into
+    public source and internal reviewNote.
+
+  Added
+
+  - /health — says which backend is live, why it broke, and the exact fix. Built
+    because this failure class was invisible.
+  - Offline support — hand-written 80-line service worker, Vietnamese comments,
+    no plugin, so you can explain it. Verified with the network genuinely cut:
+    /c/N01, /c/S01, /me, / all render. Firebase traffic is explicitly never
+    cached.
+  - 24 questions, up from 8 — 4 per card, all three GDPT levels. I rewrote one
+    that asked about 1288 on a card that never mentions it.
+  - npm run check (content), npm run e2e (real browser, student path), npm run 
+    e2e:offline.
+  - Real README in Vietnamese — it was still Vite boilerplate, and you said
+    judges will look at the repo.
+  - vercel.json with SPA rewrites. Without it every QR target 404s on Vercel.
+
+  Your move
+
+  1. Enable Anonymous auth ← everything else is downstream
+  2. Vercel — authorize at the URL below, then I deploy:
+     https://vercel.com/oauth/authorize?response_type=code&client_id=cl_WbdtcToD
+     rMR4ZHvXLGAmbfoYCsQjMeS8&code_challenge=U9uE-N8WXP1Kzhn99uc74KzGc09oV8I1Mll
+     -_W74eoE&code_challenge_method=S256&redirect_uri=http%3A%2F%2Flocalhost%3A3
+     118%2Fcallback&state=X4yxLRgFmbiwEnMYMvusdwseOb4OTzlXLbrirquYpNU&scope=open
+     id+offline_access&prompt=consent&resource=https%3A%2F%2Fmcp.vercel.com%2F
+  3. /c/N01 or /N01? — I've asked twice. Shorter URL means a bigger, more
+     scannable QR code. Free to change now, a reprint after.
+  4. Card mechanics when your team has them — verbatim, and I'll port them.
+
+  Branch isn't merged to master yet; say the word.
+
+✻ Sautéed for 32m 23s · done 10:39 Thứ Hai, 7 thg 9
+
+❯ i enable anon auth , auth vercel and upload the card illu , hold the mechanic 
+  , let my team decided                                                         
+
+● Let me verify the auth fix and find the illustrations you uploaded.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● 18/18 — Firestore is live. Leaderboard is reading real multi-device data now.
+
+  Let me find the illustrations and check Vercel.
+
+  Listed 1 directory, called plugin:vercel:vercel, ran 2 shell commands (ctrl+o to expand)
+
+● Vercel's callback didn't land — it needs a listener on a localhost port that
+  closed. I'll get you a fresh link. First, fixing my rules test (bare module
+  specifier isn't resolvable at runtime).
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Different module instances. Let me pin the exact versioned URL so db and the
+  Firestore functions come from the same graph.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All seven attacks rejected. That's evidence you can put in front of judges.
+  Let me make it a permanent check.
+
+  Searched for 1 pattern, ran 4 shell commands (ctrl+o to expand)
+
+● Anon auth confirmed working — here's where things stand.
+
+  Firestore is live
+
+  npm run e2e went from 17/18 to 18/18. The leaderboard is reading real
+  cross-device data instead of silently falling back to localStorage.
+
+  Security rules verified by attacking them
+
+  Now that auth works I could finally test the deployed rules instead of just
+  reading the file. Seven deliberate violations, all rejected with
+  permission-denied:
+
+  ┌─────────────────────────────────────┬─────────┐
+  │               Attempt               │ Result  │
+  ├─────────────────────────────────────┼─────────┤
+  │ Overwrite another student's profile │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Set own XP negative                 │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Set a nickname longer than 16 chars │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Change a wrong answer to correct    │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Delete an answered question         │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Write an answer as someone else     │ blocked │
+  ├─────────────────────────────────────┼─────────┤
+  │ Write to an unknown collection      │ blocked │
+  └─────────────────────────────────────┴─────────┘
+
+  Rows 4–5 are your answer if a judge asks whether students can cheat their
+  score. Row 3 is the no-real-names promise being enforced by the server, not
+  just the form. It's now npm run e2e:rules so you can re-run it any time.
+
+  Three commits on fix/scan-first-flow.
+
+  Mechanics — nothing to do
+
+  They're already empty by design and /health lists N02, N03, N04, D01, S01 as
+  waiting. Whatever your team decides, I copy verbatim. No pressure from my
+  side.
+
+  Two things I need
+
+  1. I can't find the illustrations. I searched the whole filesystem for images
+  added today — nothing outside the app icons. If you dropped them into the
+  chat, they didn't reach this session. Where are they? A path, or drop them in
+  ~/code/su-tu/art-source/ and tell me. Also useful when you send them: which
+  file goes with which card ID, since I shouldn't guess whether a portrait is
+  Dương Đình Nghệ or Kiều Công Tiễn.
+
+  2. Vercel didn't take. The MCP is still handing me a fresh authorize URL, so
+  the callback never completed — it redirects to a short-lived local port that
+  had closed by the time you clicked. Fresh link:
+
+  https://vercel.com/oauth/authorize?response_type=code&client_id=cl_WbdtcToDrMR
+  4ZHvXLGAmbfoYCsQjMeS8&code_challenge=2bBSewHWShefcdpKA7F_bp3gmxuX5jJ6eOrGC7ej2
+  uo&code_challenge_method=S256&redirect_uri=http%3A%2F%2Flocalhost%3A61313%2Fca
+  llback&state=d4eFgRCsc5N48AoI9VFPPXA2izUi-dFTO9QNjMM-598&scope=openid+offline_
+  access&prompt=consent&resource=https%3A%2F%2Fmcp.vercel.com%2F
+
+  If the redirect page errors, copy the full URL from the address bar and paste
+  it here — I can complete it from that.
+
+  Still open from before: /c/N01 or /N01 before anything gets printed.
+
+✻ Brewed for 5m 39s · done 10:58 Thứ Hai, 7 thg 9
+
+❯ /effort                                                                       
+  ⎿  Set effort level to medium (saved as your default for new sessions):
+     Balanced approach with standard implementation and testing
+
+❯ i put it in pulbic/art, i auth the vercel, and /c/N01 for flexibility         
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Two problems. Let me look at both.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The content check caught it instantly — all six card images are gone. Let me
+  see what's there now.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● My git add -A on the last commit swept these in and staged the old art's
+  deletion. Recoverable — let me confirm, then look at the new images.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Art is strong and stylistically consistent. But there's a mapping problem. Let
+  me look at the ambiguous one.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● vi du.jpg might be Ngô Quyền or might genuinely be a style sample — I won't
+  guess on your most important card. Let me wire what's certain and preserve the
+  masters.
+
+  Ran 5 shell commands (ctrl+o to expand)
+● ~150KB each. Now let me make missing art fail gracefully and track which cards
+  still need real illustrations.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Fair warning — let me derive that instead of syncing it in an effect.
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● Let me verify something in that screenshot — S01's progress bar looks full at
+  0 XP.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● My misread — S01 is correctly at 0%; that was resize artifacting in the
+  montage. Committing.
+
+  Called plugin:vercel:vercel, ran 2 shell commands (ctrl+o to expand)
+
+● Ba thẻ đã có tranh chính thức của nhóm: Kiều Công Tiễn, Lưu Hoằng Tháo, và bãi
+  cọc cho thẻ Trận Bạch Đằng 938.
+
+  › [image] .claude/jobs/8a022d38/tmp/newart.png (745.9KB)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The art is in and it looks good. Four commits on fix/scan-first-flow.
+
+  First — a mistake I made and caught
+
+  My previous commit used git add -A right after you dropped the files in. It
+  swept in your art and staged the deletion of all six card images, because your
+  filenames don't match the ones cards.js points at. Left alone, every card
+  page would have shown a broken image.
+
+  npm run check caught it immediately, and the old art was recoverable from
+  history. But that's exactly the accident the check script exists for, and I
+  still walked into it.
+
+  Art: 3 of 8 wired
+
+  ┌─────────────────┬───────────────────────────────────────────────────────┐
+  │    Your file    │                         Card                          │
+  ├─────────────────┼───────────────────────────────────────────────────────┤
+  │ kieu cong       │ N03 Kiều Công Tiễn                                    │
+  │ tien.jpg        │                                                       │
+  ├─────────────────┼───────────────────────────────────────────────────────┤
+  │ luu hoang       │ N04 Lưu Hoằng Tháo                                    │
+  │ thao.jpg        │                                                       │
+  ├─────────────────┼───────────────────────────────────────────────────────┤
+  │ coc go.jpg      │ S01 Trận Bạch Đằng 938 — the stake field is that      │
+  │                 │ card's first listed fact                              │
+  └─────────────────┴───────────────────────────────────────────────────────┘
+
+  Compressed to 800px / ~150KB each. Your originals moved to
+  art-source/cards-master/ untouched — use those for printing, not the web 
+  copies. Total art payload went 5.7MB → 932KB, which matters on school wifi.
+
+  What I didn't guess
+
+  Five files don't match any card: luu cung, ly long cau, tieu ich, TO PHAN, vi 
+  du.
+
+  vi du.jpg is a Vietnamese commander with a sword on a campaign map — it could
+  be Ngô Quyền, or it could be a style sample ("ví dụ"). I'm not guessing on
+  your most important card in front of judges.
+
+  Ngô Quyền and Dương Đình Nghệ have no official art. They and D01 are back on
+  the Oger woodblocks, tagged artTam: true so npm run check and /health keep
+  listing them until they're replaced.
+
+  So, three questions:
+  1. Is vi du.jpg Ngô Quyền, or a sample?
+  2. luu cung is presumably Lưu Nghiễm (Lưu Hoằng Tháo's father) and tieu ich
+     the Southern Han advisor — but who are ly long cau and TO PHAN? I won't
+     write history for people I can't confidently place.
+  3. Do you want cards added for those figures, or are they for a roster beyond
+     these six?
+
+  Also: card art is a licensing question at a startup competition. NGUON.txt now
+  separates your art from the public-domain Oger set — your team needs to be
+  able to say where these illustrations came from if asked.
+
+  /c/N01 confirmed
+
+  That's already the shape, so nothing changes and QR generation is unblocked
+  the moment the domain exists.
+
+  Vercel still hasn't gone through
+
+  The server is still handing me a fresh authorize URL, so the callback never
+  landed — it redirects to localhost:61313, which only listens for a moment.
+
+  https://vercel.com/oauth/authorize?response_type=code&client_id=cl_WbdtcToDrMR
+  4ZHvXLGAmbfoYCsQjMeS8&code_challenge=Za6fxYvjI2M-Z89n9LWNCisWQNafTI9Zukkj8RsVr
+  sY&code_challenge_method=S256&redirect_uri=http%3A%2F%2Flocalhost%3A61313%2Fca
+  llback&state=QAMYnN4DfEoV21vRuAYUdiVf1RBf45l6KWPkg9V3vJA&scope=openid+offline_
+  access&prompt=consent&resource=https%3A%2F%2Fmcp.vercel.com%2F
+
+  If the page errors after you approve, that's expected — copy the whole URL
+  from the address bar (it'll start http://localhost:61313/callback?code=…) and
+  paste it here. I can finish the handshake from that.
+
+❯ /model                                                                        
+  ⎿  Set model to Opus 5 and saved as your default for new sessions with high
+     effort
+
+❯ add all the card i have import , don't skip anyone , vi du is ngo quyen ,     
+  this is render by AI so it not violate anything halt the vercel thingy , pack 
+  all the json into one folder , only the readme and the MAIN html outside ,    
+  rename it. the firebase also need a separate folder. make all the html in a   
+  same folder.                                                                  
+
+● Let me survey the repo and research the figures I can't place.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Web Search("Tiêu Ích Nam Hán can gián Lưu Cung Bạch Đằng 938 Sùng Văn sứ")
+  ⎿  Did 1 search in 8s
+
+● Web Search(""Lý Long Cữu" hoặc "Tô Phàn" nhân vật trận Bạch Đằng 938 Nam Hán")
+  ⎿  Did 1 search in 8s
+
+● The Tiêu Ích result is solid. But the Lý Long Câu / Tô Phán prose reads like
+  historical fiction, not a chronicle. Let me check the actual source.
+
+● Fetch(https://vi.wikipedia.org/wiki/Tr%E1%BA%ADn_B%E1%BA%A1ch_%C4%90%E1%BA%B1n
+       g_(938))
+  ⎿  Received 169.9KB (200 OK)
+
+● Confirmed: Lý Long Câu and Tô Phán are not in the historical record — not in
+  Toàn thư, not in the Wikipedia account which lists even minor commanders. That
+  prose was from a novel. I'll handle them honestly rather than skip them.
+  Verifying Lưu Cung's details first.
+
+● Fetch(https://vi.wikipedia.org/wiki/L%C6%B0u_Cung)
+  ⎿  Received 119.3KB (200 OK)
+
+● That's a Western Han prince — wrong person. The Southern Han founder is under
+  a different name.
+
+● Fetch(https://vi.wikipedia.org/wiki/L%C6%B0u_Ngh%C4%A9m)
+  ⎿  Received 0 bytes (404 Not Found)
+
+● Web Search("Nam Hán Cao Tổ Lưu Nghiễm Lưu Cung vua khai quốc Nam Hán 889 942
+            wikipedia")
+  ⎿  Did 1 search in 6s
+
+● Verified: Lưu Nghiễm (889–942), also called Lưu Cung — same man already named
+  on the N04 card. Now let me wire all eight illustrations.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the card content. Let me write all four new cards plus Ngô Quyền's art
+  swap.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the questions for the four new cards.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● 10 cards, 36 questions, no errors. Now the fiction warning needs to be visible
+  in the app, not just in the data.
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Now the restructure. Let me check what the generator scripts write before
+  moving anything.
+
+  Searched for 1 pattern (ctrl+o to expand)
+
+● Now the restructure. Moving Firebase and config out of root.
+
+  Ran 7 shell commands (ctrl+o to expand)
+
+● All three work. Let me see what you removed from the README before I touch it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The user deliberately removed the TODO list — that info lives in /health and
+  npm run check anyway. I'll respect that. Updating the rest.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Let me verify visually.
+
+  Read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● All four render correctly, and the fiction warning lands above the history
+  where it belongs. Full verification.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Bốn thẻ: Ngô Quyền (tranh mới), Lưu Cung, Tiêu Ích, và Lý Long Câu với khung
+  cảnh báo hư cấu.
+
+  › [image] .claude/jobs/8a022d38/tmp/cards-new.png (1015.7KB)
+
+● All 10 cards are in. Verification: lint clean, content check clean, e2e 18/18.
+
+  The thing you need to know
+
+  Lý Long Câu and Tô Phán are not historical people. I checked before writing
+  anything: neither appears in Đại Việt sử ký toàn thư, in SGK, or in the
+  encyclopaedic account of the battle — which does name minor commanders on both
+  sides. The detailed prose about them online comes from novels.
+
+  I didn't skip them. But I didn't invent history for them either. Both cards
+  now carry a red warning above the history section saying plainly that the
+  person isn't in the record, and their six questions ask about the parts that
+  are documented — the fleet's formation, the tide — plus how to tell a
+  chronicle from a novel.
+
+  That last part turns out to be a genuine asset. A history product that marks
+  its own fiction teaches something most history apps don't, and it's a good
+  answer if a teacher-judge probes.
+
+  But the printed cards must say it too. Someone holding the cardboard can't
+  read cards.js.
+
+  Two other findings
+
+  Lưu Cung is Lưu Nghiễm — the same man, already named on the Lưu Hoằng Tháo
+  card as his father. The N05 card says so explicitly so students don't meet two
+  names and assume two people.
+
+  Tiêu Ích is real and is the best card in the batch. Sùng Văn hầu, he advised
+  Lưu Cung to scout carefully, stock supplies, and advance slowly on multiple
+  fronts. Lưu Cung ignored him. "The advice was right and nobody listened" is a
+  rich thing to teach.
+
+  Art
+
+  All eight wired, compressed 800px/~150KB each. Originals untouched in
+  art-source/cards-master/ — print from those, not the web copies.
+
+  NGUON.txt now states the art is AI-generated. One factual note in there: AI
+  images generally can't hold copyright, so nothing is infringed but your team
+  doesn't own them exclusively either. If the business plan claims an IP moat,
+  that moat is the content, the mechanics, and the brand — not the pictures.
+
+  Still no art for Dương Đình Nghệ and the river card; both stay on Oger and
+  stay flagged.
+
+  Restructure
+
+  README.md  index.html  package.json  package-lock.json  vite.config.js
+  config/    .oxlintrc.json · vercel.json
+  firebase/  firebase.json · firestore.rules · firestore.indexes.json
+  html/      every generated HTML file
+
+  Three files couldn't move: package.json and package-lock.json (npm looks for
+  them at root) and vite.config.js (not JSON, and Vite's entry). Everything else
+  is out.
+
+  Verified rather than assumed — firebase deploy works from the new location,
+  oxlint reads the moved config, and the card generator writes into html/. Added
+  npm run fb:rules / fb:indexes so nobody has to remember the flags.
+
+  Vercel halted. vercel.json is in config/, which means it's inert — Vercel only
+  reads it at root. Move it back when you resume.
+
+  One question
+
+  "rename it" — I couldn't tell what. The main HTML (index.html → something
+  else)? The project folder (su-tu)? Something else? Renaming index.html needs a
+  Vite config change and I didn't want to guess at it. Tell me which and I'll
+  do it.
+
+  Sources:
+  - Trận Bạch Đằng (938) – Wikipedia tiếng Việt (https://vi.wikipedia.org/wiki/T
+    r%E1%BA%ADn_B%E1%BA%A1ch_%C4%90%E1%BA%B1ng_(938))
+  - Nam Hán Cao Tổ – Wikipedia tiếng Việt
+    (https://vi.wikipedia.org/wiki/Nam_H%C3%A1n_Cao_T%E1%BB%95)
+
+✻ Crunched for 22m 14s · done 12:57 Thứ Năm
+
+❯ tell me step by step what to do to run this succesfully locally , then we     
+  move to vercel to port it                                                     
+
+● Let me verify the actual commands work before I write instructions for them.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● pkill matched my own shell again. Let me do this without that.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Default port is 5173, all seven routes serve. Let me check the deploy
+  prerequisites.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● There's a GitHub remote. Let me check what's actually pushed.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Production build serves every route. Vercel is back on, so vercel.json needs
+  to return to root.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Phone testing matters most for a QR product. Let me verify LAN access works.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● wlan0 is the real one. Note Cloudflare WARP is running — that can block
+  phone→laptop LAN access.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Everything verified. Dev server is running on 5173 right now if you want to
+  look.
+
+  ---
+
+  Part A — Run it locally
+
+  1. Open a terminal in the project
+
+  fish
+  cd ~/code/su-tu
+
+  2. Install dependencies (first time, or after git pull)
+
+  fish
+  npm install
+
+  Your Node is v26.8.1, npm 12.0.2 — both fine.
+
+  3. Start it
+
+  fish
+  npm run dev
+
+  Opens on http://localhost:5173. Leave this terminal running; it rebuilds as
+  you edit. Ctrl+C stops it.
+
+  4. Click through these six URLs
+
+  ┌───────────────────────────┬──────────────────────────────────────────┐
+  │            URL            │           What you should see            │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/           │ Join screen, 10 card thumbnails          │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/c/N01      │ Ngô Quyền — this is what a QR scan opens │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/c/N07      │ Lý Long Câu — red "nhân vật hư cấu" box  │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/me         │ Collection, XP, per-card levels          │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/board/10A1 │ Projector leaderboard                    │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/t/10A1     │ Teacher dashboard                        │
+  ├───────────────────────────┼──────────────────────────────────────────┤
+  │ localhost:5173/health     │ Check this first, always                 │
+  └───────────────────────────┴──────────────────────────────────────────┘
+
+  /health should say "Đang chạy trên Firestore" in green. If it says
+  localStorage, something's wrong and it tells you what.
+
+  To see the whole loop: open /c/N01, enter a nickname + class 10A1, answer
+  questions, then open /board/10A1.
+
+  5. Test on your actual phone
+
+  This matters more than anything on the laptop — the product is a phone
+  scanning cardboard.
+
+  fish
+  npm run dev -- --host
+
+  It prints a Network line. Use the wlan0 one — right now that's
+  http://172.18.36.239:5178/. Type it into your phone's browser on the same
+  wifi.
+
+  If the phone can't connect: you have Cloudflare WARP running. Turn it off —
+  it's the usual culprit for LAN access failing.
+
+  6. Checks you can run any time
+
+  Each needs the dev server running in another terminal.
+
+  fish
+  npm run check        # content: missing art, fictional cards, unreviewed text
+  npm run e2e          # walks the real student path in a real browser — expect
+  18/18
+  npm run e2e:rules    # tries 7 ways to cheat, all should be blocked
+  npm run lint
+
+  ---
+
+  Part B — Vercel
+
+  I can't do this part for you — the Vercel CLI isn't installed here and the MCP
+  authorization never completed. But the GitHub route is better anyway, because
+  every future git push redeploys automatically.
+
+  Step 1 — Push what's on disk
+
+  Your GitHub repo huyanhbui/su-tu is 2 commits behind. It doesn't have the 10
+  cards or the restructure.
+
+  fish
+  git push origin fix/scan-first-flow
+
+  Step 2 — Import on Vercel
+
+  1. Go to vercel.com/new
+  2. Sign in with GitHub
+  3. Find su-tu → Import
+  4. Change nothing. vercel.json already sets framework, build command, output
+     directory, and the SPA rewrites. Just click Deploy.
+
+  Takes about 2 minutes.
+
+  Step 3 — Verify the deployment for real
+
+  Vercel gives you a URL like su-tu-xxxx.vercel.app. Don't just eyeball the home
+  page:
+
+  fish
+  npm run e2e https://su-tu-xxxx.vercel.app
+
+  That's the same 18 checks, run against production. Then open
+  https://su-tu-xxxx.vercel.app/health on your phone.
+
+  The one thing to check by hand: open https://your-url.vercel.app/c/N01
+  directly. If that 404s, the rewrites didn't apply — tell me and I'll fix it.
+  Every QR code depends on that exact behaviour.
+
+  Step 4 — Then the domain, then the QR codes
+
+  Buy the .xyz, add it in Vercel under Settings → Domains, then and only then:
+
+  fish
+  npm run qr -- --base https://your-real-domain.xyz
+
+  The script refuses to run without a real domain, on purpose. Printed QR codes
+  are permanent.
+
+  ---
+
+  Two notes
+
+  Your GitHub default branch is fix/scan-first-flow. Vercel will treat it as
+  production, which works but reads oddly. If you want it cleaner, say so and
+  I'll merge it to main before you push.
+
+  firebase-tools is a dev dependency, so Vercel installs ~200MB at build time.
+  It works, just adds a minute or two. Worth trimming later, not now.
+
+✻ Churned for 4m 3s · done 13:03 Thứ Năm
+
+※ recap: We're getting SỬ TỰ demo-ready: 10 cards are wired and verified locally at localhost:5173. Next, you push the branch to GitHub and import the repo at vercel.com/new to deploy. (disable recaps in /config)
+
+❯ i am on coporate wifi right now , is best to when i get home . just testing   
+  local first                                                                   
+
+● Agreed — corporate wifi almost always has client isolation, so the phone won't
+  reach your laptop no matter what you do. That part genuinely waits.
+
+  Let me confirm what does work right now on this network.
+
+  Ran 1 shell command (ctrl+o to expand)
+● Good news — the network isn't in your way for anything except the phone.
+
+  Verified just now on this corporate wifi:
+  - Dev server up on http://localhost:5173 (already running, just open it)
+  - Firebase auth reachable — 200
+  - Firestore reachable — 200
+
+  So the full stack works locally right now: anonymous login, XP saving, live
+  leaderboard across browser tabs, teacher dashboard. Nothing is stubbed.
+
+  What to do right now
+
+  Just open http://localhost:5173/health first. It should say "Đang chạy trên 
+  Firestore" in green.
+
+  Then walk the real loop:
+  1. localhost:5173/c/N01 — pretend you scanned the Ngô Quyền card
+  2. Enter a nickname + class 10A1, answer the questions
+  3. Open localhost:5173/board/10A1 in a second tab — your XP appears there
+  4. localhost:5173/t/10A1 — the teacher dashboard fills in
+
+  Two tabs is a decent stand-in for two students, and it proves Firestore is
+  genuinely syncing rather than just writing locally.
+
+  Also worth a look while you're here: localhost:5173/c/N07 — the
+  fictional-character warning, since that's the one thing a history teacher on
+  the judging panel will poke at.
+
+  For a rough phone view without a phone: Ctrl+Shift+M in the browser gives you
+  device emulation. Not a substitute for the real thing, but it'll show you
+  layout problems.
+
+  What waits for home
+
+  - Phone on the same wifi (npm run dev -- --host) — and turn off Cloudflare 
+    WARP when you try it
+  - Vercel deploy
+  - Buying the domain and generating QR codes
+
+  Ping me when you're home and we'll do the deploy. If anything looks off while
+  you're clicking through, tell me what you see.
+
+✻ Baked for 56s · done 13:10 Thứ Năm
+
+※ recap: You're testing SỬ TỰ locally before deploying; the dev server is running on port 5173 with Firestore live and everything working. Next: open http://localhost:5173/health, confirm it says Firestore, then walk the card-to-leaderboard loop. (disable recaps in /config)
+
+❯ seem like when i type a different name and class code , the progress wtill    
+  keep at the old name and class code , i think because it save on the device   
+  id instead of the name. is this intentional . also two card are max level on  
+  the first time . fix that                                                     
+
+● Let me verify both before fixing.
+
+  Ran 1 shell command (ctrl+o to expand)
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ /superpowers:systematic-debugging seem like when i type a different name and  
+class code , the progress wtill keep at the old name and class code , i think   
+because it save on the device id instead of the name. is this intentional .     
+also two card are max level on the first time . fix that                        
+
+● Using systematic-debugging. Two separate issues — I'll investigate both before
+  touching anything.
+
+  Phase 1: Root cause investigation
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Issue 2 root cause found — it's data, not logic. N03 and N04 have exactly one
+  entry in levels, so levelOf returns next: null → progress: 1 → full gold bar
+  and "Đã đạt cấp cao nhất" at 0 XP. Every other card has 2–3 levels.
+
+  Now issue 1. Let me reproduce it precisely rather than assume which of several
+  behaviours it is.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Reproduced completely. The evidence shows two problems, and the second one you
+  haven't seen yet:
+
+  ┌───────────────────────────────────┬─────────────────────────────────────┐
+  │  After renaming AliceTest/ZZA →   │                                     │
+  │            BobTest/ZZB            │                                     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ device uid                        │ unchanged — your diagnosis is right │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ nickname / class                  │ updated correctly                   │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ XP + answers                      │ carried over (20 XP, 4 answers)     │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ /board/ZZA                        │ empty — Alice vanished from the old │
+  │                                   │  leaderboard                        │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ /board/ZZB                        │ BobTest, 20 XP — XP earned in ZZA   │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ /t/ZZA                            │ 1 student, 4 answers                │
+  ├───────────────────────────────────┼─────────────────────────────────────┤
+  │ /t/ZZB                            │ 0 students, 0 answers               │
+  └───────────────────────────────────┴─────────────────────────────────────┘
+
+  The player record follows you; the answer records don't (they're immutable by
+  design, to stop score tampering). So a class switch leaves the leaderboard and
+  the teacher dashboard permanently disagreeing.
+
+  Phase 2–3: writing the failing check before fixing
+
+  Let me encode both level rules as automated checks first, so this can't
+  silently return.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Third bug found that you hadn't seen: N01's top level is unreachable — "Tiền
+  Ngô Vương" needs 150 XP but the card's questions total only 70. Let me see the
+  real numbers per card before picking thresholds.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the full picture. The thresholds were never matched to the question sets —
+  N05–N08 require a perfect score to level up at all. Same root cause, three
+  severities. Fixing all of it.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Check passes. Now verifying the actual rendered behaviour, not just the data.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All ten cards fixed and verified. Now issue 1.
+
+  Read 1 file (ctrl+o to expand)
+
+● Implementing a way to start over — you need it for demoing, and a shared demo
+  phone needs it too.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Now the UI control on the collection page.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Verifying the reset actually works, end to end.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All passing. Let me make the reset a permanent test so it can't regress.
+
+  Searched for 1 pattern, ran 1 shell command (ctrl+o to expand)
+
+● Failing at the very first check — that's not the reset code. Let me look
+  rather than guess.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● failed-precondition in the log, and the page isn't rendering its content. Let
+  me capture the actual error.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The app renders perfectly — gate present, 2 inputs, no errors, and my level
+  fix visible ("Còn 30 XP để lên Tiết chế"). So this is the harness, not the
+  app.
+
+  Hypothesis: adding signOut to the firebase import triggered a Vite dependency
+  re-optimization, making that one page load exceed the harness's fixed 1800ms
+  wait. Testing by simply re-running.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Hypothesis rejected — same failure. Back to evidence gathering: let me see
+  what the page actually contains at the moment the first check runs.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Root cause found — and it's a trap I set for you.
+
+  ERR_CONNECTION_REFUSED. The e2e script defaults to port 5177 (left over from
+  when I was running dev on a custom port), but npm run dev serves on Vite's
+  default 5173. It was testing a dead address and reporting the silence as app
+  bugs.
+
+  Searched for 2 patterns (ctrl+o to expand)
+● All three wrong. The fix is correct defaults plus a preflight, so a dead
+  address can never again masquerade as app failures.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Also spotted: the offline test hardcodes "20 files" but precache is now 24.
+  Let me derive it instead of hardcoding.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● 22/22. Let me verify the offline suite too, since I changed it.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Done — npm run check clean, npm run e2e 22/22, npm run e2e:offline 8/8.
+
+  Your question: yes, intentional
+
+  Identity is the device, not the nickname. One phone = one student. The
+  nickname is only a display label, so retyping it renames you rather than
+  making you a new person. That's what lets the app claim it collects nothing
+  identifying — there's no account to log into, just an anonymous device token.
+
+  But you surfaced a real bug I hadn't seen
+
+  Changing the class code leaves the data permanently inconsistent. Reproduced:
+
+  ┌────────────────────────────────┬────────────────────────────────────────┐
+  │     After AliceTest/ZZA →      │                                        │
+  │          BobTest/ZZB           │                                        │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ /board/ZZA                     │ empty — you vanish from the old        │
+  │                                │ leaderboard                            │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ /board/ZZB                     │ BobTest, 20 XP — XP earned in ZZA      │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ /t/ZZA                         │ 1 student, 4 answers                   │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ /t/ZZB                         │ 0 students, 0 answers                  │
+  └────────────────────────────────┴────────────────────────────────────────┘
+
+  Your player record follows you; your answer records don't, because they're
+  immutable by design to stop score tampering. So the new teacher sees XP they
+  can't account for and a dashboard with nothing in it.
+
+  I haven't fixed this — it's a product decision, not a bug with one obvious
+  answer:
+
+  - A. Changing class starts you fresh in that class (clean, matches "you're in
+    one class", costs a typo'd student their session)
+  - B. Warn on class change and make them confirm
+  - C. Leave it — students don't really switch classes; only demos do
+
+  I lean A. Tell me which.
+
+  Fixed: three level bugs, one root cause
+
+  The thresholds were never matched to each card's question set.
+
+  - N03, N04 — one level only, so born at max with a full gold bar. What you
+    saw.
+  - N01 — top level needed 150 XP but its four questions total 70. "Tiền Ngô
+    Vương" was unreachable. You hadn't seen this.
+  - N05–N08 — threshold equalled the maximum earnable, so you needed a perfect 
+    score to level up at all. One wrong answer and you were stuck.
+
+  All ten cards now start at 0% with a reachable next level. npm run check now
+  blocks all three shapes — I wrote the check first, watched it catch exactly
+  those three, then fixed the data.
+
+  Added: "Đổi người chơi"
+
+  Bottom of /me. Issues a fresh anonymous identity and wipes XP, nickname, and
+  class, with a confirmation. You need it for repeat demos, and a shared demo
+  phone needs it or the next person inherits the last person's score.
+
+  A trap I set for you
+
+  npm run e2e defaulted to port 5177 — left over from when I was running dev on
+  a custom port. But I told you to run npm run dev, which serves on 5173. It was
+  talking to a dead port and reporting the silence as four app failures.
+  e2e:rules and e2e:offline had the same problem.
+
+  All three now use the right ports and check the server is alive before opening
+  a browser — if it isn't, they stop immediately and print the command you
+  need, instead of blaming the app.
+
+  Dev server is still up on 5173 if you want to try the reset button.
+
+✻ Cooked for 13m 49s · done 13:39 Thứ Năm
+
+※ recap: We're getting SỬ TỰ ready to demo — I fixed the card level bugs, added a "start over" button, and all tests pass locally. Next: tell me which option you want for the class-switch fix (I lean A). (disable recaps in /config)
+
+❯ mix with a and b i think                                                      
+
+● Good call — warn, then actually start fresh. That combination also fixes the
+  leaderboard inconsistency for free: the old player record stays behind in the
+  old class, so /board/ZZA keeps Alice instead of losing her.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Now verifying all three cases, including the claim that the old class keeps
+  its data.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All twelve pass — old class keeps everything, new class starts clean. Let me
+  make this permanent.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● My cut used the first } catch (e) { in the file — which is inside the
+  preflight I added, not the end of the try block. Let me restore and redo it
+  properly.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Flaky — it clicks choice[1] and got lucky last time. Let me make it
+  deterministic by reading the answer key.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● All green and deterministic. Documenting the rule and committing.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Done. A+B implemented — warn, then genuinely start fresh.
+
+  How it behaves now
+
+  Change nickname, same class → renames you. XP intact, no prompt. Device
+  identity is still the identity.
+
+  Change class code → prompt first:
+
+  ▎ Bạn đang ở lớp ZC893G với 30 XP.
+  ▎ Chuyển sang lớp ZM893G nghĩa là bắt đầu lại từ đầu: 0 XP, bộ sưu tập trống.
+  ▎ Điểm cũ vẫn còn nguyên ở bảng xếp hạng lớp ZC893G.
+
+  Confirm → new anonymous device id, 0 XP, clean collection.
+
+  The part that makes this actually fix the bug
+
+  That last line in the prompt is true, and it's what makes A+B better than
+  either alone: the old record stays behind. We issue a new identity rather than
+  moving the old one, so nothing is deleted.
+
+  Verified end to end:
+
+  ┌───────────────┬──────────────────────────────────┬──────────────────────┐
+  │               │          before the fix          │         now          │
+  ├───────────────┼──────────────────────────────────┼──────────────────────┤
+  │ /board/ZC     │ empty                            │ AliceHai, 70 XP      │
+  │ (old)         │                                  │                      │
+  ├───────────────┼──────────────────────────────────┼──────────────────────┤
+  │ /t/ZC (old)   │ 1 student, 4 answers             │ 1 student, 4 answers │
+  ├───────────────┼──────────────────────────────────┼──────────────────────┤
+  │ /board/ZM     │ AliceHai with 70 XP from the old │ Bob, 0 XP            │
+  │ (new)         │  class                           │                      │
+  ├───────────────┼──────────────────────────────────┼──────────────────────┤
+  │ /t/ZM (new)   │ 0 students, 0 answers            │ Bob, counting from   │
+  │               │                                  │ zero                 │
+  └───────────────┴──────────────────────────────────┴──────────────────────┘
+
+  Both classes now reconcile. The old teacher keeps their full record; the new
+  teacher gets a student whose XP they can account for.
+
+  Also
+
+  npm run e2e:identity — 13 checks covering all of it, including that the old
+  class doesn't lose data, which is the part most likely to break if someone
+  edits this later. I moved the identity checks out of npm run e2e so each
+  script covers one concern.
+
+  One thing worth mentioning: the first run of that test failed, and it wasn't
+  the app — the test was clicking a fixed answer position and had just been
+  getting lucky. It now looks the answer up from the question bank, so it's
+  deterministic. Same flavour of mistake as the port default; I'd rather these
+  show up now than during a demo.
+
+  Full suite: lint clean, check clean, e2e 18/18, e2e:identity 13/13.
+
+  Dev server is still on 5173 — try typing a different class code on the home
+  page and you'll get the prompt.
+
+✻ Churned for 8m 46s · done 14:00 Thứ Năm
+
+※ recap: We're getting SỬ TỰ demo-ready; the app now has all 10 cards, fixed level bugs, and correct identity handling when switching class. Next: test it locally at localhost:5173, then deploy to Vercel from home wifi.
+
+❯ /superpowers:brainstorming i have put a markdown file in doc folder. read it  
+and import everything like mechanic, type of the troop and mucn more            
+
+● Let me find and read it first.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Found it — su-tu/doc/LỊCH SỬ.md, 92 KB, added today. Let me see its shape
+  before reading it all.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● This is substantial — a full rulebook, character roster, equipment, and a
+  three-faction system. Let me read the parts that matter for importing.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● I've read it — rulebook, 12-general roster, 18 equipment cards, ~30
+  play/strategy/event cards, three factions, turn structure, ngũ hành counters.
+
+  This is architectural, not a bounded import. It replaces the content model the
+  app is built on: cards currently have menh/sinhLuc/skills and nothing else,
+  while this document introduces factions, chủ tướng vs phó tướng, equipment,
+  play cards, and an element-counter system. I'll work through questions →
+  approaches → design → spec before writing any code.
+
+  Three things I found that will shape the design. Flagging now, not resolving
+  yet:
+
+  The roster doesn't match the app. The rulebook's 12 generals include five the
+  app has never had — Kiều Công Hãn, Đỗ Cảnh Thạc, Phạm Bạch Hổ, Dương Tam Kha,
+  Ngô Xương Ngập. And Dương Đình Nghệ is not among the 12, though he's card N02
+  today.
+
+  The document contradicts itself in places. The ngũ hành rule in §III says x2
+  damage applies to countered or same element, but every element card in the
+  table lists only the countered one. It says "6 Mệnh" then lists five. Blood
+  cards are "6 Máu / 7 Máu" in the rulebook and "4 Máu / 5 Máu" in the hardware
+  checklist. Play-card counts sum to 143, not the stated 155. I'll need rulings
+  on these, but not yet.
+
+  Lý Long Câu and Tô Phán now have full biographies in the roster, written as
+  history. I verified last week that neither appears in Đại Việt sử ký toàn thư
+  or any historical account — the sử lược in this document closely matches a
+  novel I traced. They're now slated to be printed as historical generals. We
+  need to talk about this, but it isn't the first question.
+
+  ---
+
+  Question 1 of a few — scope.
+
+  The hardware checklist says every physical card carries its own QR code.
+  That's roughly 60 unique cards once duplicates collapse: 12 generals, 24 skill
+  cards, 18 equipment, and ~30 play/strategy/event cards.
+
+  What should the web app hold?
+
+  - A — Generals only. The 12 generals get QR pages with sử lược, history, and
+    quizzes. Everything else stays paper-only. Closest to what exists now,
+    smallest change.
+  - B — Generals + equipment + strategy/event cards. Every card with a sử lược
+    gets a page. Roughly 60 pages, and it makes the "history behind the
+    mechanic" promise apply to the whole box, not just the characters.
+  - C — Everything, including a browsable digital rulebook — turn phases, ngũ
+    hành table, terminology — so a student who loses the paper rulebook can
+    still play.
+
+  I'd lean B. Every card in that document already has a sử lược written, and
+  those paragraphs are exactly the product's core claim — the history behind the
+  mechanic. The basic Đánh/Né cards have thin ones and can be skipped. C is a
+  lot of work for something a PDF does just as well.
+
+  Which way do you want it?
+
+✻ Churned for 2m 25s · done 14:09 Thứ Năm
+
+❯ go with b , the roster still updating , i will render card later . ly long    
+  cau and to phan is on some stories as well as movie, still include it         
+
+● B it is. And noted on the roster — I'll design so cards can land incrementally
+  rather than needing the full 60 up front.
+
+  On Lý Long Câu and Tô Phán: you've decided, so they're in. I'll import their
+  sử lược as written and keep the hucau notice already built for them — that way
+  the page carries the character as the game portrays them and tells the reader
+  the name comes from fiction rather than the chronicles. That costs you
+  nothing and answers the one question a history teacher on the panel would ask.
+
+  ---
+
+  Question 2 — does the learning loop cover all 60 cards, or just the generals?
+
+  Right now every card carries levels, facts, and quiz questions, and XP is what
+  makes scanning worth doing. Extending that to equipment and strategy cards
+  means writing and verifying roughly 150 more questions. Every one needs a
+  history teacher's sign-off before printing, which is already your longest
+  pole.
+
+  - A — Everything gets quizzes. ~60 cards × 3. Strongest learning loop, but the
+    content and review burden is enormous and almost certainly won't be
+    verified in time.
+  - B — Only generals carry quizzes and XP. The other ~48 cards are read-only
+    history pages: sử lược, the mechanic, why the mechanic matches the history.
+    Scanning them teaches but doesn't score.
+  - C — Generals get full quizzes; every other card gets exactly one. ~48 extra
+    questions. Every scan still rewards, at a third of A's cost.
+
+  I'd build B now, shaped so C is a later data change with no code change — a
+  card with no questions simply renders its history and no quiz section. That
+  gets all 60 pages live for the demo, and you can promote any card to having
+  questions whenever a teacher has reviewed one. It also means the
+  still-updating roster can't block anything.
+
+  Which do you want?
+✻ Crunched for 37s · done 14:13 Thứ Năm
+
+❯ b                                                                             
+
+● B confirmed. Cards render their history; questions are optional data you can
+  add per card as teachers sign off.
+
+  ---
+
+  Question 3 — the ID scheme, which is the one thing that becomes permanent the 
+  moment anything is printed.
+
+  Two problems with what's there now. Today's IDs are N01–N08, D01, S01. Under
+  any type-prefixed scheme, S01 would mean "Sự kiện 01" but currently means the 
+  Bạch Đằng battle card — a silent collision that would send a QR to the wrong
+  page.
+
+  Bigger issue: your rulebook says the game spans 938 to 1945, twelve generals 
+  per battle. So this box is one of many. If generals are T01–T12, the next
+  battle's generals collide with this one.
+
+  - A — Type prefix, globally sequential across every battle. T01–T12 for Bạch
+    Đằng's generals, T13–T24 for the next battle's. Equipment B01…, strategy
+    K01…, events E01… The battle is stored as data, not in the ID. Shortest QR,
+    collisions impossible, but the ID alone doesn't tell you which box a card
+    came from.
+  - B — Battle prefix. 938T01, 1288T01. Self-describing — useful when boxes get
+    mixed on a classroom floor — at two to three more characters in every QR.
+  - C — Plain sequential. 01–60. Smallest possible code, but meaningless to
+    whoever is laying out 60 cards in a design tool.
+
+  I'd take A. The QR stays at its smallest, which matters more than it sounds —
+  you're printing these at 18.5 mm and every character costs scannability.
+  "Which box is this from" is better answered by the card back, which already
+  carries a different faction mascot per side. And the app can still show the
+  battle name on every page.
+
+  Under A, today's D01 and S01 become plain content pages rather than physical
+  cards — they're app-only, not in your rulebook. I'd keep them at D01/S01…
+  except S01 is exactly the collision. So they'd move to something outside the
+  card namespace.
+
+  Which scheme?
+
+✻ Brewed for 47s · done 14:15 Thứ Năm
+
+❯ a                                                                             
+
+● A confirmed. Type prefix, globally sequential, battle stored as data.
+
+  ---
+
+  Question 4 — where the document contradicts itself, which version wins?
+
+  Three of the conflicts I flagged earlier I can settle myself, so I'll just
+  tell you what I'm doing:
+
+  - Elements: §III says "6 Mệnh" then lists five, and the play-card list
+    mentions Sơn and Độc — an older draft. The general roster and the
+    element-card table both use Kim / Mộc / Thủy / Hỏa / Thổ consistently, so
+    I'll use those five.
+  - Blood cards: the "6/7 vs 4/5" conflict doesn't reach the web app at all —
+    blood cards have no sử lược and get no page. Ignoring it.
+  - Section I's roster is stale — it lists ten generals; the full table lists
+    twelve. I'll use the table.
+
+  Two I can't decide, because both affect text the app will show next to a
+  printed card:
+
+  1. The ngũ hành x2 rule. §III says double damage applies to the countered
+  element or the same element as the attacker, with the example "Thủy hits Hỏa
+  or Thủy → x2". But every element card in the table lists only the countered
+  one — Thủy→Hỏa, Hỏa→Kim, Kim→Mộc, Mộc→Thổ, Thổ→Thủy, a clean tương khắc chain.
+  Which is the live rule?
+
+  2. Ngô Quyền has two skills in the app and one in the rulebook. The app
+  carries Trận Địa Cọc Ngầm (kích hoạt) and Thống Lĩnh Tiền Ngô (thường trực),
+  transcribed from the card art you sent in August. The rulebook lists only
+  Thống Lĩnh. Did the design drop the stake-trap skill, or is the rulebook entry
+  abbreviated?
+
+  That second one matters beyond one card: it tells me whether the rulebook or 
+  the card art is authoritative when they disagree — which will come up
+  repeatedly across all 60 cards while the roster is still moving.
+
+✻ Baked for 1m 31s · done 14:17 Thứ Năm
+
+❯ follow the markdown file , not the one i send earlier                         
+
+● Clear — the rulebook wins over the August card art. So Ngô Quyền has one 
+  skill, Thống Lĩnh; I'll drop Trận Địa Cọc Ngầm from the app.
+
+  The file still contradicts itself on ngũ hành, so I'll rule and you can
+  overturn it: counter-element only — Thủy→Hỏa, Hỏa→Kim, Kim→Mộc, Mộc→Thổ,
+  Thổ→Thủy. That's the element-card table, which is the more detailed and more
+  recently drafted of the two, and §III's "or same element" would make
+  same-element matchups double-damage in both directions, which reads like a
+  drafting slip.
+
+  ---
+
+  Approaches
+
+  What all 60 cards actually have in common, once I lined the types up: artwork,
+  an identity line, the exact text printed on the card, and a sử lược 
+  explaining the history behind that text. That's the same shape the app already
+  uses — printed rule, then the history behind the rule. Only the identity
+  chips and the section label differ by type. So this is one page template, not
+  five.
+
+  The real choice is how the content is stored.
+
+  Approach 1 — One CARDS array with a type discriminator. Every card in one
+  file, type: "tuong" | "trang-bi" | "bai-danh" | "chien-luoc" | "su-kien",
+  type-specific fields optional.
+  For: closest to today's code, one lookup table, one route. Against: around
+  1,200 lines in a single file that your team edits while the roster is still
+  moving, and optional fields everywhere mean npm run check can't enforce that a
+  general has máu and mệnh.
+
+  Approach 2 — One file per card type, merged into a single index. tuong.js,
+  trang-bi.js, the-choi.js, each with a strict shape; a small index.js merges
+  them for lookup and routing. ← my recommendation
+  For: each file stays reviewable; your team can rework the general roster
+  without touching equipment; check can enforce real per-type rules ("a general
+  must have máu, mệnh, phe, and exactly one kỹ năng"); adding the next battle is
+  a new file, not a bigger one. Against: a little more plumbing than Approach
+  1.
+
+  Approach 3 — Schema registry, card types defined declaratively. Adding a type
+  becomes pure data.
+  Against: wrong for this project. You have to stand in front of judges and
+  explain your own system, and indirection is exactly what makes that hard. Two
+  battles' worth of content doesn't justify a framework.
+
+  I'd take 2. The deciding factor is that your roster is still moving: separate
+  files mean the churn is contained, and the checker can actually catch a
+  general missing its element instead of silently rendering a blank chip — which
+  is the bug you caught by eye last week.
+
+  One consequence worth naming: under scheme A, today's IDs all change (N01 →
+  T01, and so on). The 36 existing questions reference the old IDs, so that's a
+  mechanical migration I'd do as part of this — nothing printed yet, so it's
+  free now and expensive later.
+
+  Does Approach 2 look right?
+
+❯ /rename project-develop-1 
+  ⎿  Session renamed to: project-develop-1
+
+❯ /rename project-dev-1 
+  ⎿  Session renamed to: project-dev-1
+
+● Picking up where we left off — I'm still waiting on your call on the approach,
+  and one of my arguments was wrong, so let me correct it before you decide.
+
+  I said a single CARDS array (Approach 1) would stop npm run check from
+  enforcing per-type rules. That's not true: the checker can branch on type and
+  require máu, mệnh, phe and one kỹ năng for generals just as strictly either
+  way.
+
+  So the only real difference is how the content is laid out for editing:
+
+  - Approach 1 — one file. Around 1,200 lines of content in cards.js.
+  - Approach 2 — one file per type (tuong.js, trang-bi.js, the-choi.js), joined
+    by a single line into the same lookup. Your team can rework the general
+    roster without scrolling past 18 equipment cards.
+
+  That makes this a smaller decision than I made it sound. I still lean 2,
+  purely because it's easier to edit while the roster keeps changing — but 1 is
+  fine too.
+
+  Which do you want?
+
+✻ Brewed for 27s · done 13:46
+
+※ recap: Importing your LỊCH SỬ.md rulebook into the SỬ TỰ web app: 12 generals, equipment, strategy and event cards as history pages. Next: tell me whether to store the content as one file or one file per card type. (disable recaps in /config)
+
+❯ i add doc-requirement-1 and 2 into doc folder , read it and make doc about it 
+  ⎿  9 skills available
+
+  Searched for 1 pattern, read 2 files, listed 1 directory, ran 3 shell commands (ctrl+o to expand)
+  ⎿  Loaded .claude/CLAUDE.md
+
+● I've spotted a mismatch: the competition form assumes AI features (RAG-based
+  "AI Sử Quan," Computer Vision, AI video) that the actual app doesn't have.
+  I'll gather the real facts before filling anything out.
+
+  Searched for 1 pattern, read 1 file, ran 3 shell commands (ctrl+o to expand)
+
+● I see STATUS.md was updated, showing doc/ho-so-du-thi-muc-3-7.md already has
+  sections 3–7 completed today. I'll avoid duplicating this work and check that
+  file along with two other facts before proceeding.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● The requested doc already exists (doc/ho-so-du-thi-muc-3-7.md), so instead of
+  duplicating it I'll verify its claims against the facts and fix
+  errors—starting with a commit count that says 14/15 but git shows 13, so I'm
+  now checking which model names the commits actually list.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● I confirmed 13 of 15 commits have the "Claude Opus 5" co-author line, and
+  while 14 were made with Claude Code (including 642f9a2, per the loop log), the
+  doc's claim of "14 have the co-author line" is inaccurate. I'll apply that
+  fix along with four other checked corrections to the doc, then verify.
+
+● Bash(cp doc/ho-so-du-thi-muc-3-7.md "$CLAUDE_JOB_DIR/tmp/ho-so-before.md" &&
+      python3 - <<'PY'
+      import io…)
+  ⎿  applied 8 edits
+     === diff size ===
+     19
+     … +17 lines (ctrl+o to expand)
+  ⎿  Updated code/su-tu/doc/ho-so-du-thi-muc-3-7.md (+13 -6)
+      13  
+      14  | # | Dữ liệu | Nội dung | Nguồn | Cách thu thập / tiếp cận |
+      15  |---|---|---|---|---|
+      16 -| 1 | Nội dung thẻ bài | 10 thẻ về trận Bạch Đằng năm 938: tên,
+         - năm, vai trò, "Ba điều cần nhớ", kỹ năng và phần lịch sử đằng 
+         -sau kỹ năng | Biên soạn theo chương trình Lịch sử 10 (GDPT 2018
+         -) | Nhóm biên soạn, có trợ lý AI hỗ trợ soạn bản nháp. Lưu tron
+         -g mã nguồn (`src/content/cards.js`) |                          
+      17 -| 2 | Ngân hàng câu hỏi | 36 câu trắc nghiệm, mỗi câu 4 phương 
+         -án và lời giải thích. Chia theo mức nhận thức GDPT 2018: 14 nhậ
+         -n biết · 12 thông hiểu · 10 vận dụng | Biên soạn theo chương tr
+         -ình Lịch sử 10 (GDPT 2018) | Như trên (`src/content/questions.j
+         -s`) |                                                          
+      16 +| 1 | Nội dung thẻ bài | 10 thẻ về trận Bạch Đằng năm 938: tên,
+         + năm, vai trò, "Ba điều cần nhớ", kỹ năng và phần lịch sử đằng 
+         +sau kỹ năng | Bám theo chương trình Lịch sử 10 (GDPT 2018). Cơ 
+         +chế chơi của thẻ N01 chép từ bản thiết kế thẻ của nhóm. Dữ kiện
+         + đối chiếu với Wikipedia tiếng Việt (xem nguồn bên dưới) | Clau
+         +de Code soạn bản nháp theo yêu cầu của nhóm; **[CẦN ĐIỀN: thành
+         + viên rà soát]**. Lưu trong mã nguồn (`src/content/cards.js`) |
+      17 +| 2 | Ngân hàng câu hỏi | 36 câu trắc nghiệm, mỗi câu 4 phương 
+         +án và lời giải thích. Chia theo mức nhận thức GDPT 2018: 14 nhậ
+         +n biết · 12 thông hiểu · 10 vận dụng | Bám theo chương trình Lị
+         +ch sử 10 (GDPT 2018) | Claude Code soạn bản nháp; nhóm rà soát 
+         +như dòng 1 (`src/content/questions.js`) |                      
+      18  | 3 | Tranh minh hoạ chính | Tranh của 8 thẻ: N01, N03, N04, N0
+          5, N06, N07, N08, S01 | Tranh do AI tạo sinh bằng **[CẦN ĐIỀN: 
+          tên công cụ]** | Nhóm tự tạo, không sao chép tác phẩm của hoạ s
+          ĩ nào |
+      19  | 4 | Ảnh tạm | Tranh của 2 thẻ: N02 (Dương Đình Nghệ), D01 (Sô
+          ng Bạch Đằng) | Mộc bản Henri Oger, *Technique du peuple annami
+          te*, Hà Nội 1908–1909. Bản quét do Thư viện Quốc hội Hoa Kỳ lưu
+           giữ | Tải từ Wikimedia Commons (nhãn *Public domain*), cắt lấy
+           phần hình cần dùng |
+      20  | 5 | Dữ liệu học tập | Biệt danh, mã lớp, mã thiết bị ẩn danh,
+           XP, câu trả lời (câu nào, chọn ô nào, đúng hay sai, thời điểm)
+           | Do học sinh tạo ra khi dùng ứng dụng | Lưu trên Firebase Fir
+          estore |
+      21  
+      22 +**Nguồn đối chiếu dữ kiện lịch sử** (đã dùng khi soạn nội dung)
+         +:                                                              
+      23 +                                                               
+      24 +- Wikipedia tiếng Việt, *Trận Bạch Đằng (938)* — https://vi.wik
+         +ipedia.org/wiki/Trận_Bạch_Đằng_(938) : danh sách nhân vật hai p
+         +he, tước hiệu của Lưu Hoằng Tháo và Tiêu Ích. Bài này **không c
+         +ó** hai tên Lý Long Câu và Tô Phán.                            
+      25 +- Wikipedia tiếng Việt, *Nam Hán Cao Tổ* — https://vi.wikipedia
+         +.org/wiki/Nam_Hán_Cao_Tổ : Lưu Cung và Lưu Nghiễm là cùng một n
+         +gười (889–942).                                                
+      26 +- **Chưa đối chiếu với SGK.** Giáo viên Lịch sử sẽ làm việc này
+         + trước khi in thẻ.                                             
+      27 +                                                               
+      28  ### 3.2. Câu lệnh (prompt) đã sử dụng
+      29  
+      30  | Công cụ | Dùng để làm gì | Câu lệnh tiêu biểu | Nhật ký câu l
+          ệnh (Prompt Log) |
+      31  |---|---|---|---|
+      26 -| Claude Code | Viết mã nguồn, kiểm thử, soạn bản nháp nội dung
+         - | **[CẦN ĐIỀN]** | **[CẦN ĐIỀN: đường link]** |               
+      32 +| Claude Code | Viết mã nguồn, kiểm thử, soạn bản nháp nội dung
+         + | Câu lệnh thật của nhóm (trích, đã sửa lỗi gõ): *"continue to
+         + develop the website, use sub-agents if necessary"* · *"add all
+         + the cards I have imported, don't skip anyone"* · *"when I type
+         + a different name and class code, the progress still stays with
+         + the old one"* | **[CẦN ĐIỀN: đường link]** — Claude Code lưu l
+         +ịch sử phiên trên máy; xuất ra và xoá thông tin riêng tư trước 
+         +khi nộp |                                                      
+      33  | **[CẦN ĐIỀN: công cụ tạo ảnh]** | Tạo tranh thẻ bài | **[CẦN 
+          ĐIỀN]** | **[CẦN ĐIỀN: đường link]** |
+      34  
+      35  ### 3.3. Bảo đảm dữ liệu được sử dụng phù hợp quy định
+     ...
+      129  
+      130  | Công cụ | Loại | Vai trò trong quá trình xây dựng |
+      131  |---|---|---|
+      126 -| **Claude Code** (mô hình Claude Opus 5, Anthropic) | Trợ lý 
+          -lập trình AI | Viết và sửa mã nguồn. Viết các bài kiểm thử tự 
+          -động. Soạn bản nháp nội dung thẻ và câu hỏi để nhóm biên tập. 
+          -Rà soát và rút gọn mã. 14/15 lần lưu mã (commit) có ghi Claude
+          - là đồng tác giả. |                                           
+      132 +| **Claude Code** (mô hình Claude Opus 5, Anthropic) | Trợ lý 
+          +lập trình AI | Viết và sửa mã nguồn. Viết các bài kiểm thử tự 
+          +động. Soạn bản nháp nội dung thẻ và câu hỏi để nhóm biên tập. 
+          +Rà soát và rút gọn mã. Tra cứu, đối chiếu dữ kiện lịch sử trên
+          + web. 14/15 lần lưu mã (commit) được làm cùng Claude Code; 13 
+          +lần có ghi Claude là đồng tác giả. |                          
+      133  | **[CẦN ĐIỀN: tên công cụ]** | AI tạo sinh hình ảnh | Tạo tra
+           nh minh hoạ cho 8 thẻ bài. |
+      134  
+      135  ### 5.2. Thư viện và nền tảng (không phải AI)
+     ...
+      141  | Firebase Authentication | Cấp mã thiết bị ẩn danh |
+      142  | Firebase Firestore | Lưu hồ sơ, câu trả lời; luật bảo mật ch
+           ạy trên máy chủ |
+      143  | Service worker (viết tay) | Cho ứng dụng mở được khi mất mạn
+           g |
+      138 -| Vercel | Nền tảng triển khai web |                          
+      144 +| Vercel | Nền tảng triển khai web (đã cấu hình `vercel.json`,
+          + chưa triển khai) |                                           
+      145  | qrcode | Sinh mã QR cho từng thẻ để in |
+     … 17 more lines (ctrl+o to expand)
+
+● Contest doc, sections 3–7 (checked and fixed today). Fill the [CẦN ĐIỀN] gaps
+  before you submit.
+
+  › [file] code/su-tu/doc/ho-so-du-thi-muc-3-7.md (17KB)
+
+● The doc for your two images already existed. Another session wrote
+  doc/ho-so-du-thi-muc-3-7.md earlier today, and it covers sections 3 to 7. I
+  didn't make a second copy. I checked it against git, the code and the test
+  logs, and fixed 8 things.
+
+  What I fixed
+
+  - Commit count. It said 14 of 15 commits "have Claude as co-author". Git shows
+    13 with that line. It now says 14 were made with Claude Code, and 13 carry
+    the co-author line.
+  - Where the content came from. It said "the team wrote it, AI helped with
+    drafts". In fact Claude Code drafted all the card text and all 36 questions.
+    The doc now says that. The contest asks you to declare AI use openly, so
+    this matters.
+  - Fact sources. I added the two Vietnamese Wikipedia pages used to check the
+    facts. It also now says plainly that nothing has been checked against SGK
+    yet.
+  - Prompt examples. Section 3.2 now has three of your real prompts to Claude
+    Code.
+  - Vercel is marked "set up, not deployed".
+  - The security test date now notes that the test script was rewritten on 14/09
+    and hasn't been run since.
+  - One more before/after example: the missing Firestore index, which made the
+    leaderboard silently empty.
+
+  Only your team can fill these (11 gaps marked [CẦN ĐIỀN])
+
+  - Which AI tool made the card art, and the prompts you used.
+  - Links to your prompt logs.
+  - Who on the team checked the content.
+  - Real feedback from students or teachers. There's none yet, so don't invent
+    any.
+  - Keep or drop the planned AI features.
+
+  Two warnings before you submit
+
+  1. doc/LỊCH SỬ.md claims AI features the app doesn't have: "AI Sử Quan" (an AI
+     chatbot that answers from textbook data), Computer Vision, and AI video.
+     The app uses no AI while running. AI was only used to build it. If judges
+     read that file and then open the app, the two won't match. Fix those
+     claims, or mark them clearly as future plans.
+  2. Your Claude Code history file holds a Google login code that you pasted
+     earlier. If you export it as your prompt log, delete that code first.
+
+  To commit
+
+  doc/ isn't in git yet.
+
+  git add doc/ho-so-du-thi-muc-3-7.md
+  git commit -m "Add contest doc sections 3-7, checked against code and tests"
+
+✻ Worked for 5m 50s · done 13:58
+
+※ recap: You're getting Sử Tự ready for the AI contest, and I've checked and fixed the contest doc for sections 3 to 7. Next, your team fills the 11 [CẦN ĐIỀN] gaps and removes the made-up AI claims from LỊCH SỬ.md. (disable recaps in /config)
+
+❯ make it a word doc so i can open with my libreoffice instead of vscodium      
+
+  Ran 2 shell commands (ctrl+o to expand)
+● No Markdown-to-HTML converter is installed, so I'll use npx marked to handle
+  that step, then pass the HTML to LibreOffice to produce the .docx, running it
+  all as one chained command.
+
+● Bash(set -e
+      T="$CLAUDE_JOB_DIR/tmp/docx"; rm -rf "$T"; mkdir -p "$T"…)
+  ⎿  === Rusticl warning: Patched Mesa libclc not detected. Upstream libclc
+      may contain known bugs or breaking changes and isn't guaranteed to wo
+     rk reliably. Please visit https://gitlab.freedesktop.org/karolherbst/m
+     … +6 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● I'll verify the .docx renders correctly by checking page images and confirming
+  the tables and Vietnamese accents came through intact.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● All text checks pass — 8/8 tables, 11/11 fill-in gaps, 8/8 diagram arrows, and
+  all key lines present. Now I'll visually inspect the pages, zooming into the
+  diagram sections to confirm the box-drawing characters render as proper lines
+  rather than empty squares.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● The Word file looks good overall, but I spotted two layout issues in section 6
+  — split accent marks and a wrapping diagram line — plus a failed zoom command
+  due to a shell quoting issue. I'm now running three checks in parallel: a
+  proper zoom, a scan for split accent characters, and a search for monospace
+  fonts with full Vietnamese support.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● Found the root cause: DejaVu Sans Mono lacks Vietnamese letters like "ử",
+  causing font substitution that detaches accents, and the diagram's
+  133-character longest line is too wide for the page and wraps. Next I'll
+  gather three things together: fonts with both Vietnamese and diagram symbol
+  support that also exist on Windows, all diagram lines long enough to wrap, and
+  a zoom-in to visually confirm the issue.
+
+  Ran 3 shell commands (ctrl+o to expand)
+
+● My per-font glyph check seems broken (it claims DejaVu Sans Mono lacks "│",
+  which is clearly wrong), so I won't trust those results yet. I'll fix the
+  wrapping lines now since those are confirmed issues, while re-running the zoom
+  view and a corrected glyph query to verify the accent and font concerns.
+
+  Read 1 file, ran 2 shell commands (ctrl+o to expand)
+
+● Confirmed the issue: DejaVu Sans Mono lacks Vietnamese diacritics like "ử" and
+  "ể", while Liberation Mono covers everything needed and matches Courier New's
+  widths. I'll set the font to "Courier New" (after verifying it maps to
+  Liberation Mono here), then rebuild and re-render the diagram pages to
+  recheck.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The rebuild failed because my cleanup step deleted the working directory
+  mid-chain, crashing Node and LibreOffice. I'll fix this by moving to a stable
+  folder first, enabling pipefail, and removing the output filters that could
+  mask errors.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● The rebuild succeeded — the .docx now uses Courier New, with 7 pages, all 8
+  tables, and all 11 [CẦN ĐIỀN] gaps intact. Next I'll check the two diagram
+  pages to confirm accents stay attached and nothing wraps incorrectly.
+
+  Read 1 file (ctrl+o to expand)
+
+● Both fixes check out—Vietnamese accents display correctly and the section 6.2
+  diagram now flows cleanly top-to-bottom without wrapping. Sending you the
+  file.
+
+● Contest doc, sections 3–7, as Word. Opens in LibreOffice. Fill the 11 [CẦN
+  ĐIỀN] gaps.
+
+  › [file] code/su-tu/doc/ho-so-du-thi-muc-3-7.docx (16.9KB)
+
+● The Word file is ready: doc/ho-so-du-thi-muc-3-7.docx. Double-click it to open
+  in LibreOffice.
+
+  I checked it before sending. It has 7 pages, all 8 tables, all 11 [CẦN ĐIỀN]
+  gaps, and every line of text from the original.
+
+  Two problems came up in the first version, and both are fixed:
+  - Accents split from letters in the diagrams. The first font had no "ử" or
+    "ể", so LibreOffice took those letters from another font and the accents
+    drifted. The diagrams now use Courier New, which has all the Vietnamese
+    letters. It's also on Windows computers, so it should look the same for the
+    judges.
+  - Two diagram lines ran past the page edge and wrapped. I shortened them. The
+    section 6.2 diagram now reads top to bottom.
+
+  One thing to know: I also shortened those two lines in the .md file, so both
+  files match right now. From here on, edit only the .docx. If you change the
+  .docx, the .md goes out of date. If you'd rather keep editing the .md, tell me
+  and I'll rebuild the Word file.
+
+  To commit:
+  git add doc/ho-so-du-thi-muc-3-7.md doc/ho-so-du-thi-muc-3-7.docx
+  git commit -m "Add contest doc sections 3-7 as Word file"
+
+✻ Worked for 6m 55s · done 14:11
+
+❯ /model sonnet                                                                 
+  ⎿  Set model to Sonnet 5 and saved as your default for new sessions
+
+❯ the doc have alot of table , make it plain text so i can paste into another   
+  doc                                                                           
+
+  Searched for 1 pattern, ran 3 shell commands (ctrl+o to expand)
+
+● Good, but the #: 1 label is useless since "Dòng 1" already says row 1. Let me
+  drop empty/index-only columns and check the rest of the file.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Good, this is clean and reads naturally. Let me check the rest, including the
+  two-column tables with generic headers and the diagram blocks.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● This all reads cleanly — no pipes, no markdown syntax, tables became labeled
+  blocks, diagrams kept their arrows and boxes as-is (those are already plain
+  text). Saving it.
+
+● Bash(cp "$CLAUDE_JOB_DIR/tmp/plain.txt" doc/ho-so-du-thi-muc-3-7.txt
+      wc -l doc/ho-so-du-thi-muc-3-7.txt…)
+  ⎿  401 doc/ho-so-du-thi-muc-3-7.txt
+     0
+     0
+     … +16 lines (ctrl+o to expand)
+  ⎿  1 file changed (binary, mode only or too large to show)
+
+● Zero |, zero **/##/code fences left — clean plain text. Done.
+
+● Plain text version — no pipes, no markdown. Tables are now "Label: value"
+  blocks, one per row. Copy-paste straight into another doc.
+
+  › [file] code/su-tu/doc/ho-so-du-thi-muc-3-7.txt (18.7KB)
+
+● Made doc/ho-so-du-thi-muc-3-7.txt.
+
+  How I handled the tables: each table row is now its own small block, like
+  this:
+
+  --- Dòng 1 ---
+  Dữ liệu: Nội dung thẻ bài
+  Nội dung: 10 thẻ về trận Bạch Đằng năm 938...
+  Nguồn: Bám theo chương trình Lịch sử 10 (GDPT 2018)...
+
+  No |, no **, no #. Just plain lines you can select and paste.
+
+  I noticed your .docx file has a lock file (.~lock.ho-so-du-thi-muc-3-7.docx#)
+  — it's still open in LibreOffice. Close it there before you edit anything, or
+  the lock will block you.
+
+  Note: you now have three copies of this doc (.md, .docx, .txt). If you edit
+  the content, only one of them updates — tell me which one you'll keep editing
+  and I'll regenerate the other two from it.
+
+  To commit:
+  git add doc/ho-so-du-thi-muc-3-7.txt
+  git commit -m "Add plain text version of contest doc for pasting"
