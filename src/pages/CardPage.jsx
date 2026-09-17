@@ -6,6 +6,7 @@ import { levelOf } from "../lib/level";
 import { getPlayer, recordAnswer, subscribePlayer } from "../lib/store";
 import Quiz from "../components/Quiz";
 import JoinGate from "../components/JoinGate";
+import HoiSuQuan from "../components/HoiSuQuan";
 
 // Đây là trang quan trọng nhất của sản phẩm: nơi mã QR trên thẻ bài dẫn tới.
 // Nguyên tắc: KHÔNG lặp lại những gì đã in trên thẻ. Thẻ đã có cơ chế chơi rồi.
@@ -144,6 +145,8 @@ export default function CardPage() {
         <ol className="facts">{card.facts.map((f) => <li key={f}>{f}</li>)}</ol>
         <p className="src">Nguồn: {card.source}</p>
       </section>
+
+      <HoiSuQuan key={card.id} cardId={card.id} moKhoa={lv.index >= 1} />
 
       <section>
         <h2>Thử thách</h2>
