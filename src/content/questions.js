@@ -65,7 +65,7 @@ export const QUESTIONS = [
       "một nghìn năm, mở ra kỷ nguyên độc lập tự chủ.",
   },
   {
-    id: "Q04", cardId: "N02", topic: "bach-dang-938", level: "nhan-biet",
+    id: "Q04", cardId: "N01", topic: "bach-dang-938", level: "nhan-biet",
     stem: "Ai là người đánh đuổi quân Nam Hán năm 931, giành lại quyền tự chủ trước khi Ngô Quyền lên nắm quyền?",
     choices: ["Khúc Thừa Dụ", "Dương Đình Nghệ", "Kiều Công Tiễn", "Lê Hoàn"],
     answer: 1,
@@ -74,7 +74,7 @@ export const QUESTIONS = [
       "Tiết độ sứ. Ông cũng chính là bố vợ của Ngô Quyền.",
   },
   {
-    id: "Q10", cardId: "N02", topic: "bach-dang-938", level: "nhan-biet",
+    id: "Q10", cardId: "N01", topic: "bach-dang-938", level: "nhan-biet",
     stem: "Sau khi đánh đuổi quân Nam Hán năm 931, Dương Đình Nghệ tự xưng chức gì?",
     choices: ["Thái thú", "Hoàng đế", "Đại vương", "Tiết độ sứ"],
     answer: 3,
@@ -84,7 +84,7 @@ export const QUESTIONS = [
       "Ngô Quyền năm 939 nước ta mới bỏ hẳn danh xưng Tiết độ sứ vốn mang tính lệ thuộc.",
   },
   {
-    id: "Q11", cardId: "N02", topic: "bach-dang-938", level: "thong-hieu",
+    id: "Q11", cardId: "N03", topic: "bach-dang-938", level: "thong-hieu",
     stem: "Vì sao cái chết của Dương Đình Nghệ năm 937 lại dẫn tới cuộc xâm lược của quân Nam Hán năm 938?",
     choices: [
       "Vì nhà Nam Hán được nhà Đường uỷ nhiệm sang thu hồi lại Tĩnh Hải quân",
@@ -99,7 +99,7 @@ export const QUESTIONS = [
       "để ngoại xâm tràn vào. Cũng cần nhớ nhà Đường đã sụp đổ từ năm 907, không còn uỷ nhiệm cho ai.",
   },
   {
-    id: "Q12", cardId: "N02", topic: "bach-dang-938", level: "van-dung",
+    id: "Q12", cardId: "N01", topic: "bach-dang-938", level: "van-dung",
     stem:
       "Họ Khúc dựng nền tự chủ, Dương Đình Nghệ đánh đuổi Nam Hán năm 931, rồi Ngô Quyền thắng năm 938. Chuỗi sự kiện nối tiếp này cho thấy điều gì về con đường giành độc lập của dân tộc ta đầu thế kỷ X?",
     choices: [
