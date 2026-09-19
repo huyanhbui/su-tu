@@ -130,29 +130,6 @@ export const CARDS = [
     questions: ["Q06"],
   },
   {
-    id: "D01",
-    type: "dia-ly",
-    name: "Sông Bạch Đằng",
-    battle: "bach-dang-938",
-    years: "—",
-    art: "/art/d01-song-bach-dang.png",
-    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
-    menh: null, sinhLuc: null, roles: ["Cửa ngõ đường thuỷ phía Đông Bắc"],
-    skills: [],
-    facts: [
-      "Bạch Đằng là đường thuỷ ngắn nhất để hạm đội phương Bắc tiến vào vùng đồng bằng sông Hồng, nên trở thành cửa ngõ phòng thủ trọng yếu.",
-      "Sông có biên độ thuỷ triều lớn: mỗi ngày mực nước chênh nhau vài mét, đủ để nhấn chìm rồi lại phơi ra cả một bãi cọc.",
-      "Chính đặc điểm tự nhiên này khiến Bạch Đằng ba lần trở thành nơi quyết chiến — năm 938 (Ngô Quyền), năm 981 (Lê Hoàn) và năm 1288 (Trần Hưng Đạo).",
-    ],
-    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
-    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
-    levels: [
-      { xp: 0, label: "Địa thế", unlock: "3 sự kiện cơ bản" },
-      { xp: 30, label: "Yếu địa", unlock: "So sánh ba trận Bạch Đằng" },
-    ],
-    questions: ["Q07"],
-  },
-  {
     id: "S01",
     type: "su-kien",
     name: "Trận Bạch Đằng năm 938",
