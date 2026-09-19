@@ -216,12 +216,11 @@ cần cho máy dùng chung lúc demo, nếu không người sau sẽ thừa hư�
 
 ## Bộ thẻ
 
-Hiện có **10 thẻ**, tất cả thuộc trận Bạch Đằng năm 938.
+Hiện có **9 thẻ**, tất cả thuộc trận Bạch Đằng năm 938.
 
 | Mã | Tên | Ghi chú |
 |---|---|---|
 | N01 | Ngô Quyền | |
-| N02 | Dương Đình Nghệ | còn dùng ảnh tạm |
 | N03 | Kiều Công Tiễn | |
 | N04 | Lưu Hoằng Tháo | |
 | N05 | Lưu Cung | vua Nam Hán, sử sách còn gọi là Lưu Nghiễm |

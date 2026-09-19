@@ -86,29 +86,6 @@ export const CARDS = [
   // Trang thẻ tự động ẩn mục "Lịch sử đằng sau kỹ năng" khi `skills` còn rỗng.
   // ───────────────────────────────────────────────────────────────────────────
   {
-    id: "N02",
-    type: "nhan-vat",
-    name: "Dương Đình Nghệ",
-    battle: "bach-dang-938",
-    years: "?–937",
-    art: "/art/n02-duong-dinh-nghe.png",
-    artTam: true,   // tranh khắc gỗ Oger dùng tạm — CHƯA có tranh chính thức của nhóm
-    menh: null, sinhLuc: null, roles: ["Tướng cũ của họ Khúc", "Tiết độ sứ Tĩnh Hải quân"],
-    skills: [],
-    facts: [
-      "Năm 931, Dương Đình Nghệ đem quân từ Ái Châu ra đánh đuổi quân Nam Hán, giành lại quyền tự chủ cho Tĩnh Hải quân.",
-      "Ông tự xưng Tiết độ sứ và cai quản đất nước trong sáu năm, nuôi dưỡng lực lượng cho thế hệ sau.",
-      "Năm 937 ông bị nha tướng Kiều Công Tiễn sát hại — sự kiện trực tiếp châm ngòi cho cuộc xâm lược của Nam Hán năm 938.",
-    ],
-    source: "Biên soạn theo chương trình Lịch sử 10 (GDPT 2018)",
-    reviewNote: "Chưa đối chiếu câu chữ và số bài với SGK. Phải có giáo viên Lịch sử duyệt trước khi in thẻ.",
-    levels: [
-      { xp: 0, label: "Nha tướng", unlock: "3 sự kiện cơ bản" },
-      { xp: 30, label: "Tiết độ sứ", unlock: "Bối cảnh thời họ Khúc" },
-    ],
-    questions: ["Q04"],
-  },
-  {
     id: "N03",
     type: "nhan-vat",
     name: "Kiều Công Tiễn",

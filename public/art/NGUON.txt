@@ -6,16 +6,34 @@ và câu trả lời cho ban giám khảo cũng khác nhau.
 
 (1) TRANH DO AI TẠO — tranh chính của bộ bài
 --------------------------------------------
-  n01-ngo-quyen.jpg        n05-luu-cung.jpg
-  n03-kieu-cong-tien.jpg   n06-tieu-ich.jpg
-  n04-luu-hoang-thao.jpg   n07-ly-long-cau.jpg
-  s01-tran-bach-dang.jpg   n08-to-phan.jpg
 
-Nhóm xác nhận đây là tranh do AI tạo sinh, không sao chép tác phẩm của hoạ sĩ nào.
+(1a) Tranh chính thức, cắt ra từ bản thẻ in của nhóm (tháng 9-2026)
 
-File gốc độ phân giải đầy đủ nằm ở `art-source/cards-master/` (không đưa lên git).
-File trong thư mục này đã nén còn bề ngang 800px cho web — THẺ IN PHẢI DÙNG FILE
-GỐC, không dùng file này.
+  n01-ngo-quyen.jpg        n06-tieu-ich.jpg
+  n03-kieu-cong-tien.jpg   n07-ly-long-cau.jpg
+  n04-luu-hoang-thao.jpg   n08-to-phan.jpg
+  n05-luu-cung.jpg
+
+  Bảy file này được CẮT RA từ bản thẻ in hoàn chỉnh của nhóm: bỏ khung viền, bỏ
+  dải tên và bỏ phần chữ luật chơi, chỉ giữ lại phần tranh. Trang web hiện tên
+  thẻ và luật chơi bằng chữ thật bên dưới tranh, nên không cần chữ trong ảnh.
+
+  File gốc độ phân giải đầy đủ (cả thẻ, còn nguyên khung và chữ) nằm ở
+  `art-source/cards-master/2026-09-chinh-thuc/` — KHÔNG đưa lên git.
+  THẺ IN PHẢI DÙNG FILE GỐC ĐÓ, không dùng bản 800px trong thư mục này.
+
+  [CẦN ĐIỀN] tên công cụ AI đã tạo bộ tranh chính thức này.
+  Hồ sơ dự thi (`doc/ho-so-du-thi-muc-3-7.md`) hỏi đúng câu này — phải điền
+  trước khi nộp.
+
+(1b) Tranh AI đợt trước
+
+  s01-tran-bach-dang.jpg
+
+  File gốc nằm ở `art-source/cards-master/`.
+
+Nhóm xác nhận toàn bộ mục (1) là tranh do AI tạo sinh, không sao chép tác phẩm
+của hoạ sĩ nào.
 
 Hai điều nên biết trước khi trả lời ban giám khảo:
 
@@ -33,26 +51,26 @@ Hai điều nên biết trước khi trả lời ban giám khảo:
 
 (2) ẢNH TẠM — TRANH MỘC BẢN HENRI OGER
 --------------------------------------
-  n02-duong-dinh-nghe.png
   d01-song-bach-dang.png
 
-Hai thẻ này CHƯA có tranh chính thức, đang mượn tạm mộc bản Oger. Trong
-`src/content/cards.js` chúng được đánh dấu `artTam: true`; `npm run check` và
-trang /health đều nhắc. Thay xong thì bỏ cờ đó đi.
+  Thẻ này CHƯA có tranh chính thức, đang mượn tạm mộc bản Oger. Trong
+  `src/content/cards.js` nó được đánh dấu `artTam: true`; `npm run check` và
+  trang /health đều nhắc. Thay xong thì bỏ cờ đó đi.
 
-Hai file mộc bản này được cắt ra từ:
+  File mộc bản này được cắt ra từ:
 
-  Henri Oger, "Technique du peuple annamite" (Kỹ thuật của người An Nam),
-  Hà Nội, 1908–1909.
+    Henri Oger, "Technique du peuple annamite" (Kỹ thuật của người An Nam),
+    Hà Nội, 1908–1909.
 
-Tình trạng bản quyền: THUỘC PHẠM VI CÔNG CỘNG (public domain).
-  - Xuất bản năm 1909, tác giả Henri Oger (1885–1936) mất đã hơn 50 năm.
-  - Bản quét gốc do Thư viện Quốc hội Hoa Kỳ (Library of Congress) lưu giữ.
-  - Các trang được tải từ Wikimedia Commons, tất cả gắn nhãn "Public domain".
+  Tình trạng bản quyền: THUỘC PHẠM VI CÔNG CỘNG (public domain).
+    - Xuất bản năm 1909, tác giả Henri Oger (1885–1936) mất đã hơn 50 năm.
+    - Bản quét gốc do Thư viện Quốc hội Hoa Kỳ (Library of Congress) lưu giữ.
+    - Các trang được tải từ Wikimedia Commons, tất cả gắn nhãn "Public domain".
 
-Ghi công (nên có, in ở mặt sau hộp hoặc sách hướng dẫn):
-  "Hình minh hoạ phỏng theo mộc bản trong 'Kỹ thuật của người An Nam'
-   của Henri Oger, Hà Nội 1908–1909 (tư liệu thuộc phạm vi công cộng)."
+  Ghi công (nên có, in ở mặt sau hộp hoặc sách hướng dẫn):
+    "Hình minh hoạ phỏng theo mộc bản trong 'Kỹ thuật của người An Nam'
+     của Henri Oger, Hà Nội 1908–1909 (tư liệu thuộc phạm vi công cộng)."
+
 
 LƯU Ý CHUNG: không có chân dung đương thời của bất kỳ nhân vật nào thế kỷ X.
 Mọi hình trong thư mục này — dù do AI tạo hay mộc bản — đều mang tính biểu
