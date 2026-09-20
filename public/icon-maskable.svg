@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="SỬ TỰ">
-  <rect width="512" height="512" fill="#0F1B2A"/>
+  <rect width="512" height="512" fill="#2E0D0B"/>
   <g transform="translate(256 256) scale(0.66) translate(-256 -256)">
-    <rect x="40" y="40" width="432" height="432" rx="68" fill="#16273B" stroke="#D4A83A" stroke-width="14"/>
-    <rect x="70" y="70" width="372" height="372" rx="44" fill="none" stroke="#D4A83A" stroke-width="4" opacity="0.38"/>
+    <rect x="40" y="40" width="432" height="432" rx="68" fill="#411310" stroke="#D9A441" stroke-width="14"/>
+    <rect x="70" y="70" width="372" height="372" rx="44" fill="none" stroke="#D9A441" stroke-width="4" opacity="0.38"/>
     <g font-family="DejaVu Sans" font-weight="bold" text-anchor="middle">
-      <text x="250" y="228" font-size="126" letter-spacing="10" fill="#F0CB6A">SỬ</text>
-      <text x="250" y="378" font-size="126" letter-spacing="10" fill="#D4A83A">TỰ</text>
+      <text x="250" y="228" font-size="126" letter-spacing="10" fill="#F3D07A">SỬ</text>
+      <text x="250" y="378" font-size="126" letter-spacing="10" fill="#D9A441">TỰ</text>
     </g>
   </g>
 </svg>

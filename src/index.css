@@ -1,20 +1,22 @@
 /* ─────────────────────────────────────────────────────────────────────────
-   SỬ TỰ — bảng màu lấy từ chính thẻ bài: sơn mài xanh thẫm, đỏ son, thếp vàng.
+   SỬ TỰ — sơn son thếp vàng: nền sơn mài đỏ son, chữ vỏ trứng, nét thếp vàng.
+   Đây là màu của hoành phi, ngai thờ, cửa võng trong đình chùa Việt.
    Ưu tiên điện thoại trước: học sinh quét QR bằng điện thoại, không phải máy tính.
    ───────────────────────────────────────────────────────────────────────── */
 :root{
-  --ground:#0F1B2A;      /* nền xanh thẫm như viền thẻ */
-  --surface:#16273B;
-  --surface-2:#1E3350;
-  --ink:#F3ECDD;         /* chữ màu ngà */
-  --ink-2:#BFCBDA;
-  --ink-3:#8798AC;
-  --line:#2A415E;
-  --gold:#D4A83A;
-  --gold-2:#F0CB6A;
-  --son:#B23A32;         /* đỏ son */
-  --jade:#4FA88A;
-  --bad:#D9705F;
+  --ground:#2E0D0B;      /* nền sơn mài đỏ son, đã hãm thật sẫm để chữ đọc được */
+  --surface:#411310;
+  --surface-2:#571C16;
+  --ink:#F6EBDA;         /* chữ màu vỏ trứng, đúng chất liệu khảm sơn mài */
+  --ink-2:#E2C6B5;
+  --ink-3:#BC9686;
+  --line:#7E342A;
+  --gold:#D9A441;        /* thếp vàng */
+  --gold-2:#F3D07A;
+  --son:#E35A46;         /* son tươi: nền đã đỏ nên dấu hiệu cảnh báo phải sáng hơn nền */
+  --son-2:#FFAE9C;
+  --jade:#56C0A0;
+  --bad:#FF8F6E;
   --radius:12px;
 }
 *{box-sizing:border-box}
@@ -40,6 +42,11 @@ section{margin-top:8px}
 
 .brand{text-align:center;padding:22px 0 10px}
 .brand h1{font-size:34px;letter-spacing:.18em;color:var(--gold)}
+.brand h1::after{
+  content:"";display:block;width:104px;height:0;margin:10px auto 0;
+  border-top:2px solid var(--gold);border-bottom:1px solid var(--gold);
+  padding-bottom:3px;opacity:.75;
+}
 
 .note,.insight,.warnbar{
   border-radius:var(--radius);padding:12px 14px;font-size:14px;margin-top:14px;
@@ -62,7 +69,7 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 .btn{
   display:inline-block;text-align:center;font:inherit;font-weight:600;font-size:15px;
   padding:12px 18px;border-radius:10px;border:1px solid var(--gold);
-  background:var(--gold);color:#20170A;cursor:pointer;text-decoration:none;
+  background:var(--gold);color:#2E0D0B;cursor:pointer;text-decoration:none;
 }
 .btn.ghost{background:transparent;color:var(--gold-2)}
 .btn:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px}
@@ -74,7 +81,7 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 .card-id{margin-top:16px}
 .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
 .chip{font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
-.chip.menh{background:rgba(79,168,138,.16);color:var(--jade);border-color:transparent}
+.chip.menh{background:rgba(86,192,160,.16);color:var(--jade);border-color:transparent}
 .roles{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:3px}
 .roles li{font-size:14px;color:var(--ink-2)}
 .roles li::before{content:"◆ ";color:var(--gold);font-size:10px}
@@ -92,7 +99,7 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 .skill{margin-top:14px;padding:14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
 .skill.locked{opacity:.72}
 .kind{font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
-.kind.kich-hoat{background:rgba(178,58,50,.2);color:#E8998F}
+.kind.kich-hoat{background:rgba(227,90,70,.22);color:var(--son-2)}
 .skill h3{margin-top:8px}
 .rules{margin-top:8px;font-size:14px;color:var(--ink-2);font-style:italic;
   padding-left:11px;border-left:2px solid var(--line)}
@@ -107,9 +114,9 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 .quiz{margin-top:16px;padding:15px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
 .quiz-tag{margin-bottom:9px}
 .lv{font-size:11px;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
-.lv-nhan-biet{background:rgba(135,152,172,.18);color:var(--ink-2)}
-.lv-thong-hieu{background:rgba(79,168,138,.16);color:var(--jade)}
-.lv-van-dung{background:rgba(212,168,58,.18);color:var(--gold-2)}
+.lv-nhan-biet{background:rgba(188,150,134,.20);color:var(--ink-2)}
+.lv-thong-hieu{background:rgba(86,192,160,.16);color:var(--jade)}
+.lv-van-dung{background:rgba(217,164,65,.20);color:var(--gold-2)}
 .quiz-tag{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .lv-xp{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .quiz-stem{font-weight:600;font-size:16px}
@@ -122,9 +129,9 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 .choice:hover:not(:disabled){border-color:var(--gold)}
 .choice:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .choice-key{font-weight:700;color:var(--ink-3);flex:0 0 auto}
-.choice.right{border-color:var(--jade);background:rgba(79,168,138,.16)}
+.choice.right{border-color:var(--jade);background:rgba(86,192,160,.16)}
 .choice.right .choice-key{color:var(--jade)}
-.choice.wrong{border-color:var(--bad);background:rgba(217,112,95,.14)}
+.choice.wrong{border-color:var(--bad);background:rgba(255,143,110,.16)}
 .choice.dim{opacity:.5}
 .choice:disabled{cursor:default}
 .explain{margin-top:12px;font-size:14.5px;padding:12px;border-radius:10px;background:var(--surface-2)}
@@ -134,7 +141,7 @@ input::placeholder{text-transform:none;color:var(--ink-3);opacity:1}
 
 .flash{
   position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;
-  background:var(--gold);color:#20170A;font-weight:700;padding:8px 18px;border-radius:999px;
+  background:var(--gold);color:#2E0D0B;font-weight:700;padding:8px 18px;border-radius:999px;
 }
 
 /* collection + leaderboard */
@@ -173,14 +180,13 @@ th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vert
 thead th{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2)}
 tbody tr:last-child td{border-bottom:none}
 td.num{text-align:right;font-variant-numeric:tabular-nums}
-tr.flag td{background:rgba(217,112,95,.1)}
+tr.flag td{background:rgba(255,143,110,.12)}
 
 @media (prefers-reduced-motion: reduce){ *{transition:none!important} }
 
 /* cửa vào lớp — đặt ngay trên trang thẻ bài, vì mã QR mới là cửa trước */
 .gate{margin-top:14px;padding:16px;border-radius:var(--radius);
-  background:var(--surface);border:1px solid var(--gold);
-  box-shadow:0 0 0 3px rgba(212,168,58,.08)}
+  background:var(--surface);border:1px solid var(--gold)}
 .gate h3{color:var(--gold)}
 .gate p{margin-top:6px}
 
@@ -200,13 +206,13 @@ code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:.9e
 
 /* cảnh báo nhân vật hư cấu — phải đập vào mắt, đặt trên mọi nội dung lịch sử */
 .hucau{margin-top:16px;padding:13px 15px;border-radius:var(--radius);
-  background:rgba(178,58,50,.12);border:1px solid var(--son);border-left-width:3px}
-.hucau strong{display:block;color:#E8998F;font-size:14px;letter-spacing:.02em}
+  background:rgba(227,90,70,.14);border:1px solid var(--son);border-left-width:3px}
+.hucau strong{display:block;color:var(--son-2);font-size:14px;letter-spacing:.02em}
 .hucau p{margin-top:6px;font-size:14px;color:var(--ink-2)}
 
 /* đổi người chơi — đặt cuối trang, phải bấm có chủ ý mới xoá được */
 .reset{margin-top:38px;padding-top:20px;border-top:1px solid var(--line)}
 .reset h2{font-size:15px;color:var(--ink-2);margin:0 0 6px}
 .reset .btn{margin-top:12px}
-.btn.ghost.danger{border-color:var(--son);color:#E8998F}
+.btn.ghost.danger{border-color:var(--son);color:var(--son-2)}
 .btn.ghost.danger:disabled{opacity:.6;cursor:default}
