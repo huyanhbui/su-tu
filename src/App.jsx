@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Join from "./pages/Join";
 import CardPage from "./pages/CardPage";
 import Me from "./pages/Me";
+import OnTap from "./pages/OnTap";
 import Board from "./pages/Board";
 import Teacher from "./pages/Teacher";
 import Health from "./pages/Health";
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<Join />} />
         <Route path="/c/:cardId" element={<CardPage />} />
         <Route path="/me" element={<Me />} />
+        <Route path="/on-tap" element={<OnTap />} />
         <Route path="/board/:classCode" element={<Board />} />
         <Route path="/t" element={<Teacher />} />
         <Route path="/t/:classCode" element={<Teacher />} />

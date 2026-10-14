@@ -170,10 +170,10 @@ if (tam.length) {
   for (const c of tam) console.log(`  ${pad(c.id, 5)} ${pad(c.name, 26)} ${c.art}`);
 }
 
-const notes = CARDS.filter((c) => c.reviewNote);
+const notes = [...CARDS, ...QUESTIONS].filter((x) => x.reviewNote);
 if (notes.length) {
   console.log("\nGhi chú nội bộ còn tồn đọng (máy không kiểm hộ được):");
-  for (const c of notes) console.log(`  ${pad(c.id, 5)} ${c.reviewNote}`);
+  for (const x of notes) console.log(`  ${pad(x.id, 5)} ${x.reviewNote}`);
 }
 
 if (warnings.length) {

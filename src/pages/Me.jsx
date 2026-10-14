@@ -36,7 +36,10 @@ export default function Me() {
         })}
       </div>
 
-      <nav className="foot"><Link className="btn ghost" to="/">Trang chính</Link></nav>
+      <nav className="foot">
+        <Link className="btn" to="/on-tap">Ôn tập lỗ hổng kiến thức</Link>
+        <Link className="btn ghost" to="/">Trang chính</Link>
+      </nav>
 
       {/* Danh tính gắn với THIẾT BỊ chứ không gắn với biệt danh: đổi tên chỉ đổi
           nhãn hiển thị, XP vẫn còn nguyên. Đó là chủ ý — một điện thoại là một

@@ -1,5 +1,5 @@
-// Ngân hàng câu hỏi. `level` bám theo ba mức độ nhận thức của GDPT 2018:
-//   nhan-biet | thong-hieu | van-dung
+// Ngân hàng câu hỏi. `level` bám theo bốn mức độ nhận thức của GDPT 2018:
+//   nhan-biet | thong-hieu | van-dung | van-dung-cao
 // Chính `level` là thứ làm nên biểu đồ "lỗ hổng kiến thức" trong Teacher Dashboard —
 // giáo viên thấy học sinh yếu ở MỨC TƯ DUY nào, không chỉ thấy điểm số.
 
@@ -231,7 +231,7 @@ export const QUESTIONS = [
       "quân sang nước ta lần nào nữa. Nhà Nam Hán còn tồn tại thêm hơn ba mươi năm rồi mới bị nhà Tống thôn tính.",
   },
   {
-    id: "Q19", cardId: "D01", topic: "bach-dang-938", level: "nhan-biet",
+    id: "Q19", cardId: "S01", topic: "bach-dang-938", level: "nhan-biet",
     stem: "Sông Bạch Đằng ba lần trở thành nơi quyết chiến vào những năm nào?",
     choices: ["938, 1075 và 1288", "931, 938 và 981", "938, 981 và 1288", "938, 1258 và 1285"],
     answer: 2,
@@ -241,7 +241,7 @@ export const QUESTIONS = [
       "1258 và 1285 là hai lần kháng chiến chống Mông – Nguyên trước đó, đều không diễn ra ở Bạch Đằng.",
   },
   {
-    id: "Q20", cardId: "D01", topic: "bach-dang-938", level: "nhan-biet",
+    id: "Q20", cardId: "S01", topic: "bach-dang-938", level: "nhan-biet",
     stem: "Trận Bạch Đằng năm 1288 — trận thứ ba trên dòng sông này — do ai chỉ huy?",
     choices: ["Ngô Quyền", "Lê Hoàn", "Lý Thường Kiệt", "Trần Hưng Đạo"],
     answer: 3,
@@ -251,7 +251,7 @@ export const QUESTIONS = [
       "Nhớ chắc ba mốc này là cách an toàn nhất để không nhầm lẫn khi làm bài.",
   },
   {
-    id: "Q21", cardId: "D01", topic: "bach-dang-938", level: "thong-hieu",
+    id: "Q21", cardId: "S01", topic: "bach-dang-938", level: "thong-hieu",
     stem:
       "Vì sao sông Bạch Đằng trở thành cửa ngõ phòng thủ trọng yếu trước các cuộc tiến công bằng đường biển từ phương Bắc?",
     choices: [
@@ -267,7 +267,7 @@ export const QUESTIONS = [
       "thích vì sao cùng một dòng sông lại ba lần được chọn làm nơi quyết chiến.",
   },
   {
-    id: "Q07", cardId: "D01", topic: "bach-dang-938", level: "van-dung",
+    id: "Q07", cardId: "S01", topic: "bach-dang-938", level: "van-dung",
     stem:
       "Sông Bạch Đằng ba lần được chọn làm nơi quyết chiến (938, 981, 1288). Điều này cho thấy điều gì về nghệ thuật quân sự của cha ông ta?",
     choices: [
@@ -522,12 +522,82 @@ export const QUESTIONS = [
       "Một bộ bài có thể vừa hay vừa trung thực. Ghi rõ chỗ nào là hư cấu không làm " +
       "trò chơi kém đi, mà làm người chơi tin được phần còn lại.",
   },
+  // ── Level 4 "Vận dụng cao": AI-written, must be approved by a history teacher.
+  {
+    id: "Q37", cardId: "N01", topic: "bach-dang-938", level: "van-dung-cao",
+    stem: "Có ý kiến cho rằng: “Ngô Quyền thắng ở Bạch Đằng năm 938 chỉ nhờ may mắn gặp lúc thủy triều.” Em đánh giá ý kiến này thế nào?",
+    choices: [
+      "Đúng, vì thủy triều lên xuống tự nhiên mới là yếu tố quyết định tất cả",
+      "Sai, vì Ngô Quyền hiểu quy luật thủy triều và chủ động dùng nó để đánh địch",
+      "Đúng, vì quân Nam Hán hoàn toàn không biết con sông này có thủy triều",
+      "Sai, vì thủy triều không hề liên quan gì đến cách đánh của hai bên",
+    ],
+    answer: 1,
+    explain:
+      "Thủy triều lên xuống là điều kiện tự nhiên mà bên nào cũng gặp. Điều làm nên chiến thắng năm 938 " +
+      "là Ngô Quyền hiểu quy luật ấy và dùng nó: đóng cọc gỗ bịt sắt ở khúc sông nước lên thì ngập kín cọc, " +
+      "cho thuyền nhẹ nhử hạm đội Nam Hán vượt bãi cọc lúc triều lên, rồi phản công đúng lúc triều rút. " +
+      "Đó là chủ động tận dụng tự nhiên, không phải may mắn.",
+    reviewNote: "Câu mới do AI soạn (2026-10-14). Cần giáo viên Lịch sử duyệt trước khi dùng với học sinh.",
+  },
+  {
+    id: "Q38", cardId: "S01", topic: "bach-dang-938", level: "van-dung-cao",
+    stem: "Một đội bóng yếu hơn đối thủ về thể lực nhưng rất hiểu sân nhà của mình. Cách nghĩ nào giống nhất với cách Ngô Quyền đánh quân Nam Hán năm 938?",
+    choices: [
+      "Dồn toàn bộ sức tấn công ồ ạt ngay từ những phút đầu tiên của trận",
+      "Tìm mua thêm cầu thủ to khoẻ hơn để đọ sức trực diện với đối thủ",
+      "Buộc đối thủ chơi ở chỗ bất lợi cho họ, chờ đúng thời điểm mới phản công",
+      "Xin hoãn trận đấu sang ngày khác để khỏi phải thua trên sân nhà",
+    ],
+    answer: 2,
+    explain:
+      "Năm 938 quân Nam Hán mạnh về thuyền lớn. Ngô Quyền không đọ sức trực diện mà chọn khúc sông có " +
+      "thủy triều lên xuống mạnh, nhử địch vào bãi cọc rồi chờ triều rút mới phản công — lúc thuyền lớn bị " +
+      "cọc đâm thủng và mắc cạn. Bài học ấy dùng được cả ngày nay: hiểu rõ “sân nhà”, kéo đối thủ vào chỗ " +
+      "bất lợi cho họ và chọn đúng thời điểm.",
+    reviewNote: "Câu mới do AI soạn (2026-10-14). Cần giáo viên Lịch sử duyệt trước khi dùng với học sinh.",
+  },
+  {
+    id: "Q39", cardId: "N05", topic: "bach-dang-938", level: "van-dung-cao",
+    stem: "Lưu Cung cho rằng sau cái chết của Dương Đình Nghệ, Tĩnh Hải quân không còn tướng giỏi. Dựa vào diễn biến sau đó, chỗ sai trong cách đánh giá này là gì?",
+    choices: [
+      "Ông đã đánh giá quá cao sức mạnh của Tĩnh Hải quân sau khi Dương Đình Nghệ mất",
+      "Ông đã không đem quân đóng ở biên giới để tiếp ứng cho con trai mình",
+      "Ông đã nghe theo lời khuyên đánh chậm mà chắc của mưu sĩ Tiêu Ích",
+      "Ông không thấy Ngô Quyền đã dẹp Kiều Công Tiễn và thống nhất được lực lượng",
+    ],
+    answer: 3,
+    explain:
+      "Lưu Cung nghĩ mất Dương Đình Nghệ là Tĩnh Hải quân không còn ai đủ sức chống cự. Nhưng Ngô Quyền " +
+      "đã từ Ái Châu kéo quân ra, hạ thành Đại La, giết Kiều Công Tiễn trước khi hạm đội Nam Hán tới, và " +
+      "quy tụ các hào trưởng địa phương dưới một quyền chỉ huy thống nhất. Hai phương án về biên giới và " +
+      "về Tiêu Ích đều sai với sử: Lưu Cung có tự đem quân đóng ở biên giới, và ông không nghe lời Tiêu Ích.",
+    reviewNote: "Câu mới do AI soạn (2026-10-14). Cần giáo viên Lịch sử duyệt trước khi dùng với học sinh.",
+  },
+  {
+    id: "Q40", cardId: "N08", topic: "bach-dang-938", level: "van-dung-cao",
+    stem: "Em chuẩn bị thuyết trình về trận Bạch Đằng năm 938 và tìm được ba nguồn: Đại Việt sử ký toàn thư, một tiểu thuyết lịch sử và một video trên mạng không ghi nguồn. Cách dùng ba nguồn này hợp lý nhất là gì?",
+    choices: [
+      "Lấy sự kiện từ chính sử, coi tiểu thuyết là hư cấu, đối chiếu video trước khi dùng",
+      "Dùng cả ba nguồn như nhau vì chúng đều kể về cùng một trận đánh năm 938",
+      "Ưu tiên video trên mạng vì đó là nguồn có nhiều người xem nhất",
+      "Chỉ dùng tiểu thuyết vì nó kể chuyện hấp dẫn và dễ nhớ nhất",
+    ],
+    answer: 0,
+    explain:
+      "Chính sử và SGK là nơi lấy sự kiện. Tiểu thuyết giúp bài nói sinh động, nhưng tên và chi tiết trong " +
+      "đó có thể do người viết đặt ra — như hai cái tên Lý Long Câu và Tô Phán không có trong Đại Việt sử ký " +
+      "toàn thư. Một video không ghi nguồn thì chưa biết đúng sai, phải đối chiếu trước khi dùng. Nhiều " +
+      "người xem không làm cho thông tin đúng hơn.",
+    reviewNote: "Câu mới do AI soạn (2026-10-14). Cần giáo viên Lịch sử duyệt trước khi dùng với học sinh.",
+  },
 ];
 
 export const LEVEL_LABEL = {
   "nhan-biet": "Nhận biết",
   "thong-hieu": "Thông hiểu",
   "van-dung": "Vận dụng",
+  "van-dung-cao": "Vận dụng cao",
 };
 
-export const XP_PER_CORRECT = { "nhan-biet": 10, "thong-hieu": 20, "van-dung": 30 };
+export const XP_PER_CORRECT = { "nhan-biet": 10, "thong-hieu": 20, "van-dung": 30, "van-dung-cao": 40 };

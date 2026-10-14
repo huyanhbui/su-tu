@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LEVEL_LABEL, XP_PER_CORRECT } from "../content/questions";
 
-export default function Quiz({ question, answered, onAnswer }) {
+export default function Quiz({ question, answered, onAnswer, practice = false }) {
   const [justPicked, setJustPicked] = useState(null);
 
   // `answered` là câu trả lời đã lưu từ lần trước, và nó thường về SAU lần vẽ đầu
@@ -29,7 +29,8 @@ export default function Quiz({ question, answered, onAnswer }) {
     <div className="quiz">
       <div className="quiz-tag">
         <span className={`lv lv-${question.level}`}>{LEVEL_LABEL[question.level]}</span>
-        <span className="lv-xp">+{XP_PER_CORRECT[question.level]} XP</span>
+        {/* Practice mode gives no XP, so hide the XP tag. */}
+        {!practice && <span className="lv-xp">+{XP_PER_CORRECT[question.level]} XP</span>}
       </div>
       <p className="quiz-stem">{question.stem}</p>
 

@@ -13,7 +13,7 @@ import HoiSuQuan from "../components/HoiSuQuan";
 // Trang này bổ sung thứ tấm bìa không chứa được — LỊCH SỬ ĐẰNG SAU CƠ CHẾ ĐÓ.
 
 const MENH_LABEL = { thuy: "Thủy", hoa: "Hỏa", moc: "Mộc", kim: "Kim", tho: "Thổ" };
-const LEVEL_ORDER = { "nhan-biet": 0, "thong-hieu": 1, "van-dung": 2 };
+const LEVEL_ORDER = { "nhan-biet": 0, "thong-hieu": 1, "van-dung": 2, "van-dung-cao": 3 };
 
 export default function CardPage() {
   const { cardId } = useParams();

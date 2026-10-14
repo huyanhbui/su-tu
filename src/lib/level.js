@@ -1,7 +1,6 @@
 // Xác định thẻ đang ở cấp nào dựa trên XP đã tích trên chính thẻ đó.
 export function levelOf(card, cardXp = 0) {
-  let idx = 0;
-  card.levels.forEach((l, i) => { if (cardXp >= l.xp) idx = i; });
+  const idx = Math.max(0, card.levels.findLastIndex((l) => cardXp >= l.xp));
   const next = card.levels[idx + 1] || null;
   return {
     index: idx,
