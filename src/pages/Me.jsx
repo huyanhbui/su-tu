@@ -38,6 +38,7 @@ export default function Me() {
 
       <nav className="foot">
         <Link className="btn" to="/on-tap">Ôn tập lỗ hổng kiến thức</Link>
+        <Link className="btn" to="/quet-bai">Quét bài tập</Link>
         <Link className="btn ghost" to="/">Trang chính</Link>
       </nav>
 
